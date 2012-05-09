@@ -3,25 +3,20 @@
 #include "stdafx.h"
 #include "KClmtrWrapper.h"
 
-string KClmtrWrapper::KClmtrWrap::MarshalString (String^ s) 
-{
+string KClmtrWrapper::KClmtrWrap::MarshalString(String^ s){
 	using namespace Runtime::InteropServices;
-	string os;
-	const char* chars =  (const char*)(Marshal::StringToHGlobalAnsi(s)).ToPointer();
-	os = chars;
+	const char* chars = (const char*)(Marshal::StringToHGlobalAnsi(s)).ToPointer();
+	string os = chars;
 	Marshal::FreeHGlobal(IntPtr((void*)chars));
 	return os;
 }
-System::String^ KClmtrWrapper::KClmtrWrap::NativeToDotNet( std::string input ) 
-{
+System::String^ KClmtrWrapper::KClmtrWrap::NativeToDotNet(std::string input){
 	return gcnew String(input.c_str());
 }
-void KClmtrWrapper::SubClass::printMeasure(Measurement m)
-{
+void KClmtrWrapper::SubClass::printMeasure(Measurement m){
 	_kclmtrwrapper->printMeasure(gcnew wMeasurement(m));
 }
-void KClmtrWrapper::SubClass::printFlick(Flicker f)
-{
+void KClmtrWrapper::SubClass::printFlick(Flicker f){
 	_kclmtrwrapper->printFlick(gcnew wFlicker(f));
 }
 KClmtrWrapper::SubClass::SubClass(gcroot<KClmtrWrap^> _kcw){
