@@ -1,0 +1,13 @@
+CC=g++
+CFLAGS=-c -Wall
+SOURCES=serialPort.cpp KClmtr.cpp
+OBJECTS=$(SOURCES:.cpp=.o)
+
+all:  clean $(OBJECTS)
+	ar  rcs libKClmtr.a $(OBJECTS)
+
+.o:
+	$(CC) $(CFLAGS) $< -o $@
+
+clean:
+	rm -rf *.o *.a

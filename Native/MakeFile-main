@@ -1,0 +1,20 @@
+CC=g++
+CFLAGS=-c -Wall
+SOURCES=main.cpp
+LDFLAGS=-static -pthread 
+LIBARYFLAGS=-L. -lKClmtr
+OBJECTS=$(SOURCES:.cpp=.o)
+EXECUTABLE=main.exe
+
+all:  clean $(EXECUTABLE)
+
+$(EXECUTABLE) : $(OBJECTS)
+	$(CC) $(LDFLAGS) $(OBJECTS) $(LIBARYFLAGS) -o $@
+
+.cpp.o:
+	$(CC) $(CFLAGS) $< -o $@
+
+clean:
+	rm -rf *.exe
+
+

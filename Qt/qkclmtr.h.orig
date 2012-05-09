@@ -1,0 +1,545 @@
+#ifndef QKCLMTR_H
+#define QKCLMTR_H
+
+#include <QtGui/QWidget>
+#include "KClmtr/KClmtr.h"
+struct QMeasurement
+{
+public:
+    double x;               //The x in the xyl
+    double y;               //The y in the xyl
+    double l;               //The l in the xyl
+    double bigx;            //The x in the xyz
+    double bigy;            //The y in the xyz
+    double bigz;            //The z in the xyz
+    double bigxraw;         //The xraw in the xyz
+    double bigyraw;         //The yraw in the xyz
+    double bigzraw;         //The zraw in the xyz
+    double r;               //The r in the rgb
+    double g;               //The g in the rgb
+    double b;               //The b in the rgb
+    double u;               //The u' in the u'v'y
+    double v;               //The v' in the u'v'y
+    double nm;              //The nm in the nmdu'v'Y
+    double du;              //The duv' in the nmdu'v'Y
+    double L;               //The L in L*A*B*
+    double A;               //The A in L*A*B*
+    double B;               //The B in L*A*B*
+    QString redrange;		//The range which the KClmtr is in red
+    QString greenrange;		//The range which the KClmtr is in green
+    QString bluerange;		//The range which the KClmtr is in blue
+    int range;              //The range which the KClmtr is in overall
+    double temp;            //The temperature in K
+    double duv;             //The distance off the curve
+    int errorcode;          //The error code whenever you are getting data
+    QString errorstring;	//The string
+    int averagingby;        //How many measurements we are averaging by
+    bool readyflag;         //Ready or not to grab it
+
+    QMeasurement(){}
+    QMeasurement(Measurement measurement)
+    {
+        x = measurement.x;
+        y = measurement.y;
+        l = measurement.l;
+        bigx = measurement.bigx;
+        bigy = measurement.bigy;
+        bigz = measurement.bigz;
+        bigxraw = measurement.bigxraw;
+        bigyraw = measurement.bigyraw;
+        bigzraw = measurement.bigzraw;
+        r = measurement.r;
+        g = measurement.g;
+        b = measurement.b;
+        u = measurement.u;
+        v = measurement.v;
+        nm = measurement.nm;
+        du = measurement.du;
+        L = measurement.L;
+        A = measurement.A;
+        B = measurement.B;
+        redrange = QString::fromStdString(measurement.redrange);
+        greenrange = QString::fromStdString(measurement.greenrange);
+        bluerange = QString::fromStdString(measurement.bluerange);
+        range = measurement.range;
+        duv = measurement.duv;
+        errorcode = measurement.errorcode;
+        errorstring = QString::fromStdString(measurement.errorstring);
+        averagingby = measurement.averagingby;
+        readyflag = measurement.readyflag;
+        }
+};
+struct Qwrgb
+{
+public:
+    double Whitex;            //The x from when the screen was white
+    double Whitey;            //The y from when the screen was white
+    double Whitez;            //The z from when the screen was white
+    double Redx;              //The x from when the screen was red
+    double Redy;              //The y from when the screen was red
+    double Redz;              //The z from when the screen was red
+    double Greenx;            //The x from when the screen was green
+    double Greeny;            //The y from when the screen was green
+    double Greenz;            //The z from when the screen was green
+    double bluex;             //The x from when the screen was blue
+    double bluey;             //The y from when the screen was blue
+    double bluez;             //The z from when the screen was blue
+
+    Qwrgb() {}
+    Qwrgb(wrgb WRGB)
+    {
+        Whitex = WRGB.Whitex;
+        Whitey = WRGB.Whitey;
+        Whitez = WRGB.Whitez;
+        Redx = WRGB.Redx;
+        Redy = WRGB.Redy;
+        Redz = WRGB.Redz;
+        Greenx = WRGB.Greenx;
+        Greeny = WRGB.Greeny;
+        Greenz = WRGB.Greenz;
+        bluex = WRGB.bluex;
+        bluey = WRGB.bluey;
+        bluez = WRGB.bluez;
+    }
+    wrgb getNwrgb()
+    {
+        wrgb WRGB;
+
+        WRGB.Whitex = Whitex;
+        WRGB.Whitey = Whitey;
+        WRGB.Whitez = Whitez;
+        WRGB.Redx = Redx;
+        WRGB.Redy = Redy;
+        WRGB.Redz = Redz;
+        WRGB.Greenx = Greenx;
+        WRGB.Greeny = Greeny;
+        WRGB.Greenz = Greenz;
+        WRGB.bluex = bluex;
+        WRGB.bluey = bluey;
+        WRGB.bluez = bluez;
+
+        return WRGB;
+    }
+};
+struct QBlackMatrix
+{
+public:
+    double range1[3];
+    double range2[3];
+    double range3[3];
+    double range4[3];
+    double range5[3];
+    double range6[3];
+    double Therm;
+    int errorcode;
+    QString errorstring;
+
+    QBlackMatrix(){}
+    QBlackMatrix(BlackMatrix black)
+    {
+        for(int i = 0; i < 3; i++)
+        {
+            range1[i] = black.range1[i];
+            range2[i] = black.range2[i];
+            range3[i] = black.range3[i];
+            range4[i] = black.range4[i];
+            range5[i] = black.range5[i];
+            range6[i] = black.range6[i];
+        }
+        Therm = black.Therm;
+        errorcode = black.errorcode;
+        errorstring = QString::fromStdString(black.errorstring);
+    }
+
+};
+struct QCorrectedCoefficient
+{
+public:
+    double ColorMatrix[3][3];
+    double RGBMatrix[3][3];
+
+    QCorrectedCoefficient(){}
+    QCorrectedCoefficient(CorrectedCoefficient corrected)
+    {
+        for(int i = 0; i < 3; i++)
+        {
+            for(int x = 0; x < 3; x++)
+            {
+                ColorMatrix[i][x] = corrected.ColorMatrix[i][x];
+                RGBMatrix[i][x] = corrected.RGBMatrix[i][x];
+            }
+        }
+    }
+
+    CorrectedCoefficient getNCorrectedCoefficient()
+    {
+        CorrectedCoefficient corrected;
+        for(int i = 0; i < 3; i++)
+        {
+            for(int x = 0; x < 3; x++)
+            {
+                corrected.ColorMatrix[i][x] = ColorMatrix[i][x];
+                corrected.RGBMatrix[i][x] = RGBMatrix[i][x];
+            }
+        }
+        return corrected;
+    }
+};
+struct QFlicker
+{
+public:
+    QMeasurement *xyz;
+    double peakfrequencyDB[3][2];
+    double peakfrequencyPercent[3][2];
+    double FlickerDB[101];
+    double FlickerPercent[101];
+    int errorcode;
+    QString errorstring;
+    bool readyflag;
+
+    QFlicker(){}
+    QFlicker(Flicker flicker)
+    {
+        xyz = new QMeasurement(flicker.xyz);
+        //peakfrequencyDB = new double[3][2];
+        //peakfrequencyPercent = new double[3][2];
+        //FlickerDB = new double[101];
+        //FlickerPercent = new double[101];
+
+        for(int i = 0; i < 3; i++)
+        {
+            for(int x = 0; x < 2; x++)
+            {
+                peakfrequencyDB[i][x] = flicker.peakfrequencyDB[i][x];
+                peakfrequencyPercent[i][x] = flicker.peakfrequencyPercent[i][x];
+            }
+        }
+        for(int i = 0; i < 101; i++)
+        {
+            FlickerDB[i] = flicker.FlickerDB[i];
+            FlickerPercent[i] = flicker.FlickerPercent[i];
+        }
+        errorcode = flicker.errorcode;
+        errorstring = QString::fromStdString(flicker.errorstring);
+        readyflag = flicker.readyflag;
+    }
+};
+struct Qwhitespect
+{
+public:
+    double x;
+    double y;
+    double z;
+    double xy;
+    double l;
+
+    Qwhitespect(){}
+    Qwhitespect(whitespect White)
+    {
+        x = White.x;
+        y = White.y;
+        z = White.z;
+        xy = White.xy;
+        l = White.l;
+    }
+    whitespect getNwhitespect()
+    {
+        whitespect White;
+
+        White.x = x;
+        White.y = y;
+        White.z = z;
+        White.xy = xy;
+        White.l = l;
+
+        return White;
+    }
+};
+
+class QK10V : public QWidget
+{
+    Q_OBJECT
+
+public:
+    struct QColors
+    {
+        int red;
+        int green;
+        int blue;
+
+        QColors(){}
+        QColors(Colors color)
+        {
+            red = color.red;
+            green = color.green;
+            blue = color.blue;
+        }
+        Colors getNColor()
+        {
+            Colors color;
+
+            color.red = red;
+            color.green = green;
+            color.blue = blue;
+
+            return color;
+        }
+    };
+
+    QK10V() { _k10v = new K10V; }
+    virtual ~QK10V(void) { delete _k10v; }
+    QK10V(K10V k10v)
+    {
+        _k10v = new K10V(k10v);
+    }
+    Q_PROPERTY(QColors* ColorField READ getColors WRITE setColors)
+
+    K10V getNK10v()
+    {
+        return *_k10v;
+    }
+
+private:
+    K10V * _k10v;
+    QColors* getColors()
+    {
+        return new QColors(_k10v->getColorField());
+    }
+    void setColors(QColors* value)
+    {
+        _k10v->setColorField(value->getNColor());
+    }
+};
+
+class QKClmtr;
+class foobar : public KClmtr
+{
+public:
+    foobar(QKClmtr* _QKC);
+    void printMeasure(Measurement m);
+    void printFlick(Flicker f);
+    QKClmtr* _QKclmtr;
+};
+
+class QKClmtr : public QWidget
+{
+    Q_OBJECT
+    
+public:
+    QKClmtr() { _kclmtr = new foobar(this); }
+    virtual ~QKClmtr(void) { delete _kclmtr; }
+    //Property
+    Q_PROPERTY(QString KPort READ getKPort WRITE setKPort)
+    Q_PROPERTY(QString SN READ getSN)
+    Q_PROPERTY(QString Model READ getModel)
+    void setAimingLights(bool onOff)
+    {
+        _kclmtr->setAimingLights(onOff);
+    }
+    Q_PROPERTY(bool isPortOpen READ _isPortOpen)
+    //Property - CalFiles
+    Q_PROPERTY(QString CalFileName READ getCalFileName WRITE setCalFileName)
+    Q_PROPERTY(int CalFileID READ getCalFileID WRITE setCalFileID)
+    Q_PROPERTY(matrix CalMatrix READ getCalMatrix)
+    Q_PROPERTY(matrix RGBMatrix READ getRGBMatrix)
+    Q_PROPERTY(Qwhitespect* WhiteSpect READ getWhiteSpect WRITE setWhiteSpect)
+    Q_PROPERTY(QString CalFileList READ getCalFileList)
+    void setTempCalFile(QCorrectedCoefficient* Matrix, Qwhitespect* whiteSpect)
+    {
+        _kclmtr->setTempCalFile(Matrix->getNCorrectedCoefficient(), whiteSpect->getNwhitespect());
+    }
+    //Property - FFT
+    Q_PROPERTY(bool FFT_Cosine READ getFFT_Cosine WRITE setFFT_Cosine)
+    Q_PROPERTY(bool FFT_Smoothing READ getFFT_Smoothing WRITE setFFT_Smoothing)
+    Q_PROPERTY(bool FFT_RollOff READ getFFT_Rolloff WRITE setFFT_RollOff)
+    Q_PROPERTY(int FFT_samples READ getFFT_samples WRITE setFFT_samples)
+    Q_PROPERTY(QK10V* VirtualK10 READ getK10V WRITE setK10V)
+
+    //XYZ
+    Q_PROPERTY(bool Measure READ getMeasure WRITE setMeasure)
+    QMeasurement *getMeasurement()
+    {
+        return new QMeasurement(_kclmtr->getMeasurement());
+    }
+    QMeasurement *getNextMeasurement()
+    {
+        return new QMeasurement(_kclmtr->getNextMeasurement());
+    };
+    //Setting up to Store CalFiles
+    QCorrectedCoefficient* getCoefficientTestMatrix(Qwrgb* Reference, Qwrgb* Kclmtr)
+    {
+        return new QCorrectedCoefficient(_kclmtr->getCoefficientTestMatrix(Reference->getNwrgb(), Kclmtr->getNwrgb()));
+    }
+    int deleteCalFile(int CalFileID)
+    {
+        return _kclmtr->deleteCalFile(CalFileID);
+    }
+    //Storing CalFile
+    int storeMatrices(int ID, QString Name, Qwrgb* Reference, Qwrgb* Kclmtr, Qwhitespect* whitespect)
+    {
+        return _kclmtr->storeMatrices(ID, Name.toStdString(), Reference->getNwrgb(), Kclmtr->getNwrgb(), whitespect->getNwhitespect());
+    }
+
+    //BlackCal - Cold
+    QBlackMatrix* captureBlackLevel()
+    {
+        return new QBlackMatrix(_kclmtr->captureBlackLevel());
+    };
+    QBlackMatrix* recallFlashMatrix()
+    {
+        return new QBlackMatrix(_kclmtr->recallFlashMatrix());
+    };
+
+    //BlackCal - Hot
+    QBlackMatrix* recallRAMMatrix()
+    {
+        return new QBlackMatrix(_kclmtr->recallRAMMatrix());
+    };
+    QBlackMatrix* recallCoefficientMatrix()
+    {
+        return new QBlackMatrix(_kclmtr->recallCoefficientMatrix());
+    }
+
+    //FFT
+    QString StartFlicker(bool grabConstantly)
+    {
+        return QString::fromStdString(_kclmtr->startFlicker(grabConstantly));
+    }
+    QFlicker* getFlicker()
+    {
+        return new QFlicker(_kclmtr->getFlicker());
+    }
+    void StopFlicker()
+    {
+        _kclmtr->stopFlicker();
+    }
+
+    //setup/Close
+    bool KHookUp()
+    {
+        return _kclmtr->KHookUp();
+    }
+    void ClosePort(bool resetThePortName)
+    {
+        _kclmtr->ClosePort(resetThePortName);
+    }
+
+    QString getAvailablePortsList()
+    {
+        return QString::fromStdString(_kclmtr->getAvailablePortsList());
+    }
+
+    virtual void printMeasure(QMeasurement *){}
+    virtual void printFlicker(QFlicker *){}
+
+private:
+    KClmtr *_kclmtr;
+
+    QString getKPort()
+    {
+        return QString::fromStdString(_kclmtr->getKPort());
+    }
+    void setKPort(QString value)
+    {
+        _kclmtr->setKPort(value.toStdString());
+    }
+    QString getSN()
+    {
+        return QString::fromStdString(_kclmtr->getSN());
+    }
+    QString getModel()
+    {
+        return QString::fromStdString(_kclmtr->getModel());
+    }
+    bool _isPortOpen()
+    {
+        return _kclmtr->isPortOpen();
+    }
+    QString getCalFileName()
+    {
+        return QString::fromStdString(_kclmtr->getCalFileName());
+    }
+    void setCalFileName(QString value)
+    {
+        _kclmtr->setCalFileName(value.toStdString());
+    }
+    int getCalFileID()
+    {
+        return _kclmtr->getCalFileID();
+    }
+    void setCalFileID(int value)
+    {
+        _kclmtr->setCalFileID(value);
+    }
+    const matrix getCalMatrix()
+    {
+        return _kclmtr->getcalMatrix();
+    }
+    const matrix getRGBMatrix()
+    {
+        return _kclmtr->getRGBMatrix();
+    }
+    Qwhitespect* getWhiteSpect()
+    {
+        return new Qwhitespect(_kclmtr->getWhiteSpect());
+    }
+    void setWhiteSpect(Qwhitespect* value)
+    {
+        _kclmtr->setWhiteSpect(value->getNwhitespect());
+    }
+    QString getCalFileList()
+    {
+        return QString::fromStdString(_kclmtr->getCalFileList());
+    }
+    bool getFFT_Cosine()
+    {
+        return _kclmtr->getFFT_Cosine();
+    }
+    void setFFT_Cosine(bool value)
+    {
+        _kclmtr->setFFT_Cosine(value);
+    }
+    bool getFFT_Smoothing()
+    {
+        return _kclmtr->getFFT_Smoothing();
+    }
+    void setFFT_Smoothing(bool value)
+    {
+        _kclmtr->setFFT_Smoothing(value);
+    }
+    bool getFFT_Rolloff()
+    {
+        return _kclmtr->getFFT_RoolOff();
+    }
+    void setFFT_RollOff(bool value)
+    {
+        _kclmtr->setFFT_RollOff(value);
+    }
+    bool getFFT_samples()
+    {
+        return _kclmtr->getFFT_Samples();
+    }
+    void setFFT_samples(int value)
+    {
+        _kclmtr->setFFT_Samples(value);
+    }
+    QK10V* getK10V()
+    {
+        return new QK10V(_kclmtr->getVirtualK10());
+    }
+    void setK10V(QK10V* value)
+    {
+        _kclmtr->setVirtualK10(value->getNK10v());
+    }
+    bool getMeasure()
+    {
+        return _kclmtr->getMeasure();
+    }
+    void setMeasure(bool value)
+    {
+        _kclmtr->setMeasure(value);
+    }
+};
+
+
+#endif // QKCLMTR_H
