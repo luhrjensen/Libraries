@@ -1,6 +1,5 @@
 // This is the main DLL file.
 
-#include "stdafx.h"
 #include "KClmtrWrapper.h"
 
 string KClmtrWrapper::KClmtrWrap::MarshalString(String^ s){
