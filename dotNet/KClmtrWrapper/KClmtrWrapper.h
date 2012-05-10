@@ -278,6 +278,10 @@ namespace KClmtrWrapper {
 		}
 
 		//Property
+		/// <summary>
+		/// Gets or sets the com port's number
+		/// </summary>
+		/// <value> Com port's number </value>
 		property int port{
 			int get(){
 				string foobar = _kclmtr->getPort();
@@ -289,21 +293,34 @@ namespace KClmtrWrapper {
 				_kclmtr->setPort(foobar);
 			}
 		}
+		/// <summary>
+		/// Gets the Serail Number of the Klein device
+		/// </summary>
 		property String^ SN{
 			String^ get(){
 				return NativeToDotNet(_kclmtr->getSN());
 			}
 		}
+		/// <summary>
+		/// Gets the Model Number of the Klein device
+		/// </summary>
 		property String^ Model{
 			String^ get(){
 				return NativeToDotNet(_kclmtr->getModel());
 			}
 		}
+		/// <summary>
+		/// Sets the Aiming Lights on or Off
+		/// </summary>
+		/// <value> ON = true, OFF = False </value>
 		property bool AimingLights{
 			void set(bool value){
 				_kclmtr->setAimingLights(value);
 			}
 		}
+		/// <summary>
+		/// Returns true if the device is currently hooked up. Returns false if the device is not currently hooked up.
+		/// </summary>
 		property bool isPortOpen{
 			bool get(){
 				return _kclmtr->isPortOpen();
@@ -311,6 +328,9 @@ namespace KClmtrWrapper {
 		}
 
 		//Property - CalFiles
+		/// <summary>
+		/// Gets or Set the current Cal File based on it's name
+		/// </summary>
 		property String^ CalFileName{
 			String^ get(){
 				return NativeToDotNet(_kclmtr->getCalFileName());
@@ -319,6 +339,9 @@ namespace KClmtrWrapper {
 				_kclmtr->setCalFileName(MarshalString(value));
 			}
 		}
+		/// <summary>
+		/// Gets or Set the current Cal File based on it's ID
+		/// </summary>
 		property int CalFileID{
 			int get(){
 				return _kclmtr->getCalFileID();
@@ -326,7 +349,9 @@ namespace KClmtrWrapper {
 			void set(int value){
 				_kclmtr->setCalFileID(value);
 			}
-		}
+		/// <summary>
+		/// Gets the current Cal File's calaibration matrix
+		/// </summary>
 		property array<double,2>^ CalMatrix{
 			array<double,2>^ get(){
 				array<double,2>^ matrix = gcnew array<double,2>(3,3);
@@ -338,6 +363,9 @@ namespace KClmtrWrapper {
 				return matrix;
 			}
 		}
+		/// <summary>
+		/// Gets the current Cal File's color matrix
+		/// </summary>
 		property array<double,2>^ RGBMatrix{
 			array<double,2>^ get(){
 				array<double,2>^ matrix = gcnew array<double,2>(3,3);
@@ -349,6 +377,9 @@ namespace KClmtrWrapper {
 				return matrix;
 			}
 		}
+		/// <summary>
+		/// Gets or set the current Cal File's white spect
+		/// </summary>
 		property wwhitespect^ WhiteSpect{
 			wwhitespect^ get(){
 				return gcnew wwhitespect(_kclmtr->getWhiteSpect());
@@ -357,16 +388,25 @@ namespace KClmtrWrapper {
 				_kclmtr->setWhiteSpect(value->getNwhitespect());
 			}
 		}
+		/// <summary>
+		/// Gets the cal files that is on the klein device
+		/// </summary>
 		property String^ CalFileList{
 			String^ get(){
 				return NativeToDotNet(_kclmtr->getCalFileList());
 			}
 		}
+		/// <summary>
+		/// set the temporary cal file spect
+		/// </summary>
 		void setTempCalFile(wCorrectedCoefficient^ Matrix, wwhitespect^ whiteSpect){
 			_kclmtr->setTempCalFile(Matrix->getNCorrectedCoefficient(), whiteSpect->getNwhitespect());
 		}
 
 		//Property - FFT
+		/// <summary>
+		/// Get or Set to use the cosine correction in the flicker output
+		/// </summary>
 		property bool FFT_Cosine{
 			bool get(){
 				return _kclmtr->getFFT_Cosine();
@@ -375,6 +415,9 @@ namespace KClmtrWrapper {
 				_kclmtr->setFFT_Cosine(value);
 			}
 		}
+		/// <summary>
+		/// Get or Set to use smoothing in the output of flicker. Smooths out the line of flicker
+		/// </summary>
 		property bool FFT_Smoothing{
 			bool get(){
 				return _kclmtr->getFFT_Smoothing();
@@ -383,6 +426,9 @@ namespace KClmtrWrapper {
 				_kclmtr->setFFT_Smoothing(value);
 			}
 		}
+		/// <summary>
+		/// Get or Set the use of the EIAJ Roll off in the flicker output
+		/// </summary>
 		property bool FFT_RollOff{
 			bool get(){
 				return _kclmtr->getFFT_RoolOff();
@@ -391,6 +437,10 @@ namespace KClmtrWrapper {
 				_kclmtr->setFFT_RollOff(value);
 			}
 		}
+		/// <summary>
+		/// Get or Set how many samples need for flicker data needs before returning flicker
+		/// </summary> 
+		/// <value> 256 samples -  1  second, 128 samples - .5  seconds, 64  samples - .25 seconds </value>
 		property int FFT_samples{
 			int get(){
 				return _kclmtr->getFFT_Samples();
@@ -399,6 +449,9 @@ namespace KClmtrWrapper {
 				_kclmtr->setFFT_Samples(value);
 			}
 		}
+		/// <summary>
+		/// Get or Set the Virtual K10 object, K10V, to the KClmtr to be used during measurements
+		/// </summary>
 		property K10VWrap^ VirtualK10{
 			K10VWrap^ get(){
 				return gcnew K10VWrap(_kclmtr->getVirtualK10());
@@ -409,69 +462,133 @@ namespace KClmtrWrapper {
 		}
 
 		//XYZ
+		/// <summary>
+		/// Returns true if the device is measuring mode. Returns false if it is not in measuring mode.
+		/// </summary>
 		property bool isMeasure{
 			bool get(){
 				return _kclmtr->isMeasuring();
 			}
 		}
+		/// <summary>
+		/// Starts the Klein device to measure constantly.
+		/// </summary>
 		void startMeasuring(){
 			_kclmtr->startMeasuring();
 		}
+		/// <summary>
+		/// Stops the Klein device to stop measuring.
+		/// </summary>
 		void stopMeasuring(){
 			_kclmtr->stopMeasuring();
 		}
+		/// <summary>
+		/// Returns one measurement from the device. Do not need to startMeasuring() to use this method.
+		/// </summary>
 		wMeasurement ^getNextMeasurement(){
 			return gcnew wMeasurement(_kclmtr->getNextMeasurement());
 		}
 
 		//Setting up to Store CalFiles
+		/// <summary>
+		/// This will create a coefficient matrix from the reference device measurement and the KClmtr measurement. This will not store a calibration file into the Klein Device, but just return the values that would store it. This is good to used with setTempCaliFile()
+		/// </summary>
+		/// <param name="Reference"> Reference The reference device's measurement </param>
+		/// <param name="Kclmtr">  Kclmtr The KClmtr's measurement </param>
+		/// <return> The meatrix that would be stored to the KClmtr, but does not </return>
 		wCorrectedCoefficient^ getCoefficientTestMatrix(wwrgb^ Reference, wwrgb^ Kclmtr){
 			return gcnew wCorrectedCoefficient(_kclmtr->getCoefficientTestMatrix(Reference->getNwrgb(), Kclmtr->getNwrgb()));
 		}
+		/// <summary>
+		/// Deletes a Calibration file with it's ID.
+		/// </summary>
 		int deleteCalFile(int CalFileID){
 			return _kclmtr->deleteCalFile(CalFileID);
 		}
 
 		//Storing CalFile
+		/// <summary>
+		/// This will store a Calibration file into the device, based on the reference device's measurement and the KClmtr's measurement
+		/// </summary>
+		/// <param name="ID"> The location which the Calibration file will be stored </param>
+		/// <param name"name"> e The name of the Calibration file </param>
+		/// <param name="Reference"> Reference The reference device's measurement </param>
+		/// <param name="Kclmtr">  Kclmtr The KClmtr's measurement </param>
+		/// <param name="whitespect> The white spect to be stored for the Calibration file </param>
+		/// <return>int Error code. 0 is Good</return>
 		int storeMatrices(int ID, String^ Name, wwrgb^ Reference, wwrgb^ Kclmtr, wwhitespect^ whitespect){
 			return _kclmtr->storeMatrices(ID, MarshalString(Name), Reference->getNwrgb(), Kclmtr->getNwrgb(), whitespect->getNwhitespect());
 		}
 
 		//BlackCal - Cold
+		/// <summary>
+		/// Takes reading of counts, if passes saves to flash/ram
+		/// </summary>
 		wBlackMatrix^ captureBlackLevel(){
 			return gcnew wBlackMatrix(_kclmtr->captureBlackLevel());
 		}
+		/// <summary>
+		/// Reads matrix of saved counts from flash
+		/// </summary>
 		wBlackMatrix^ recallFlashMatrix(){
 			return gcnew wBlackMatrix(_kclmtr->recallFlashMatrix());
 		}
 
 		//BlackCal - Hot
+		/// <summary>
+		///  Reads matrix of saved counts from RAM
+		/// </summary>
 		wBlackMatrix^ recallRAMMatrix(){
 			return gcnew wBlackMatrix(_kclmtr->recallRAMMatrix());
 		}
+		/// <summary>
+		/// Reads matrix of black thermal correction coefficents
+		/// </summary>
 		wBlackMatrix^ recallCoefficientMatrix(){
 			return gcnew wBlackMatrix(_kclmtr->recallCoefficientMatrix());
 		}
 
 		//FFT
+		/// <summary>
+		/// Returns true if the device is in flicker mode. Returns false if the device is not in flicker mode
+		/// </summary>
+		/// <param name="grabConstantly"> If you are planning to use getNextFlicker() set this to be false. If you want it to return flicker has soon has it grabs one, set it to be true </param>
+		/// <return> Error string, OK is good </return> 
 		String^ StartFlicker(bool grabConstantly){
 			return NativeToDotNet(_kclmtr->startFlicker(grabConstantly));
 		}
+		/// <summary>
+		/// Grabs and returns one flicker measurement. The speed which this returns is based on the getFFT_Samples()
+		/// </summary>
 		wFlicker^ getNextFlicker(){
 			return gcnew wFlicker(_kclmtr->getNextFlicker());
 		}
+		/// <summary>
+		/// Stops the device from being in flicker mode. This also needs to be if you set the grabConstanly param in startFlicker()
+		/// </summary>
 		void StopFlicker(){
 			_kclmtr->stopFlicker();
 		}
 
 		//setup/Close
+		/// <summary>
+		/// This will open the device
+		/// </summary>
+		/// <param name="theport">sets the port name</param>
+		/// <return>A user should always have this true. This is used for internal use.</return>
 		bool connect(int thePort){
 			port = thePort;
 			return _kclmtr->connect();
 		}
+		/// <summary>
+		/// This will open the device to the PortName you have set.
+		/// </summary>
 		bool connect(){
 			return _kclmtr->connect();
 		}
+		/// <summary>
+		/// Closes the port and reset all the propeties of the KClmtr object
+		/// </summary>
 		void closePort(bool resetThePortName){
 			_kclmtr->closePort(resetThePortName);
 		}
