@@ -349,6 +349,7 @@ namespace KClmtrWrapper {
 			void set(int value){
 				_kclmtr->setCalFileID(value);
 			}
+		}
 		/// <summary>
 		/// Gets the current Cal File's calaibration matrix
 		/// </summary>
