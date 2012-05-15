@@ -358,7 +358,7 @@ namespace KClmtrWrapper {
 				array<double,2>^ matrix = gcnew array<double,2>(3,3);
 				for (int i = 0; i < 3; i++){
 					for(int x = 0; x < 3; x++){
-						matrix[i, x] = _kclmtr->getcalMatrix()[i][x];
+						matrix[i, x] = _kclmtr->getcalMatrix().v[i][x];
 					}
 				}
 				return matrix;
@@ -372,7 +372,7 @@ namespace KClmtrWrapper {
 				array<double,2>^ matrix = gcnew array<double,2>(3,3);
 				for (int i = 0; i < 3; i++){
 					for(int x = 0; x < 3; x++){
-						matrix[i, x] = _kclmtr->getRGBMatrix()[i][x];
+						matrix[i, x] = _kclmtr->getRGBMatrix().v[i][x];
 					}
 				}
 				return matrix;
