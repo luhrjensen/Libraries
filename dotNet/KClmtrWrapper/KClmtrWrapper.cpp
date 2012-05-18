@@ -16,7 +16,7 @@ void KClmtrWrapper::SubClass::printMeasure(Measurement m){
 	_kclmtrwrapper->printMeasure(gcnew wMeasurement(m));
 }
 void KClmtrWrapper::SubClass::printFlick(Flicker f){
-	_kclmtrwrapper->printFlick(gcnew wFlicker(f));
+	_kclmtrwrapper->printFlicker(gcnew wFlicker(f));
 }
 KClmtrWrapper::SubClass::SubClass(gcroot<KClmtrWrap^> _kcw){
 	_kclmtrwrapper = _kcw;
