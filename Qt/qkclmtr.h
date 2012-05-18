@@ -346,7 +346,7 @@ public:
     }
 
     void printMeasure(Measurement m);
-    void printFlick(Flicker f);
+    void printFlicker(Flicker f);
     QKClmtr* _QKClmtr;
 };
 

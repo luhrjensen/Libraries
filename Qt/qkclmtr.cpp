@@ -4,7 +4,7 @@ void SubClass::printMeasure(Measurement m)
 {
     _QKClmtr->printMeasure(QMeasurement(m));
 }
-void SubClass::printFlick(Flicker f)
+void SubClass::printFlicker(Flicker f)
 {
     _QKClmtr->printFlicker(QFlicker(f));
 }
