@@ -338,12 +338,21 @@
 				RelativePath="..\..\kclmtr\KClmtr.cpp"
 				>
 				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						CompileAsManaged="4"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
 					Name="Debug|x64"
 					>
 					<Tool
 						Name="VCCLCompilerTool"
 						UsePrecompiledHeader="0"
 						PrecompiledHeaderThrough=""
+						CompileAsManaged="4"
 					/>
 				</FileConfiguration>
 				<FileConfiguration
@@ -371,12 +380,21 @@
 				RelativePath="..\..\kclmtr\serialPort.cpp"
 				>
 				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						CompileAsManaged="4"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
 					Name="Debug|x64"
 					>
 					<Tool
 						Name="VCCLCompilerTool"
 						UsePrecompiledHeader="0"
 						PrecompiledHeaderThrough=""
+						CompileAsManaged="4"
 					/>
 				</FileConfiguration>
 				<FileConfiguration
