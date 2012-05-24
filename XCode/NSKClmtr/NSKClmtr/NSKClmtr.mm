@@ -14,7 +14,12 @@ SubClass::SubClass(NSKClmtr* _NSK)
 }
 void SubClass::printFlick(Flicker f)
 {
-    //[_NSKClmtr printFlicker:[[NSFlicker alloc] initWithFlicker:f]];
+    NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+    
+    NSFlicker *flicker = [[NSFlicker alloc] initWithFlicker:f];
+    [_NSKClmtr sendFlicker:flicker];
+    
+    [pool release];
 }
 void SubClass::printMeasure(Measurement m)
 {
@@ -440,15 +445,13 @@ void SubClass::printMeasure(Measurement m)
     _kclmtr->closePort(resetThePortName);
 }
 
-//-(void)printMeasure:(NSMeasurement*)measure{
-//    
-//}
-//-(void)printFlicker:(NSFlicker*)flicker{
-//    //SEND SINGAL
-//}
 -(void)sendMeasure:(NSMeasurement*)measurement
 {
     [_target performSelector:printMeasure withObject:measurement];
+}
+-(void)sendFlicker:(NSFlicker*)flicker
+{
+    [_target performSelector:printFlicker withObject:flicker];
 }
 -(void)addTarget:(id)target action:(SEL)action forEvent:(bool)measure
 {

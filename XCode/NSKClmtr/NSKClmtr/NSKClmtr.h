@@ -215,11 +215,9 @@ public:
 -(bool)connect;
 -(bool)connect:(NSString*)portName;
 -(void)closePort:(bool)resetThePortName;
-
-//-(IBAction)printMeasure:(NSMeasurement*)measure;
-//-(void)printFlicker:(NSFlicker*)flicker;
+ 
+-(void)sendFlicker:(NSFlicker*)flicker;
 -(void)sendMeasure:(NSMeasurement*)measurement;
-//-(void)sendFlicker:(NSFlicker*)flicker;
 -(void)addTarget:(id)target action:(SEL)action forEvent:(bool)measure;
 
 @end
