@@ -322,7 +322,7 @@ public:
     virtual Qwhitespect* getWhiteSpect()=0;
 
     //CalFiles
-    virtual QString getCalFileList()=0;
+    virtual QStringList getCalFileList()=0;
     virtual int deleteCalFile(int CalFileID)=0;
     virtual int getCalFileID()=0;
     virtual void setCalFileID(int)=0;
@@ -433,9 +433,15 @@ public:
     {
         _kclmtr->setWhiteSpect(value->getNwhitespect());
     }
-    QString getCalFileList()
+    QStringList getCalFileList()
     {
-        return QString::fromStdString(_kclmtr->getCalFileList());
+        QStringList CalList;
+        const string* calList  =_kclmtr->getCalFileList();
+
+        for(int i = 0; i < 96;  i++)
+            CalList[i] = QString::fromStdString(calList[i]);
+
+        return CalList;
     }
     QK10V* getK10V()
     {
