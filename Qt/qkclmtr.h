@@ -438,7 +438,7 @@ public:
         QStringList CalList;
         const string* calList  =_kclmtr->getCalFileList();
 
-        for(int i = 0; i < 96;  i++)
+        for(int i = 0; i < 97;  i++)
             CalList[i] = QString::fromStdString(calList[i]);
 
         return CalList;

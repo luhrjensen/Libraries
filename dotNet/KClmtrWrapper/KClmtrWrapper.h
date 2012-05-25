@@ -399,9 +399,9 @@ namespace KClmtrWrapper {
 		/// </summary>
 		property array<System::String ^>^ CalFileList{
 			array<System::String ^>^ get(){
-				array<System::String ^>^ List = gcnew array<System::String ^>(96);
+				array<System::String ^>^ List = gcnew array<System::String ^>(97);
 				const std::string* calFileList = _kclmtr->getCalFileList();
-				for(int i = 0; i > 96; ++i)
+				for(int i = 0; i <= 96; ++i)
 					List[i] = NativeToDotNet(calFileList[i]);
 				return List;
 			}
