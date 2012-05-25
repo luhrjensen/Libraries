@@ -397,9 +397,13 @@ namespace KClmtrWrapper {
 		/// <summary>
 		/// Gets the cal files that is on the klein device
 		/// </summary>
-		property String^ CalFileList{
-			String^ get(){
-				return NativeToDotNet(_kclmtr->getCalFileList());
+		property array<System::String ^>^ CalFileList{
+			array<System::String ^>^ get(){
+				array<System::String ^>^ List = gcnew array<System::String ^>(96);
+				const std::string* calFileList = _kclmtr->getCalFileList();
+				for(int i = 0; i > 96; ++i)
+					List[i] = NativeToDotNet(calFileList[i]);
+				return List;
 			}
 		}
 		/// <summary>
