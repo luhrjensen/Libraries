@@ -1,0 +1,309 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		1D11BE801566BA4E00323836 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D8BFF4215617629005662C1 /* Cocoa.framework */; };
+		1D11BE861566BA4E00323836 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 1D11BE841566BA4E00323836 /* InfoPlist.strings */; };
+		1D11BEA31566BA6100323836 /* NSKClmtr.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1D11BE3915659F3600323836 /* NSKClmtr.mm */; };
+		1D11BEA41566BA6100323836 /* KClmtr.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1D8BFFA015642146005662C1 /* KClmtr.cpp */; };
+		1D11BEA51566BA6100323836 /* serialPort.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1D8BFFA415642146005662C1 /* serialPort.cpp */; };
+		1D11BEA71566BAA900323836 /* serialPort.h in Headers */ = {isa = PBXBuildFile; fileRef = 1D8BFFA515642146005662C1 /* serialPort.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		1D11BEA81566BAAC00323836 /* KClmtr.h in Headers */ = {isa = PBXBuildFile; fileRef = 1D8BFFA115642146005662C1 /* KClmtr.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		1D85B16D156D5C9400EDB2E8 /* NSKClmtr.h in Headers */ = {isa = PBXBuildFile; fileRef = 1D11BE3815659F3600323836 /* NSKClmtr.h */; settings = {ATTRIBUTES = (Public, ); }; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		1D11BE3815659F3600323836 /* NSKClmtr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSKClmtr.h; sourceTree = "<group>"; };
+		1D11BE3915659F3600323836 /* NSKClmtr.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = NSKClmtr.mm; sourceTree = "<group>"; };
+		1D11BE7F1566BA4E00323836 /* NSKClmtr.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = NSKClmtr.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		1D11BE831566BA4E00323836 /* NSKClmtr-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "NSKClmtr-Info.plist"; sourceTree = "<group>"; };
+		1D11BE851566BA4E00323836 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		1D11BE871566BA4E00323836 /* NSKClmtr-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSKClmtr-Prefix.pch"; sourceTree = "<group>"; };
+		1D8B000F1564665A005662C1 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
+		1D8BFF4215617629005662C1 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
+		1D8BFF4515617629005662C1 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
+		1D8BFF4615617629005662C1 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		1D8BFF4715617629005662C1 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		1D8BFFA015642146005662C1 /* KClmtr.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = KClmtr.cpp; sourceTree = "<group>"; };
+		1D8BFFA115642146005662C1 /* KClmtr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KClmtr.h; sourceTree = "<group>"; };
+		1D8BFFA415642146005662C1 /* serialPort.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = serialPort.cpp; sourceTree = "<group>"; };
+		1D8BFFA515642146005662C1 /* serialPort.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = serialPort.h; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		1D11BE7B1566BA4E00323836 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1D11BE801566BA4E00323836 /* Cocoa.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		1D11BE811566BA4E00323836 /* NSKClmtr */ = {
+			isa = PBXGroup;
+			children = (
+				1D11BE3815659F3600323836 /* NSKClmtr.h */,
+				1D11BE3915659F3600323836 /* NSKClmtr.mm */,
+				1D11BE821566BA4E00323836 /* Supporting Files */,
+			);
+			path = NSKClmtr;
+			sourceTree = "<group>";
+		};
+		1D11BE821566BA4E00323836 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				1D11BE831566BA4E00323836 /* NSKClmtr-Info.plist */,
+				1D11BE841566BA4E00323836 /* InfoPlist.strings */,
+				1D11BE871566BA4E00323836 /* NSKClmtr-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		1D8BFF3315617629005662C1 = {
+			isa = PBXGroup;
+			children = (
+				1D8BFF6A15642146005662C1 /* kclmtr */,
+				1D11BE811566BA4E00323836 /* NSKClmtr */,
+				1D8BFF4115617629005662C1 /* Frameworks */,
+				1D8BFF4015617629005662C1 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		1D8BFF4015617629005662C1 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				1D11BE7F1566BA4E00323836 /* NSKClmtr.framework */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		1D8BFF4115617629005662C1 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				1D8BFF4215617629005662C1 /* Cocoa.framework */,
+				1D8B000F1564665A005662C1 /* CoreFoundation.framework */,
+				1D8BFF4415617629005662C1 /* Other Frameworks */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		1D8BFF4415617629005662C1 /* Other Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				1D8BFF4515617629005662C1 /* AppKit.framework */,
+				1D8BFF4615617629005662C1 /* CoreData.framework */,
+				1D8BFF4715617629005662C1 /* Foundation.framework */,
+			);
+			name = "Other Frameworks";
+			sourceTree = "<group>";
+		};
+		1D8BFF6A15642146005662C1 /* kclmtr */ = {
+			isa = PBXGroup;
+			children = (
+				1D8BFFA015642146005662C1 /* KClmtr.cpp */,
+				1D8BFFA115642146005662C1 /* KClmtr.h */,
+				1D8BFFA415642146005662C1 /* serialPort.cpp */,
+				1D8BFFA515642146005662C1 /* serialPort.h */,
+			);
+			name = kclmtr;
+			path = ../../kclmtr;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		1D11BE7C1566BA4E00323836 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1D85B16D156D5C9400EDB2E8 /* NSKClmtr.h in Headers */,
+				1D11BEA71566BAA900323836 /* serialPort.h in Headers */,
+				1D11BEA81566BAAC00323836 /* KClmtr.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		1D11BE7E1566BA4E00323836 /* NSKClmtr */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 1D11BE9D1566BA4F00323836 /* Build configuration list for PBXNativeTarget "NSKClmtr" */;
+			buildPhases = (
+				1D11BE7A1566BA4E00323836 /* Sources */,
+				1D11BE7B1566BA4E00323836 /* Frameworks */,
+				1D11BE7C1566BA4E00323836 /* Headers */,
+				1D11BE7D1566BA4E00323836 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = NSKClmtr;
+			productName = NSKClmtr;
+			productReference = 1D11BE7F1566BA4E00323836 /* NSKClmtr.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		1D8BFF3515617629005662C1 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				ORGANIZATIONNAME = "Klein Instruments";
+			};
+			buildConfigurationList = 1D8BFF3815617629005662C1 /* Build configuration list for PBXProject "NSKClmtr" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 1D8BFF3315617629005662C1;
+			productRefGroup = 1D8BFF4015617629005662C1 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				1D11BE7E1566BA4E00323836 /* NSKClmtr */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		1D11BE7D1566BA4E00323836 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1D11BE861566BA4E00323836 /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		1D11BE7A1566BA4E00323836 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1D11BEA31566BA6100323836 /* NSKClmtr.mm in Sources */,
+				1D11BEA41566BA6100323836 /* KClmtr.cpp in Sources */,
+				1D11BEA51566BA6100323836 /* serialPort.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		1D11BE841566BA4E00323836 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				1D11BE851566BA4E00323836 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		1D11BE9E1566BA4F00323836 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = NO;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				FRAMEWORK_VERSION = A;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "NSKClmtr/NSKClmtr-Prefix.pch";
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				INFOPLIST_FILE = "NSKClmtr/NSKClmtr-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = framework;
+			};
+			name = Debug;
+		};
+		1D11BE9F1566BA4F00323836 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				FRAMEWORK_VERSION = A;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "NSKClmtr/NSKClmtr-Prefix.pch";
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				INFOPLIST_FILE = "NSKClmtr/NSKClmtr-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = framework;
+			};
+			name = Release;
+		};
+		1D8BFF4F15617629005662C1 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = DEBUG;
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_VERSION = com.apple.compilers.llvmgcc42;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		1D8BFF5015617629005662C1 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_VERSION = com.apple.compilers.llvmgcc42;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		1D11BE9D1566BA4F00323836 /* Build configuration list for PBXNativeTarget "NSKClmtr" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1D11BE9E1566BA4F00323836 /* Debug */,
+				1D11BE9F1566BA4F00323836 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		1D8BFF3815617629005662C1 /* Build configuration list for PBXProject "NSKClmtr" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1D8BFF4F15617629005662C1 /* Debug */,
+				1D8BFF5015617629005662C1 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 1D8BFF3515617629005662C1 /* Project object */;
+}

@@ -272,6 +272,11 @@ namespace KClmtrWrapper {
 	public:
 		KClmtrWrap(){
 			_kclmtr = new SubClass(this);
+
+			this->backgroundWorkerMeasure = (gcnew System::ComponentModel::BackgroundWorker());
+			this->backgroundWorkerFlicker = (gcnew System::ComponentModel::BackgroundWorker());
+			this->backgroundWorkerMeasure->DoWork += gcnew System::ComponentModel::DoWorkEventHandler(this, &KClmtrWrap::backgroundWorkerMeasure_DoWork);
+			this->backgroundWorkerFlicker->DoWork += gcnew System::ComponentModel::DoWorkEventHandler(this, &KClmtrWrap::backgroundWorkerFlicker_DoWork);
 		}
 		virtual ~KClmtrWrap(void){
 			delete _kclmtr;
@@ -595,17 +600,27 @@ namespace KClmtrWrapper {
 		}
 
 		delegate System::Void MeasureEventHandler(wMeasurement^);
-		delegate System::Void FlickEventHandler(wFlicker^);
+		delegate System::Void FlickerEventHandler(wFlicker^);
 		event MeasureEventHandler^ measureEvent;
-		event FlickEventHandler^ flickEvent;
+		event FlickerEventHandler^ flickerEvent;
 		void printMeasure(wMeasurement^ m){
-			measureEvent(m);
+			while(backgroundWorkerMeasure->IsBusy);
+			backgroundWorkerMeasure->RunWorkerAsync(m);
 		}
-		void printFlick(wFlicker^ f){
-			flickEvent(f);
+		void printFlicker(wFlicker^ f){
+			flickerEvent(f);
 		}
 
 	private:
+		System::Void backgroundWorkerMeasure_DoWork(System::Object^  sender, System::ComponentModel::DoWorkEventArgs^  e) {
+			measureEvent((KClmtrWrapper::wMeasurement^) e->Argument);
+		}
+		System::Void backgroundWorkerFlicker_DoWork(System::Object^  sender, System::ComponentModel::DoWorkEventArgs^  e) {
+			flickerEvent((KClmtrWrapper::wFlicker^) e->Argument);
+		}
+
+		System::ComponentModel::BackgroundWorker^ backgroundWorkerMeasure;
+		System::ComponentModel::BackgroundWorker^ backgroundWorkerFlicker;
 		string MarshalString(String^ s);
 		System::String^ NativeToDotNet(std::string input);
 		KClmtr *_kclmtr;
