@@ -349,7 +349,9 @@ public:
     void printFlicker(Flicker f);
     QKClmtr* _QKClmtr;
 };
-
+/** @ingroup wrappers
+ * 	@brief Wraps the Native object to work easly in Qt
+ */
 class QKClmtr : public GenClmtr
 {
     Q_OBJECT
@@ -596,7 +598,23 @@ signals:
     void connected();
     void closed();
     void calfilChanged();
+	/** @brief Sends out measurement
+	 *  @details You must Registring QMeasurement connect this singal to a slot.
+	 *  @details Here is an example: 
+	 *  @details Header
+	 *  @snippet QKClmtrExample.cpp Header_measure
+	 *   Source
+	 *  @snippet QKClmtrExample.cpp Source_measure
+	 */
     void measured(QMeasurement measure);
+	/** @brief Sends out flicker
+	 *  @details You must Registring QFlicker connect this singal to a slot.
+	 *  @details Here is an example: 
+	 *  @details Header
+	 *  @snippet QKClmtrExample.cpp Header_flicker
+	 *   Source
+	 *  @snippet QKClmtrExample.cpp Source_flicker
+	 */
     void flickered(QFlicker flicker);
 
 private:

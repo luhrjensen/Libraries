@@ -142,7 +142,9 @@ public:
 -(NSColors*)getColors;
 -(void)setColors:(NSColors*)colors;
 @end
-
+/** @ingroup wrappers
+ * 	@brief Wraps the Native object to work easly in XCode
+ */
 @interface NSKClmtr : NSObject {
 
 @private
@@ -216,8 +218,29 @@ public:
 -(bool)connect:(NSString*)portName;
 -(void)closePort:(bool)resetThePortName;
  
+/** @brief Sends out flicker
+ *  @details You must setup the target where the flicker needs to go to.
+ *  @details Here is an example: 
+ *  @details Header
+ *  @snippet NSKClmtrExample.mm Header_flicker
+ *   Source
+ *  @snippet NSKClmtrExample.mm Source_flicker
+ */
 -(void)sendFlicker:(NSFlicker*)flicker;
+/** @brief Sends out measurement
+ *  @details You must setup the target where the measure needs to go to.
+ *  @details Here is an example: 
+ *  @details Header
+ *  @snippet NSKClmtrExample.mm Header_measure
+ *   Source
+ *  @snippet NSKClmtrExample.mm Source_measure
+ */
 -(void)sendMeasure:(NSMeasurement*)measurement;
+/** @brief Sets up where the measurement/flicker goes to
+ *  @param target The object that needs to be sent to
+ *  @param action The function that needs to be sent to
+ *  @param measure If it's for measruement = TRUE, if it's for flicker = False
+ */
 -(void)addTarget:(id)target action:(SEL)action forEvent:(bool)measure;
 
 @end

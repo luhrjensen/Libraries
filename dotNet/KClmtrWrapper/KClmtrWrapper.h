@@ -268,6 +268,9 @@ namespace KClmtrWrapper {
 		K10V *_k10v;
 	};
 
+	/** @ingroup wrappers
+	 * 	@brief Wraps the Native object to work easly in .Net Framework
+	 */
 	public ref class KClmtrWrap {
 	public:
 		KClmtrWrap(){
@@ -605,7 +608,23 @@ namespace KClmtrWrapper {
 
 		delegate System::Void MeasureEventHandler(wMeasurement^);
 		delegate System::Void FlickerEventHandler(wFlicker^);
+		/** @brief Sends out measurement
+		*  @details You must add the event to the object, and then make sure the thread can touch your thread
+		*  @details Here is an example: 
+		*  @details Header
+		*  @snippet KClmtrWrapperExample.cpp measure
+		*   Source
+		*  @snippet KClmtrWrapperExample.cpp measure
+		*/
 		event MeasureEventHandler^ measureEvent;
+		/** @brief Sends out flicker
+		*  @details You must add the event to the object, and then make sure the thread can touch your thread
+		*  @details Here is an example: 
+		*  @details Header
+		*  @snippet KClmtrWrapperExample.cpp flicker
+		*   Source
+		*  @snippet KClmtrWrapperExample.cpp flicker
+		*/
 		event FlickerEventHandler^ flickerEvent;
 		void printMeasure(wMeasurement^ m){
 			while(backgroundWorkerMeasure->IsBusy);
