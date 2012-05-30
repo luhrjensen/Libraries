@@ -1,7 +1,7 @@
-SOURCES += qkclmtr.cpp \
+SOURCES += QKClmtr.cpp \
     ../kclmtr/serialPort.cpp \
     ../kclmtr/KClmtr.cpp \
 
-HEADERS  += qkclmtr.h \
+HEADERS  += QKClmtr.h \
     ../kclmtr/serialPort.h \
     ../kclmtr/KClmtr.h \
