@@ -439,7 +439,7 @@ public:
         const string* calList  =_kclmtr->getCalFileList();
 
         for(int i = 0; i < 97;  i++)
-            CalList[i] = QString::fromStdString(calList[i]);
+            CalList << QString::fromStdString(calList[i]);
 
         return CalList;
     }
