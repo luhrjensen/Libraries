@@ -1,4 +1,4 @@
-#include "qkclmtr.h"
+#include "QKClmtr.h"
 
 void SubClass::printMeasure(Measurement m)
 {
