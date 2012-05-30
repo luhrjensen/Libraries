@@ -172,7 +172,7 @@ public:
 -(void)resetWhiteSpect;
 
 -(void)setWhiteSpect:(NSWhiteSpect*)whiteSpect;
--(NSString*)getCalfileList;
+-(NSArray*)getCalfileList;
 -(NSK10V*)getK10V;
 -(void)setK10V:(NSK10V*)value;
 

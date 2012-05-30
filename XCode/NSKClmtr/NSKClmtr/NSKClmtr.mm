@@ -340,8 +340,14 @@ void SubClass::printMeasure(Measurement m)
 -(void)setWhiteSpect:(NSWhiteSpect*)whiteSpect{
     _kclmtr->setWhiteSpect([whiteSpect getNwhitespect]);
 }
--(NSString*)getCalfileList{
-    return [NSString stringWithUTF8String:_kclmtr->getCalFileList().c_str()];
+-(NSArray*)getCalfileList{
+    NSMutableArray *calListboo = [[NSMutableArray alloc] init];;
+    const string* fileList = _kclmtr->getCalFileList();
+    
+    for(int i = 0; i < 97; ++i)
+        [calListboo addObject:[NSString stringWithUTF8String:fileList[i].c_str()]];
+    
+    return calListboo;
 }
 -(NSK10V*)getK10V{
     return [[NSKClmtr alloc] initWithK10V:_kclmtr->getVirtualK10()];
