@@ -33,9 +33,7 @@ public:
     double temp;            //The temperature in K
     double duv;             //The distance off the curve
     int errorcode;          //The error code whenever you are getting data
-    QString errorstring;	//The string
     int averagingby;        //How many measurements we are averaging by
-    bool readyflag;         //Ready or not to grab it
 
     QMeasurement(){}
     QMeasurement(Measurement measurement)
@@ -66,9 +64,7 @@ public:
         temp = measurement.temp;
         duv = measurement.duv;
         errorcode = measurement.errorcode;
-        errorstring = QString::fromStdString(measurement.errorstring);
         averagingby = measurement.averagingby;
-        readyflag = measurement.readyflag;
     }
 };
 struct Qwrgb
@@ -123,7 +119,6 @@ public:
         }
         Therm = black.Therm;
         errorcode = black.errorcode;
-        errorstring = QString::fromStdString(black.errorstring);
     }
 
 };
@@ -168,8 +163,6 @@ public:
     double flickerDB[101];
     double flickerPercent[101];
     int errorcode;
-    QString errorstring;
-    bool readyflag;
 
     QFlicker(){}
     QFlicker(Flicker flicker)
@@ -193,8 +186,6 @@ public:
             flickerPercent[i] = flicker.flickerPercent[i];
         }
         errorcode = flicker.errorcode;
-        errorstring = QString::fromStdString(flicker.errorstring);
-        readyflag = flicker.readyflag;
     }
     ~QFlicker(){
         //delete xyz;
@@ -327,7 +318,6 @@ public:
     virtual int getCalFileID()=0;
     virtual void setCalFileID(int)=0;
     virtual QString getCalFileName()=0;
-    virtual void setCalFileName(QString value)=0;
     virtual int storeCalFile(int ID, QString Name, Qwrgb* Reference, Qwrgb* Kclmtr, Qwhitespect* whitespect)=0;
 
     //BlackCal
@@ -391,15 +381,6 @@ public:
     QString getCalFileName()
     {
         return QString::fromStdString(_kclmtr->getCalFileName());
-    }
-    void setCalFileName(QString calFileName)
-    {
-        //will it really change
-        if(getCalFileName() != calFileName)
-        {
-            _kclmtr->setCalFileName(calFileName.toStdString());
-            emit calfilChanged();
-        }
     }
     int getCalFileID()
     {
@@ -550,9 +531,9 @@ public:
     bool isFlickering(){
         return _kclmtr->isFlickering();
     }
-    QString startFlicker(bool grabConstantly)
+    int startFlicker(bool grabConstantly)
     {
-        return QString::fromStdString(_kclmtr->startFlicker(grabConstantly));
+        return _kclmtr->startFlicker(grabConstantly);
     }
     Flicker getNextFlicker(){
         return Flicker(_kclmtr->getNextFlicker());
