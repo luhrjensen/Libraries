@@ -392,7 +392,7 @@ public:
         if(getCalFileID() != calFileID)
         {
             _kclmtr->setCalFileID(calFileID);
-            emit calfilChanged();
+            emit calfileChanged();
         }
     }
     const matrix getCalMatrix()
@@ -578,7 +578,7 @@ public:
 signals:
     void connected();
     void closed();
-    void calfilChanged();
+    void calfileChanged();
 	/** @brief Sends out measurement
 	 *  @details You must Registring QMeasurement connect this singal to a slot.
 	 *  @details Here is an example: 
