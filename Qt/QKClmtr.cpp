@@ -1,11 +1,9 @@
 #include "QKClmtr.h"
 
-void SubClass::printMeasure(Measurement m)
-{
+void SubClass::printMeasure(Measurement m) {
     _QKClmtr->printMeasure(QMeasurement(m));
 }
-void SubClass::printFlicker(Flicker f)
-{
+void SubClass::printFlicker(Flicker f) {
     _QKClmtr->printFlicker(QFlicker(f));
 }
 /*
