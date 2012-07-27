@@ -503,9 +503,7 @@ public:
     void closePort(bool resetThePortName) {
         _kclmtr->closePort(resetThePortName);
         _isOpen = false;
-        if(!isPortOpen()) {
-            emit closed();
-        }
+        emit closed();
     }
     bool connect(QString *portName) {
         setPort(portName[0]);
