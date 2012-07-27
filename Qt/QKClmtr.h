@@ -271,8 +271,14 @@ public:
     virtual bool isPortOpen() = 0;
     virtual void closePort(bool) = 0;
     virtual bool connect(QString* portName) = 0;
+
+signals:
+    void closed();
 };
+
 class GenClmtr : public GenDevice {
+    Q_OBJECT
+
 public:
     virtual QString getModel() = 0;
     virtual QString getSN() = 0;
@@ -318,6 +324,7 @@ class QKClmtr : public GenClmtr {
 
 public:
     QKClmtr() {
+        _isOpen = false;
         _kclmtr = new SubClass(this);
     }
     virtual ~QKClmtr(void) {
@@ -337,6 +344,10 @@ public:
         return QString::fromStdString(_kclmtr->getModel());
     }
     bool isPortOpen() {
+        if(_isOpen && !_kclmtr->isPortOpen()) {
+            emit closed();
+        }
+
         return _kclmtr->isPortOpen();
     }
 
@@ -481,14 +492,17 @@ public:
     //setup/Close
     bool connect() {
         if(_kclmtr->connect()) {
+            _isOpen = true;
             emit connected();
             return true;
         } else {
+            _isOpen = false;
             return false;
         }
     }
     void closePort(bool resetThePortName) {
         _kclmtr->closePort(resetThePortName);
+        _isOpen = false;
         if(!isPortOpen()) {
             emit closed();
         }
@@ -513,7 +527,6 @@ public:
 
 signals:
     void connected();
-    void closed();
     void calfileChanged();
     /** @brief Sends out measurement
      *  @details You must Registring QMeasurement connect this singal to a slot.
@@ -535,6 +548,7 @@ signals:
     void flickered(QFlicker flicker);
 
 private:
+    bool _isOpen;
     SubClass *_kclmtr;
 };
 
