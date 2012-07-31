@@ -91,12 +91,7 @@ public:
 };
 struct QBlackMatrix {
 public:
-    double range1[3];
-    double range2[3];
-    double range3[3];
-    double range4[3];
-    double range5[3];
-    double range6[3];
+    double range[6][3];
     double Therm;
     int errorcode;
     QString errorstring;
@@ -104,12 +99,9 @@ public:
     QBlackMatrix() {}
     QBlackMatrix(BlackMatrix black) {
         for(int i = 0; i < 3; ++i) {
-            range1[i] = black.range1[i];
-            range2[i] = black.range2[i];
-            range3[i] = black.range3[i];
-            range4[i] = black.range4[i];
-            range5[i] = black.range5[i];
-            range6[i] = black.range6[i];
+            for(int j = 0; j < 6; ++j) {
+                range[j][i] = black.range[j][i];
+            }
         }
         Therm = black.Therm;
         errorcode = black.errorcode;
