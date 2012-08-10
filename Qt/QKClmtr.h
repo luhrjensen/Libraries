@@ -21,21 +21,33 @@ public:
     double u;               //The u' in the u'v'y
     double v;               //The v' in the u'v'y
     double nm;              //The nm in the nmdu'v'Y
-    double du;              //The duv' in the nmdu'v'Y
+    double nmduv;           //The duv' in the nmdu'v'Y
     //double L;               //The L in L*A*B*
     //double A;               //The A in L*A*B*
     //double B;               //The B in L*A*B*
-    QString redrange;		//The range which the KClmtr is in red
-    QString greenrange;		//The range which the KClmtr is in green
-    QString bluerange;		//The range which the KClmtr is in blue
+    QString redrange;       //The range which the KClmtr is in red
+    QString greenrange;     //The range which the KClmtr is in green
+    QString bluerange;      //The range which the KClmtr is in blue
     int range;              //The range which the KClmtr is in overall
     double temp;            //The temperature in K
-    double duv;             //The distance off the curve
+    double tempduv;         //The distance off the curve
     int errorcode;          //The error code whenever you are getting data
     int averagingby;        //How many measurements we are averaging by
 
     QMeasurement() {}
-    QMeasurement(Measurement measurement) {
+    QMeasurement(int X, int Y, int Z) {
+        Measurement m;
+        m.bigx = X;
+        m.bigy = Y;
+        m.bigz = Z;
+        m.computeDerivativeData();
+        copy(m);
+    }
+    QMeasurement(Measurement m) {
+        copy(m);
+    }
+private:
+    void copy(Measurement measurement) {
         x = measurement.x;
         y = measurement.y;
         l = measurement.l;
@@ -51,7 +63,7 @@ public:
         u = measurement.u;
         v = measurement.v;
         nm = measurement.nm;
-        du = measurement.du;
+        nmduv = measurement.nmduv;
         //L = measurement.L;
         //A = measurement.A;
         //B = measurement.B;
@@ -60,7 +72,7 @@ public:
         bluerange = QString::fromStdString(measurement.bluerange);
         range = measurement.range;
         temp = measurement.temp;
-        duv = measurement.duv;
+        tempduv = measurement.tempduv;
         errorcode = measurement.errorcode;
         averagingby = measurement.averagingby;
     }
@@ -309,7 +321,7 @@ public:
     QKClmtr* _QKClmtr;
 };
 /** @ingroup wrappers
- * 	@brief Wraps the Native object to work easly in Qt
+ *  @brief Wraps the Native object to work easly in Qt
  */
 class QKClmtr : public GenClmtr {
     Q_OBJECT
@@ -438,6 +450,9 @@ public:
     }
     QMeasurement getNextMeasurement() {
         return QMeasurement(_kclmtr->getNextMeasurement());
+    }
+    QMeasurement getNextMeasurement(int n = 1) {
+        return QMeasurement(_kclmtr->getNextMeasurement(n));
     }
     //Setting up to Store CalFiles
     QCorrectedCoefficient* getCoefficientTestMatrix(Qwrgb* Reference, Qwrgb* Kclmtr) {
