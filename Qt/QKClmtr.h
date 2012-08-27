@@ -264,7 +264,8 @@ public:
     enum GenType {
         genTypeKClmtr,
         genTypeCS2000,
-        genTypePR650
+        genTypePR650,
+        genTypeBM7
     };
 
     virtual QString getModel() = 0;
