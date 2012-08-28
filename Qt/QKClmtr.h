@@ -35,16 +35,26 @@ public:
     int averagingby;        //How many measurements we are averaging by
 
     QMeasurement() {}
-    QMeasurement(int X, int Y, int Z) {
-        Measurement m;
-        m.bigx = X;
-        m.bigy = Y;
-        m.bigz = Z;
-        m.computeDerivativeData();
-        copy(m);
-    }
     QMeasurement(Measurement m) {
         copy(m);
+    }
+    static QMeasurement fromXYZ(double X, double Y, double Z, gamutSpec gs = NTSC) {
+        return QMeasurement(Measurement::fromXYZ(X, Y, Z, gs));
+    }
+    static QMeasurement fromxyL(double x, double y, double L, gamutSpec gs = NTSC) {
+        return QMeasurement(Measurement::fromxyL(x, y, L, gs));
+    }
+    static QMeasurement fromuvprimeL(double u, double v, double L, gamutSpec gs = NTSC) {
+        return QMeasurement(Measurement::fromuvprimeL(u, v, L, gs));
+    }
+    static QMeasurement fromTempduvL(double _temp, double _tempduv, double L, gamutSpec gs = NTSC) {
+        return QMeasurement(Measurement::fromTempduvL(_temp, _tempduv, L, gs));
+    }
+    static QMeasurement fromnmduvL(double _nm, double _nmduv, double L, gamutSpec gs = NTSC) {
+        return QMeasurement(Measurement::fromnmduvL(_nm, _nmduv, L, gs));
+    }
+    static QMeasurement fromRGB(double r, double g, double b, gamutSpec gs = NTSC) {
+        return QMeasurement(Measurement::fromRGB(r, g, b, gs));
     }
 private:
     void copy(Measurement measurement) {
