@@ -187,7 +187,7 @@ public:
         //delete xyz;
     }
 };
-struct Qwhitespect {
+struct QWhitespec {
 public:
     double x;
     double y;
@@ -195,16 +195,16 @@ public:
     double xy;
     double l;
 
-    Qwhitespect() {}
-    Qwhitespect(whitespect White) {
+    QWhitespec() {}
+    QWhitespec(whitespec White) {
         x = White.x;
         y = White.y;
         z = White.z;
         xy = White.xy;
         l = White.l;
     }
-    whitespect getNwhitespect() {
-        whitespect White;
+    whitespec getNwhitespec() {
+        whitespec White;
 
         White.x = x;
         White.y = y;
@@ -304,7 +304,7 @@ public:
     virtual void closePort(bool) = 0;
     virtual bool connect(QString* portName) = 0;
 
-    virtual Qwhitespect* getWhiteSpect() = 0;
+    virtual QWhitespec* getWhiteSpec() = 0;
 
     //CalFiles
     virtual QStringList getCalFileList() = 0;
@@ -312,7 +312,7 @@ public:
     virtual int getCalFileID() = 0;
     virtual void setCalFileID(int) = 0;
     virtual QString getCalFileName() = 0;
-    virtual int storeCalFile(int ID, QString Name, Qwrgb* Reference, Qwrgb* Kclmtr, Qwhitespect* whitespect) = 0;
+    virtual int storeCalFile(int ID, QString Name, Qwrgb* Reference, Qwrgb* Kclmtr, QWhitespec* whitespec) = 0;
 
     //BlackCal
     virtual QBlackMatrix* captureBlackLevel() = 0;
@@ -391,15 +391,15 @@ public:
     const matrix getRGBMatrix() {
         return _kclmtr->getRGBMatrix();
     }
-    Qwhitespect* getWhiteSpect() {
-        return new Qwhitespect(_kclmtr->getWhiteSpect());
+    QWhitespec* getWhiteSpec() {
+        return new QWhitespec(_kclmtr->getWhiteSpec());
     }
-    void resetWhiteSpect() {
-        _kclmtr->resetWhiteSpect();
+    void resetWhiteSpec() {
+        _kclmtr->resetWhiteSpec();
     }
 
-    void setWhiteSpect(Qwhitespect* value) {
-        _kclmtr->setWhiteSpect(value->getNwhitespect());
+    void setWhiteSpec(QWhitespec* value) {
+        _kclmtr->setWhiteSpec(value->getNwhitespec());
     }
     QStringList getCalFileList() {
         QStringList CalList;
@@ -419,8 +419,8 @@ public:
     }
 
 
-    void setTempCalFile(QCorrectedCoefficient* Matrix, Qwhitespect* whiteSpect) {
-        _kclmtr->setTempCalFile(Matrix->getNCorrectedCoefficient(), whiteSpect->getNwhitespect());
+    void setTempCalFile(QCorrectedCoefficient* Matrix, QWhitespec* whiteSpec) {
+        _kclmtr->setTempCalFile(Matrix->getNCorrectedCoefficient(), whiteSpec->getNwhitespec());
     }
     //Property - FFT
     bool getFFT_Cosine() {
@@ -473,8 +473,8 @@ public:
         return _kclmtr->deleteCalFile(CalFileID);
     }
     //Storing CalFile
-    int storeCalFile(int ID, QString Name, Qwrgb* Reference, Qwrgb* Kclmtr, Qwhitespect* whitespect) {
-        return _kclmtr->storeMatrices(ID, Name.toStdString(), Reference->getNwrgb(), Kclmtr->getNwrgb(), whitespect->getNwhitespect());
+    int storeCalFile(int ID, QString Name, Qwrgb* Reference, Qwrgb* Kclmtr, QWhitespec* whitespec) {
+        return _kclmtr->storeMatrices(ID, Name.toStdString(), Reference->getNwrgb(), Kclmtr->getNwrgb(), whitespec->getNwhitespec());
     }
 
     //BlackCal - Cold
