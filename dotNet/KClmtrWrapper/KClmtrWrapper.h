@@ -6,7 +6,63 @@
 using namespace System;
 
 namespace KClmtrWrapper {
+
 	ref class KClmtrWrap;
+
+	//ENUMS
+	public enum class wGamutSpec {
+		wNTSC = 0,
+		wEBU = 1,
+		wREC709 = 2,
+		wSMPTE = 3,
+		wNUM_SPECS
+	};
+
+	public enum class wMeasureErrorCodes {
+        wNONE                    = 0x00000000,
+        //Serial Port
+        wNOT_OPEN                = 0x00000001,
+        wTIMED_OUT               = 0x00000002,
+        wLOST_CONNECTION         = 0x00000004,
+
+        //Measurement
+        wCONVERTED_NM            = 0x00000008,
+        wKELVINS                 = 0x00000010,
+        wAIMING_LIGHTS           = 0x00000020,
+        wAVERAGING_LOW_LIGHT     = 0x00800000,
+		
+        //Ranges
+        wBOTTOM_UNDER_RANGE      = 0x00000040,
+        wTOP_OVER_RANGE          = 0x00000080,
+        wOVER_HIGH_RANGE         = 0x00000100,
+
+        //Black Cals
+        wBLACK_ZERO              = 0x00000200,
+        wBLACK_OVERDRIVE         = 0x00000400,
+        wBLACK_EXCESSIVE         = 0x00000800,
+        wBLACK_PARSING_ROM       = 0x00001000,
+        wBLACK_STORING_ROM       = 0x00002000,
+
+        //CalFiles
+        wCAL_WHITE_RGB           = 0x00004000,
+        wCAL_STORING             = 0x00008000,
+        wCAL_CONVERT_BINARY      = 0x00010000,
+
+        //FFT
+        wFFT_BAD_STRING          = 0x00020000,
+        wFFT_RANGE_CAL           = 0x00040000,
+        wFFT_NO_XYZ              = 0x00080000,
+        wFFT_NO_RANGE            = 0x00100000,
+        wFFT_INSUFFICIENT_DATA   = 0x00200000,
+        wFFT_PREVIOUS_RANGE      = 0x00400000,
+        wFFT_NOT_SUPPORTED       = 0x00800000,
+
+
+        //Miscellaneous
+        wFIRMWARE                = 0x0000800000
+    };
+
+
 
 	class SubClass : public KClmtr {
 
@@ -44,11 +100,10 @@ namespace KClmtrWrapper {
 		double temp;            //The temperature in K
 		double duv;             //The distance off the curve
 		int errorcode;          //The error code whenever you are getting data
-		String^ errorstring;	//The string
 		int averagingby;        //How many measurements we are averaging by
-		bool readyflag;         //Ready or not to grab it
 
 		wMeasurement(){}
+
 		wMeasurement(Measurement measurement) {
 			x = measurement.x;
 			y = measurement.y;
@@ -65,7 +120,7 @@ namespace KClmtrWrapper {
 			u = measurement.u;
 			v = measurement.v;
 			nm = measurement.nm;
-			du = measurement.du;
+			du = measurement.nmduv;
 			//L = measurement.L;
 			//A = measurement.A;
 			//B = measurement.B;
@@ -73,11 +128,44 @@ namespace KClmtrWrapper {
 			greenrange = gcnew String(measurement.greenrange.c_str());
 			bluerange = gcnew String(measurement.bluerange.c_str());
 			range = measurement.range;
-			duv = measurement.duv;
+			temp = measurement.temp;
+			duv = measurement.tempduv;
 			errorcode = measurement.errorcode;
-			errorstring = gcnew String(measurement.errorstring.c_str());
 			averagingby = measurement.averagingby;
-			readyflag = measurement.readyflag;
+		}
+
+		void fromXYZ(double X, double Y, double Z){
+			wMeasurement(Measurement::fromXYZ(X,Y,Z,NTSC));
+		}
+		void fromXYZ(double X, double Y, double Z, wGamutSpec gs){
+			wMeasurement(Measurement::fromXYZ(X,Y,Z, static_cast<gamutSpec>(gs)));
+		}
+		void fromxyL(double x, double y, double L){
+			wMeasurement(Measurement::fromxyL(x,y,L,NTSC));
+		}
+		void fromxyL(double x, double y, double L, wGamutSpec gs){
+			wMeasurement(Measurement::fromxyL(x,y,L,static_cast<gamutSpec>(gs)));
+		}
+		void fromuvprimeL(double u, double v, double L){
+			wMeasurement(Measurement::fromuvprimeL(u,v,L,NTSC));
+		}
+		void fromTempduvL(double _temp, double _tempduv, double L){
+			wMeasurement(Measurement::fromTempduvL(_temp, _tempduv, L, NTSC));
+		}
+		void fromTempduvL(double _temp, double _tempduv, double L, wGamutSpec gs){
+			wMeasurement(Measurement::fromTempduvL(_temp, _tempduv, L, static_cast<gamutSpec>(gs)));
+		}
+		void fromnmduvL(double _nm, double _nmduv, double L){
+			wMeasurement(Measurement::fromnmduvL(_nm, _nmduv, L, NTSC));
+		}
+		void fromnmduvL(double _nm, double _nmduv, double L, wGamutSpec gs){
+			wMeasurement(Measurement::fromnmduvL(_nm, _nmduv, L, static_cast<gamutSpec>(gs)));
+		}
+		void fromRGB(double r, double g, double b){
+			wMeasurement(Measurement::fromRGB(r, g, b, NTSC));
+		}
+		void fromRGB(double r, double g, double b, wGamutSpec gs){
+			wMeasurement(Measurement::fromRGB(r, g, b, static_cast<gamutSpec>(gs)));
 		}
 	};
 
@@ -110,29 +198,19 @@ namespace KClmtrWrapper {
 	};
 
 	public ref struct wBlackMatrix {
-		array<double>^ range1;
-		array<double>^ range2;
-		array<double>^ range3;
-		array<double>^ range4;
-		array<double>^ range5;
-		array<double>^ range6;
+		array<array<double>^>^ range;
 		double Therm;
 		int errorcode;            //The error code whenever you are getting data
-		String^ errorstring;      //The string
 
 		wBlackMatrix(){}
 		wBlackMatrix(BlackMatrix black){
-			for(int i = 0; i < 3; i++){
-				range1[i] = black.range1[i];
-				range2[i] = black.range2[i];
-				range3[i] = black.range3[i];
-				range4[i] = black.range4[i];
-				range5[i] = black.range5[i];
-				range6[i] = black.range6[i];
+			for(int i = 0; i < 6; ++i){
+				range[i][0] = black.range[i][0];
+				range[i][1] = black.range[i][1];
+				range[i][2] = black.range[i][2];
 			}
 			Therm = black.Therm;
 			errorcode = black.errorcode;
-			errorstring = gcnew String(black.errorstring.c_str());
 		}
 	};
 
@@ -166,8 +244,6 @@ namespace KClmtrWrapper {
 		array<double> ^flickerDB;			//The DB from 1hz to 100hz
 		array<double> ^flickerPercent;		//The Percent from 1hz to 100hz
 		int errorcode;						//The error code whenever you are getting data
-		String^ errorstring;				//The string
-		bool readyflag;					    //Ready or not to grab it
 
 		wFlicker(){}
 		wFlicker(Flicker flicker){
@@ -185,27 +261,25 @@ namespace KClmtrWrapper {
 				flickerPercent[i] = flicker.flickerPercent[i];
 			}
 			errorcode = flicker.errorcode;
-			errorstring = gcnew String(flicker.errorstring.c_str());
-			readyflag = flicker.readyflag;
 		}
 	};
 
-	public ref struct wwhitespect {
+	public ref struct wwhitespec {
 		double x;                //The X to the Whitespect modifier
 		double y;                //The y to the Whitespect modifier
 		double z;                //The z to the Whitespect modifier
 		double xy;               //The allowed variance of xy
 		double l;                //The allowed variance of Y
-		wwhitespect(){}
-		wwhitespect(whitespect White){
+		wwhitespec(){}
+		wwhitespec(whitespec White){
 			x = White.x;
 			y = White.y;
 			z = White.z;
 			xy = White.xy;
 			l = White.l;
 		}
-		whitespect getNwhitespect(){
-			whitespect White;
+		whitespec getNwhitespec(){
+			whitespec White;
 
 			White.x = x;
 			White.y = y;
@@ -343,9 +417,6 @@ namespace KClmtrWrapper {
 			String^ get(){
 				return NativeToDotNet(_kclmtr->getCalFileName());
 			}
-			void set(String^ value){
-				_kclmtr->setCalFileName(MarshalString(value));
-			}
 		}
 		/// <summary>
 		/// Gets or Set the current Cal File based on it's ID
@@ -389,12 +460,12 @@ namespace KClmtrWrapper {
 		/// <summary>
 		/// Gets or set the current Cal File's white spect
 		/// </summary>
-		property wwhitespect^ WhiteSpect{
-			wwhitespect^ get(){
-				return gcnew wwhitespect(_kclmtr->getWhiteSpect());
+		property wwhitespec^ WhiteSpect{
+			wwhitespec^ get(){
+				return gcnew wwhitespec(_kclmtr->getWhiteSpec());
 			}
-			void set(wwhitespect^ value){
-				_kclmtr->setWhiteSpect(value->getNwhitespect());
+			void set(wwhitespec^ value){
+				_kclmtr->setWhiteSpec(value->getNwhitespec());
 			}
 		}
 		/// <summary>
@@ -412,8 +483,8 @@ namespace KClmtrWrapper {
 		/// <summary>
 		/// set the temporary cal file spect
 		/// </summary>
-		void setTempCalFile(wCorrectedCoefficient^ Matrix, wwhitespect^ whiteSpect){
-			_kclmtr->setTempCalFile(Matrix->getNCorrectedCoefficient(), whiteSpect->getNwhitespect());
+		void setTempCalFile(wCorrectedCoefficient^ Matrix, wwhitespec^ whiteSpect){
+			_kclmtr->setTempCalFile(Matrix->getNCorrectedCoefficient(), whiteSpect->getNwhitespec());
 		}
 
 		//Property - FFT
@@ -529,8 +600,8 @@ namespace KClmtrWrapper {
 		/// <param name="Kclmtr">  Kclmtr The KClmtr's measurement </param>
 		/// <param name="whitespect> The white spect to be stored for the Calibration file </param>
 		/// <return>int Error code. 0 is Good</return>
-		int storeMatrices(int ID, String^ Name, wwrgb^ Reference, wwrgb^ Kclmtr, wwhitespect^ whitespect){
-			return _kclmtr->storeMatrices(ID, MarshalString(Name), Reference->getNwrgb(), Kclmtr->getNwrgb(), whitespect->getNwhitespect());
+		int storeMatrices(int ID, String^ Name, wwrgb^ Reference, wwrgb^ Kclmtr, wwhitespec^ whitespec){
+			return _kclmtr->storeMatrices(ID, MarshalString(Name), Reference->getNwrgb(), Kclmtr->getNwrgb(), whitespec->getNwhitespec());
 		}
 
 		//BlackCal - Cold
@@ -567,8 +638,8 @@ namespace KClmtrWrapper {
 		/// </summary>
 		/// <param name="grabConstantly"> If you are planning to use getNextFlicker() set this to be false. If you want it to return flicker has soon has it grabs one, set it to be true </param>
 		/// <return> Error string, OK is good </return> 
-		String^ StartFlicker(bool grabConstantly){
-			return NativeToDotNet(_kclmtr->startFlicker(grabConstantly));
+		int StartFlicker(bool grabConstantly){
+			return _kclmtr->startFlicker(grabConstantly);
 		}
 		/// <summary>
 		/// Grabs and returns one flicker measurement. The speed which this returns is based on the getFFT_Samples()
