@@ -1,6 +1,6 @@
 CC=g++
 CFLAGS=-c -Wall
-SOURCES=serialPort.cpp KClmtr.cpp
+SOURCES=../kclmtr/serialPort.cpp ../kclmtr/KClmtr.cpp
 OBJECTS=$(SOURCES:.cpp=.o)
 
 all:  clean $(OBJECTS)
