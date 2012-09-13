@@ -216,7 +216,7 @@ public:
     }
 };
 
-class QK10V : public QWidget {
+class QK10V : public QObject {
     Q_OBJECT
 
 public:
