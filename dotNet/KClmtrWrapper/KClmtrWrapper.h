@@ -89,7 +89,7 @@ namespace KClmtrWrapper {
 		double u;               //The u' in the u'v'y
 		double v;               //The v' in the u'v'y
 		double nm;              //The nm in the nmdu'v'Y
-		double du;              //The duv' in the nmdu'v'Y
+		double nmduv;              //The duv' in the nmdu'v'Y
 		//double L;               //The L in L*A*B*
 		//double A;               //The A in L*A*B*
 		//double B;               //The B in L*A*B*
@@ -98,7 +98,7 @@ namespace KClmtrWrapper {
 		String^ bluerange;		//The range which the KClmtr is in blue
 		int range;              //The range which the KClmtr is in overall
 		double temp;            //The temperature in K
-		double duv;             //The distance off the curve
+		double tempduv;             //The distance off the curve
 		int errorcode;          //The error code whenever you are getting data
 		int averagingby;        //How many measurements we are averaging by
 
@@ -120,7 +120,7 @@ namespace KClmtrWrapper {
 			u = measurement.u;
 			v = measurement.v;
 			nm = measurement.nm;
-			du = measurement.nmduv;
+			nmduv = measurement.nmduv;
 			//L = measurement.L;
 			//A = measurement.A;
 			//B = measurement.B;
@@ -129,7 +129,7 @@ namespace KClmtrWrapper {
 			bluerange = gcnew String(measurement.bluerange.c_str());
 			range = measurement.range;
 			temp = measurement.temp;
-			duv = measurement.tempduv;
+			tempduv = measurement.tempduv;
 			errorcode = measurement.errorcode;
 			averagingby = measurement.averagingby;
 		}
@@ -569,8 +569,8 @@ namespace KClmtrWrapper {
 		/// <summary>
 		/// Returns one measurement from the device. Do not need to startMeasuring() to use this method.
 		/// </summary>
-		wMeasurement ^getNextMeasurement(){
-			return gcnew wMeasurement(_kclmtr->getNextMeasurement());
+		wMeasurement ^getNextMeasurement(int n){
+			return gcnew wMeasurement(_kclmtr->getNextMeasurement(n));
 		}
 
 		//Setting up to Store CalFiles
