@@ -441,11 +441,11 @@ public:
     void setFFT_RollOff(bool value) {
         _kclmtr->setFFT_RollOff(value);
     }
-    bool getFFT_samples() {
+    int getFFT_samples() {
         return _kclmtr->getFFT_Samples();
     }
-    void setFFT_samples(int value) {
-        _kclmtr->setFFT_Samples(value);
+    int setFFT_samples(int value) {
+        return _kclmtr->setFFT_Samples(value);
     }
 
 
