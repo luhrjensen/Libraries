@@ -116,7 +116,6 @@ public:
     double range[6][3];
     double Therm;
     int errorcode;
-    QString errorstring;
 
     QBlackMatrix() {}
     QBlackMatrix(BlackMatrix black) {
@@ -167,11 +166,6 @@ public:
     QFlicker() {}
     QFlicker(Flicker flicker) {
         xyz = QMeasurement(flicker.xyz);
-        //peakfrequencyDB = new double[3][2];
-        //peakfrequencyPercent = new double[3][2];
-        //FlickerDB = new double[101];
-        //FlickerPercent = new double[101];
-
         for(int i = 0; i < 3; ++i) {
             for(int j = 0; j < 3; ++j) {
                 peakfrequency[i][j] = flicker.peakfrequency[i][j];
@@ -304,7 +298,7 @@ public:
     virtual void closePort(bool) = 0;
     virtual bool connect(QString* portName) = 0;
 
-    virtual QWhitespec* getWhiteSpec() = 0;
+    virtual QWhitespec getWhiteSpec() = 0;
 
     //CalFiles
     virtual QStringList getCalFileList() = 0;
@@ -312,13 +306,13 @@ public:
     virtual int getCalFileID() = 0;
     virtual void setCalFileID(int) = 0;
     virtual QString getCalFileName() = 0;
-    virtual int storeCalFile(int ID, QString Name, Qwrgb* Reference, Qwrgb* Kclmtr, QWhitespec* whitespec) = 0;
+    virtual int storeCalFile(int ID, QString Name, Qwrgb Reference, Qwrgb Kclmtr, QWhitespec whitespec) = 0;
 
     //BlackCal
-    virtual QBlackMatrix* captureBlackLevel() = 0;
-    virtual QBlackMatrix* recallCoefficientMatrix() = 0;
-    virtual QBlackMatrix* recallRAMMatrix() = 0;
-    virtual QBlackMatrix* recallFlashMatrix() = 0;
+    virtual QBlackMatrix captureBlackLevel() = 0;
+    virtual QBlackMatrix recallCoefficientMatrix() = 0;
+    virtual QBlackMatrix recallRAMMatrix() = 0;
+    virtual QBlackMatrix recallFlashMatrix() = 0;
 };
 
 class SubClass : public KClmtr {
@@ -391,15 +385,15 @@ public:
     const matrix getRGBMatrix() {
         return _kclmtr->getRGBMatrix();
     }
-    QWhitespec* getWhiteSpec() {
-        return new QWhitespec(_kclmtr->getWhiteSpec());
+    QWhitespec getWhiteSpec() {
+        return QWhitespec(_kclmtr->getWhiteSpec());
     }
     void resetWhiteSpec() {
         _kclmtr->resetWhiteSpec();
     }
 
-    void setWhiteSpec(QWhitespec* value) {
-        _kclmtr->setWhiteSpec(value->getNwhitespec());
+    void setWhiteSpec(QWhitespec value) {
+        _kclmtr->setWhiteSpec(value.getNwhitespec());
     }
     QStringList getCalFileList() {
         QStringList CalList;
@@ -419,8 +413,8 @@ public:
     }
 
 
-    void setTempCalFile(QCorrectedCoefficient* Matrix, QWhitespec* whiteSpec) {
-        _kclmtr->setTempCalFile(Matrix->getNCorrectedCoefficient(), whiteSpec->getNwhitespec());
+    void setTempCalFile(QCorrectedCoefficient matrix, QWhitespec whiteSpec) {
+        _kclmtr->setTempCalFile(matrix.getNCorrectedCoefficient(), whiteSpec.getNwhitespec());
     }
     //Property - FFT
     bool getFFT_Cosine() {
@@ -466,31 +460,31 @@ public:
         return QMeasurement(_kclmtr->getNextMeasurement(n));
     }
     //Setting up to Store CalFiles
-    QCorrectedCoefficient* getCoefficientTestMatrix(Qwrgb* Reference, Qwrgb* Kclmtr) {
-        return new QCorrectedCoefficient(_kclmtr->getCoefficientTestMatrix(Reference->getNwrgb(), Kclmtr->getNwrgb()));
+    QCorrectedCoefficient getCoefficientTestMatrix(Qwrgb* Reference, Qwrgb* Kclmtr) {
+        return QCorrectedCoefficient(_kclmtr->getCoefficientTestMatrix(Reference->getNwrgb(), Kclmtr->getNwrgb()));
     }
     int deleteCalFile(int CalFileID) {
         return _kclmtr->deleteCalFile(CalFileID);
     }
     //Storing CalFile
-    int storeCalFile(int ID, QString Name, Qwrgb* Reference, Qwrgb* Kclmtr, QWhitespec* whitespec) {
-        return _kclmtr->storeMatrices(ID, Name.toStdString(), Reference->getNwrgb(), Kclmtr->getNwrgb(), whitespec->getNwhitespec());
+    int storeCalFile(int ID, QString Name, Qwrgb reference, Qwrgb kclmtr, QWhitespec whitespec) {
+        return _kclmtr->storeMatrices(ID, Name.toStdString(), reference.getNwrgb(), kclmtr.getNwrgb(), whitespec.getNwhitespec());
     }
 
     //BlackCal - Cold
-    QBlackMatrix* captureBlackLevel() {
-        return new QBlackMatrix(_kclmtr->captureBlackLevel());
+    QBlackMatrix captureBlackLevel() {
+        return QBlackMatrix(_kclmtr->captureBlackLevel());
     }
-    QBlackMatrix* recallFlashMatrix() {
-        return new QBlackMatrix(_kclmtr->recallFlashMatrix());
+    QBlackMatrix recallFlashMatrix() {
+        return QBlackMatrix(_kclmtr->recallFlashMatrix());
     }
 
     //BlackCal - Hot
-    QBlackMatrix* recallRAMMatrix() {
-        return new QBlackMatrix(_kclmtr->recallRAMMatrix());
+    QBlackMatrix recallRAMMatrix() {
+        return QBlackMatrix(_kclmtr->recallRAMMatrix());
     }
-    QBlackMatrix* recallCoefficientMatrix() {
-        return new QBlackMatrix(_kclmtr->recallCoefficientMatrix());
+    QBlackMatrix recallCoefficientMatrix() {
+        return QBlackMatrix(_kclmtr->recallCoefficientMatrix());
     }
 
     //FFT
