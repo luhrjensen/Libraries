@@ -8,23 +8,24 @@ struct QMeasurement {
 public:
     double x;               //The x in the xyl
     double y;               //The y in the xyl
-    double l;               //The l in the xyl
     double bigx;            //The x in the xyz
     double bigy;            //The y in the xyz
     double bigz;            //The z in the xyz
     double bigxraw;         //The xraw in the xyz
     double bigyraw;         //The yraw in the xyz
     double bigzraw;         //The zraw in the xyz
-    double r;               //The r in the rgb
-    double g;               //The g in the rgb
-    double b;               //The b in the rgb
+    double red;             //The red in the rgb
+    double green;           //The green in the rgb
+    double blue;            //The blue in the rgb
     double u;               //The u' in the u'v'y
     double v;               //The v' in the u'v'y
     double nm;              //The nm in the nmdu'v'Y
     double nmduv;           //The duv' in the nmdu'v'Y
-    //double L;               //The L in L*A*B*
-    //double A;               //The A in L*A*B*
-    //double B;               //The B in L*A*B*
+    double L;               //The L in L*a*b* or L*C*h*
+    double a;               //The a in L*a*b*
+    double b;               //The b in L*a*b*
+    double C;               //The C in L*C*h*
+    double h;               //The h in L*C*h*
     QString redrange;       //The range which the KClmtr is in red
     QString greenrange;     //The range which the KClmtr is in green
     QString bluerange;      //The range which the KClmtr is in blue
@@ -60,23 +61,24 @@ private:
     void copy(Measurement measurement) {
         x = measurement.x;
         y = measurement.y;
-        l = measurement.l;
         bigx = measurement.bigx;
         bigy = measurement.bigy;
         bigz = measurement.bigz;
         bigxraw = measurement.bigxraw;
         bigyraw = measurement.bigyraw;
         bigzraw = measurement.bigzraw;
-        r = measurement.r;
-        g = measurement.g;
-        b = measurement.b;
+        red = measurement.red;
+        green = measurement.green;
+        blue = measurement.blue;
         u = measurement.u;
         v = measurement.v;
         nm = measurement.nm;
         nmduv = measurement.nmduv;
-        //L = measurement.L;
-        //A = measurement.A;
-        //B = measurement.B;
+        L = measurement.L;
+        a = measurement.a;
+        b = measurement.b;
+        C = measurement.C;
+        h = measurement.h;
         redrange = QString::fromStdString(measurement.redrange);
         greenrange = QString::fromStdString(measurement.greenrange);
         bluerange = QString::fromStdString(measurement.bluerange);
