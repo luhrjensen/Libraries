@@ -57,7 +57,51 @@ public:
     static QMeasurement fromRGB(double r, double g, double b, gamutSpec gs = NTSC) {
         return QMeasurement(Measurement::fromRGB(r, g, b, gs));
     }
+
+    double deltaE1976(QMeasurement spec) {
+        return baseCopy().deltaE1976(spec.baseCopy());
+    }
+    double deltaE1994(QMeasurement spec) {
+        return baseCopy().deltaE1994(spec.baseCopy());
+    }
+    double deltaE2000(QMeasurement spec) {
+        return baseCopy().deltaE2000(spec.baseCopy());
+    }
+
 private:
+    Measurement baseCopy() {
+        Measurement measurement;
+
+        measurement.x = x;
+        measurement.y = y;
+        measurement.bigx = bigx;
+        measurement.bigy = bigy;
+        measurement.bigz = bigz;
+        measurement.bigxraw = bigxraw;
+        measurement.bigyraw = bigyraw;
+        measurement.bigzraw = bigzraw;
+        measurement.red = red;
+        measurement.green = green;
+        measurement.blue = blue;
+        measurement.u = u;
+        measurement.v = v;
+        measurement.nm = nm;
+        measurement.nmduv = nmduv;
+        measurement.L = L;
+        measurement.a = a;
+        measurement.b = b;
+        measurement.C = C;
+        measurement.h = h;
+        //measurement.redrange = redrange.toStdString();
+        //measurement.greenrange = greenrange.toStdString();
+        //measurement.bluerange = bluerange.toStdString();
+        //measurement.range = range;
+        measurement.temp = temp;
+        measurement.tempduv = tempduv;
+        measurement.errorcode = errorcode;
+        measurement.averagingby = averagingby;
+        return measurement;
+    }
     void copy(Measurement measurement) {
         x = measurement.x;
         y = measurement.y;
@@ -79,10 +123,10 @@ private:
         b = measurement.b;
         C = measurement.C;
         h = measurement.h;
-        redrange = QString::fromStdString(measurement.redrange);
-        greenrange = QString::fromStdString(measurement.greenrange);
-        bluerange = QString::fromStdString(measurement.bluerange);
-        range = measurement.range;
+        //redrange = QString::fromStdString(measurement.redrange);
+        //greenrange = QString::fromStdString(measurement.greenrange);
+        //bluerange = QString::fromStdString(measurement.bluerange);
+        //range = measurement.range;
         temp = measurement.temp;
         tempduv = measurement.tempduv;
         errorcode = measurement.errorcode;
@@ -178,9 +222,6 @@ public:
             flickerPercent[i] = flicker.flickerPercent[i];
         }
         errorcode = flicker.errorcode;
-    }
-    ~QFlicker() {
-        //delete xyz;
     }
 };
 struct QWhitespec {
