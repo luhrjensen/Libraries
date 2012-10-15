@@ -73,7 +73,7 @@ public:
     virtual GenType getType() = 0;
     virtual bool isPortOpen() = 0;
     virtual void closePort(bool) = 0;
-    virtual bool connect(QString* portName) = 0;
+    virtual bool connect(QString portName) = 0;
 
 signals:
     void closed();
@@ -90,7 +90,7 @@ public:
     virtual GenType getType() = 0;
     virtual bool isPortOpen() = 0;
     virtual void closePort(bool) = 0;
-    virtual bool connect(QString* portName) = 0;
+    virtual bool connect(QString portName) = 0;
 
     virtual WhiteSpec getWhiteSpec() = 0;
 
@@ -311,8 +311,8 @@ public:
         _isOpen = false;
         emit closed();
     }
-    bool connect(QString *portName) {
-        setPort(portName[0]);
+    bool connect(QString portName) {
+        setPort(portName);
         return connect();
     }
 
