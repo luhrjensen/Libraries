@@ -2,6 +2,7 @@
 #define QKCLMTR_H
 
 #include <QtGui/QWidget>
+#include <portsystem/devices/gendevice.h>
 #include "../kclmtr/KClmtr.h"
 
 struct QMeasurement {
@@ -264,59 +265,6 @@ private:
 };
 
 class QKClmtr;
-class GenDevice : public QObject {
-    Q_OBJECT
-public:
-    enum GenType {
-        genTypeKClmtr,
-        genTypeCS2000,
-        genTypePR650,
-        genTypeBM7
-    };
-
-    virtual QString getModel() = 0;
-    virtual QString getSN() = 0;
-    virtual QString getPort() = 0;
-    virtual QMeasurement getNextMeasurement() = 0;
-    virtual GenType getType() = 0;
-    virtual bool isPortOpen() = 0;
-    virtual void closePort(bool) = 0;
-    virtual bool connect(QString portName) = 0;
-
-signals:
-    void closed();
-};
-
-class GenClmtr : public GenDevice {
-    Q_OBJECT
-
-public:
-    virtual QString getModel() = 0;
-    virtual QString getSN() = 0;
-    virtual QString getPort() = 0;
-    virtual QMeasurement getNextMeasurement() = 0;
-    virtual GenType getType() = 0;
-    virtual bool isPortOpen() = 0;
-    virtual void closePort(bool) = 0;
-    virtual bool connect(QString portName) = 0;
-
-    virtual QWhitespec getWhiteSpec() = 0;
-
-    //CalFiles
-    virtual QStringList getCalFileList() = 0;
-    virtual int deleteCalFile(int CalFileID) = 0;
-    virtual int getCalFileID() = 0;
-    virtual void setCalFileID(int) = 0;
-    virtual QString getCalFileName() = 0;
-    virtual int storeCalFile(int ID, QString Name, Qwrgb Reference, Qwrgb Kclmtr, QWhitespec whitespec) = 0;
-
-    //BlackCal
-    virtual QBlackMatrix captureBlackLevel() = 0;
-    virtual QBlackMatrix recallCoefficientMatrix() = 0;
-    virtual QBlackMatrix recallRAMMatrix() = 0;
-    virtual QBlackMatrix recallFlashMatrix() = 0;
-};
-
 class SubClass : public KClmtr {
 public:
     SubClass(QKClmtr* _QKC) {
@@ -330,7 +278,7 @@ public:
 /** @ingroup wrappers
  *  @brief Wraps the Native object to work easly in Qt
  */
-class QKClmtr : public GenClmtr {
+class QKClmtr : public GenDevice {
     Q_OBJECT
 
 public:
@@ -387,8 +335,8 @@ public:
     const matrix getRGBMatrix() {
         return _kclmtr->getRGBMatrix();
     }
-    QWhitespec getWhiteSpec() {
-        return QWhitespec(_kclmtr->getWhiteSpec());
+    whitespec getWhiteSpec() {
+        return _kclmtr->getWhiteSpec();
     }
     void resetWhiteSpec() {
         _kclmtr->resetWhiteSpec();
@@ -455,11 +403,8 @@ public:
     void stopMeasuring() {
         _kclmtr->stopMeasuring();
     }
-    QMeasurement getNextMeasurement() {
-        return QMeasurement(_kclmtr->getNextMeasurement());
-    }
-    QMeasurement getNextMeasurement(int n = 1) {
-        return QMeasurement(_kclmtr->getNextMeasurement(n));
+    Measurement getNextMeasurement(int n = 1) {
+        return Measurement(_kclmtr->getNextMeasurement(n));
     }
     //Setting up to Store CalFiles
     QCorrectedCoefficient getCoefficientTestMatrix(Qwrgb* Reference, Qwrgb* Kclmtr) {
@@ -532,8 +477,8 @@ public:
     }
 
     //functions for GenDevice
-    GenType getType() {
-        return genTypeKClmtr;
+    DeviceType getType() {
+        return typeKClmtr;
     }
 
 
