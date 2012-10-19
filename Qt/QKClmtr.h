@@ -214,16 +214,16 @@ public:
     BlackMatrix captureBlackLevel() {
         return _kclmtr->captureBlackLevel();
     }
-    BlackMatrix recallFlashMatrix() {
-        return _kclmtr->recallFlashMatrix();
+    BlackMatrix getFlashMatrix() {
+        return _kclmtr->getFlashMatrix();
     }
 
     //BlackCal - Hot
-    BlackMatrix recallRAMMatrix() {
-        return _kclmtr->recallRAMMatrix();
+    BlackMatrix getRAMMatrix() {
+        return _kclmtr->getRAMMatrix();
     }
-    BlackMatrix recallCoefficientMatrix() {
-        return _kclmtr->recallCoefficientMatrix();
+    BlackMatrix getCoefficientMatrix() {
+        return _kclmtr->getCoefficientMatrix();
     }
 
     //FFT
@@ -252,9 +252,11 @@ public:
         }
     }
     void closePort(bool resetThePortName) {
-        _kclmtr->closePort(resetThePortName);
-        _isOpen = false;
-        emit closed();
+        if(isPortOpen()) {
+            _kclmtr->closePort(resetThePortName);
+            _isOpen = false;
+            emit closed();
+        }
     }
     bool connect(QString portName) {
         setPort(portName);
@@ -275,6 +277,7 @@ public:
 
 
 signals:
+    void closed();
     void connected();
     void calfileChanged();
     /** @brief Sends out measurement
