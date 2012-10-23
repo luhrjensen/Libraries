@@ -40,18 +40,18 @@ public:
     QK10V(K10V k10v) {
         _k10v = new K10V(k10v);
     }
-    Q_PROPERTY(QColors* ColorField READ getColors WRITE setColors)
+    Q_PROPERTY(QColors *ColorField READ getColors WRITE setColors)
 
     K10V getNK10v() {
         return *_k10v;
     }
 
 private:
-    K10V * _k10v;
-    QColors* getColors() {
+    K10V *_k10v;
+    QColors *getColors() {
         return new QColors(_k10v->getColorField());
     }
-    void setColors(QColors* value) {
+    void setColors(QColors *value) {
         _k10v->setColorField(value->getNColor());
     }
 };
@@ -59,13 +59,13 @@ private:
 class QKClmtr;
 class SubClass : public KClmtr {
 public:
-    SubClass(QKClmtr* _QKC) {
+    SubClass(QKClmtr *_QKC) {
         _QKClmtr = _QKC;
     }
 
     void printMeasure(Measurement m);
     void printFlicker(Flicker f);
-    QKClmtr* _QKClmtr;
+    QKClmtr *_QKClmtr;
 };
 /** @ingroup wrappers
  *  @brief Wraps the Native object to work easly in Qt
@@ -139,7 +139,7 @@ public:
     }
     QStringList getCalFileList() {
         QStringList CalList;
-        const string* calList  = _kclmtr->getCalFileList();
+        const string *calList  = _kclmtr->getCalFileList();
 
         for(int i = 0; i < 97;  i++) {
             CalList << QString::fromStdString(calList[i]);
@@ -147,10 +147,10 @@ public:
 
         return CalList;
     }
-    QK10V* getK10V() {
+    QK10V *getK10V() {
         return new QK10V(_kclmtr->getVirtualK10());
     }
-    void setK10V(QK10V* value) {
+    void setK10V(QK10V *value) {
         _kclmtr->setVirtualK10(value->getNK10v());
     }
 
