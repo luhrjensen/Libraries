@@ -5,57 +5,6 @@
 #include <portsystem/devices/gendevice.h>
 #include "../kclmtr/KClmtr.h"
 
-class QK10V : public QObject {
-    Q_OBJECT
-
-public:
-    struct QColors {
-        int red;
-        int green;
-        int blue;
-
-        QColors() {}
-        QColors(Colors color) {
-            red = color.red;
-            green = color.green;
-            blue = color.blue;
-        }
-        Colors getNColor() {
-            Colors color;
-
-            color.red = red;
-            color.green = green;
-            color.blue = blue;
-
-            return color;
-        }
-    };
-
-    QK10V() {
-        _k10v = new K10V;
-    }
-    virtual ~QK10V(void) {
-        delete _k10v;
-    }
-    QK10V(K10V k10v) {
-        _k10v = new K10V(k10v);
-    }
-    Q_PROPERTY(QColors *ColorField READ getColors WRITE setColors)
-
-    K10V getNK10v() {
-        return *_k10v;
-    }
-
-private:
-    K10V *_k10v;
-    QColors *getColors() {
-        return new QColors(_k10v->getColorField());
-    }
-    void setColors(QColors *value) {
-        _k10v->setColorField(value->getNColor());
-    }
-};
-
 class QKClmtr;
 class SubClass : public KClmtr {
 public:
@@ -147,13 +96,6 @@ public:
 
         return CalList;
     }
-    QK10V *getK10V() {
-        return new QK10V(_kclmtr->getVirtualK10());
-    }
-    void setK10V(QK10V *value) {
-        _kclmtr->setVirtualK10(value->getNK10v());
-    }
-
 
     void setTempCalFile(CorrectedCoefficient matrix, WhiteSpec whiteSpec) {
         _kclmtr->setTempCalFile(matrix, whiteSpec);
@@ -274,30 +216,6 @@ public:
     DeviceType getType() {
         return typeKClmtr;
     }
-
-
-signals:
-    void closed();
-    void connected();
-    void calfileChanged();
-    /** @brief Sends out measurement
-     *  @details You must register Measurement to connect this singal to a slot.
-     *  @details Here is an example:
-     *  @details Header
-     *  @snippet QKClmtrExample.cpp Header_measure
-     *   Source
-     *  @snippet QKClmtrExample.cpp Source_measure
-     */
-    void measured(Measurement measure);
-    /** @brief Sends out flicker
-     *  @details You must register Flicker to connect this singal to a slot.
-     *  @details Here is an example:
-     *  @details Header
-     *  @snippet QKClmtrExample.cpp Header_flicker
-     *   Source
-     *  @snippet QKClmtrExample.cpp Source_flicker
-     */
-    void flickered(Flicker flicker);
 
 private:
     bool _isOpen;
