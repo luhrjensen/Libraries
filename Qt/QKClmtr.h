@@ -37,8 +37,8 @@ public:
     void setPort(QString value) {
         _kclmtr->setPort(value.toStdString());
     }
-    QString getSN() {
-        return QString::fromStdString(_kclmtr->getSN());
+    QString getSerialNumber() {
+        return QString::fromStdString(_kclmtr->getSerialNumber());
     }
     QString getModel() {
         return QString::fromStdString(_kclmtr->getModel());
@@ -71,7 +71,7 @@ public:
         }
     }
     const matrix getCalMatrix() {
-        return _kclmtr->getcalMatrix();
+        return _kclmtr->getCalMatrix();
     }
     const matrix getRGBMatrix() {
         return _kclmtr->getRGBMatrix();
@@ -183,6 +183,10 @@ public:
     }
 
     //setup/Close
+    bool connect(QString portName) {
+        setPort(portName);
+        return connect();
+    }
     bool connect() {
         if(_kclmtr->connect()) {
             _isOpen = true;
@@ -193,16 +197,12 @@ public:
             return false;
         }
     }
-    void closePort(bool resetThePortName) {
+    void closePort() {
         if(isPortOpen()) {
-            _kclmtr->closePort(resetThePortName);
+            _kclmtr->closePort();
             _isOpen = false;
             emit closed();
         }
-    }
-    bool connect(QString portName) {
-        setPort(portName);
-        return connect();
     }
 
     void printMeasure(Measurement measure) {
