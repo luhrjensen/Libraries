@@ -2,339 +2,24 @@
 #define QKCLMTR_H
 
 #include <QtGui/QWidget>
+#include <portsystem/devices/gendevice.h>
 #include "../kclmtr/KClmtr.h"
 
-struct QMeasurement {
-public:
-    double x;               //The x in the xyl
-    double y;               //The y in the xyl
-    double l;               //The l in the xyl
-    double bigx;            //The x in the xyz
-    double bigy;            //The y in the xyz
-    double bigz;            //The z in the xyz
-    double bigxraw;         //The xraw in the xyz
-    double bigyraw;         //The yraw in the xyz
-    double bigzraw;         //The zraw in the xyz
-    double r;               //The r in the rgb
-    double g;               //The g in the rgb
-    double b;               //The b in the rgb
-    double u;               //The u' in the u'v'y
-    double v;               //The v' in the u'v'y
-    double nm;              //The nm in the nmdu'v'Y
-    double nmduv;           //The duv' in the nmdu'v'Y
-    //double L;               //The L in L*A*B*
-    //double A;               //The A in L*A*B*
-    //double B;               //The B in L*A*B*
-    QString redrange;       //The range which the KClmtr is in red
-    QString greenrange;     //The range which the KClmtr is in green
-    QString bluerange;      //The range which the KClmtr is in blue
-    int range;              //The range which the KClmtr is in overall
-    double temp;            //The temperature in K
-    double tempduv;         //The distance off the curve
-    int errorcode;          //The error code whenever you are getting data
-    int averagingby;        //How many measurements we are averaging by
-
-    QMeasurement() {}
-    QMeasurement(Measurement m) {
-        copy(m);
-    }
-    static QMeasurement fromXYZ(double X, double Y, double Z, gamutSpec gs = NTSC) {
-        return QMeasurement(Measurement::fromXYZ(X, Y, Z, gs));
-    }
-    static QMeasurement fromxyL(double x, double y, double L, gamutSpec gs = NTSC) {
-        return QMeasurement(Measurement::fromxyL(x, y, L, gs));
-    }
-    static QMeasurement fromuvprimeL(double u, double v, double L, gamutSpec gs = NTSC) {
-        return QMeasurement(Measurement::fromuvprimeL(u, v, L, gs));
-    }
-    static QMeasurement fromTempduvL(double _temp, double _tempduv, double L, gamutSpec gs = NTSC) {
-        return QMeasurement(Measurement::fromTempduvL(_temp, _tempduv, L, gs));
-    }
-    static QMeasurement fromnmduvL(double _nm, double _nmduv, double L, gamutSpec gs = NTSC) {
-        return QMeasurement(Measurement::fromnmduvL(_nm, _nmduv, L, gs));
-    }
-    static QMeasurement fromRGB(double r, double g, double b, gamutSpec gs = NTSC) {
-        return QMeasurement(Measurement::fromRGB(r, g, b, gs));
-    }
-private:
-    void copy(Measurement measurement) {
-        x = measurement.x;
-        y = measurement.y;
-        l = measurement.l;
-        bigx = measurement.bigx;
-        bigy = measurement.bigy;
-        bigz = measurement.bigz;
-        bigxraw = measurement.bigxraw;
-        bigyraw = measurement.bigyraw;
-        bigzraw = measurement.bigzraw;
-        r = measurement.r;
-        g = measurement.g;
-        b = measurement.b;
-        u = measurement.u;
-        v = measurement.v;
-        nm = measurement.nm;
-        nmduv = measurement.nmduv;
-        //L = measurement.L;
-        //A = measurement.A;
-        //B = measurement.B;
-        redrange = QString::fromStdString(measurement.redrange);
-        greenrange = QString::fromStdString(measurement.greenrange);
-        bluerange = QString::fromStdString(measurement.bluerange);
-        range = measurement.range;
-        temp = measurement.temp;
-        tempduv = measurement.tempduv;
-        errorcode = measurement.errorcode;
-        averagingby = measurement.averagingby;
-    }
-};
-struct Qwrgb {
-public:
-    //white, red, green, blue
-    //x, y, z
-    double v[4][3];
-
-    Qwrgb() {}
-    Qwrgb(wrgb WRGB) {
-        for(int i = 0; i < 4; ++i)
-            for(int j = 0; j < 3; ++j) {
-                v[i][j] = WRGB.v[i][j];
-            }
-    }
-    wrgb getNwrgb() {
-        wrgb WRGB;
-
-        for(int i = 0; i < 4; ++i)
-            for(int j = 0; j < 3; ++j) {
-                WRGB.v[i][j] = v[i][j];
-            }
-
-        return WRGB;
-    }
-};
-struct QBlackMatrix {
-public:
-    double range[6][3];
-    double Therm;
-    int errorcode;
-    QString errorstring;
-
-    QBlackMatrix() {}
-    QBlackMatrix(BlackMatrix black) {
-        for(int i = 0; i < 3; ++i) {
-            for(int j = 0; j < 6; ++j) {
-                range[j][i] = black.range[j][i];
-            }
-        }
-        Therm = black.Therm;
-        errorcode = black.errorcode;
-    }
-
-};
-struct QCorrectedCoefficient {
-public:
-    double colorMatrix[3][3];
-    double rgbMatrix[3][3];
-
-    QCorrectedCoefficient() {}
-    QCorrectedCoefficient(CorrectedCoefficient corrected) {
-        for(int i = 0; i < 3; ++i) {
-            for(int j = 0; j < 3; ++j) {
-                colorMatrix[i][j] = corrected.colorMatrix[i][j];
-                rgbMatrix[i][j] = corrected.rgbMatrix[i][j];
-            }
-        }
-    }
-
-    CorrectedCoefficient getNCorrectedCoefficient() {
-        CorrectedCoefficient corrected;
-        for(int i = 0; i < 3; ++i) {
-            for(int j = 0; j < 3; ++j) {
-                corrected.colorMatrix[i][j] = colorMatrix[i][j];
-                corrected.rgbMatrix[i][j] = rgbMatrix[i][j];
-            }
-        }
-        return corrected;
-    }
-};
-struct QFlicker {
-public:
-    QMeasurement xyz;
-    double peakfrequency[3][3];
-    double flickerDB[101];
-    double flickerPercent[101];
-    int errorcode;
-
-    QFlicker() {}
-    QFlicker(Flicker flicker) {
-        xyz = QMeasurement(flicker.xyz);
-        //peakfrequencyDB = new double[3][2];
-        //peakfrequencyPercent = new double[3][2];
-        //FlickerDB = new double[101];
-        //FlickerPercent = new double[101];
-
-        for(int i = 0; i < 3; ++i) {
-            for(int j = 0; j < 3; ++j) {
-                peakfrequency[i][j] = flicker.peakfrequency[i][j];
-            }
-        }
-        for(int i = 0; i < 101; ++i) {
-            flickerDB[i] = flicker.flickerDB[i];
-            flickerPercent[i] = flicker.flickerPercent[i];
-        }
-        errorcode = flicker.errorcode;
-    }
-    ~QFlicker() {
-        //delete xyz;
-    }
-};
-struct QWhitespec {
-public:
-    double x;
-    double y;
-    double z;
-    double xy;
-    double l;
-
-    QWhitespec() {}
-    QWhitespec(whitespec White) {
-        x = White.x;
-        y = White.y;
-        z = White.z;
-        xy = White.xy;
-        l = White.l;
-    }
-    whitespec getNwhitespec() {
-        whitespec White;
-
-        White.x = x;
-        White.y = y;
-        White.z = z;
-        White.xy = xy;
-        White.l = l;
-
-        return White;
-    }
-};
-
-class QK10V : public QObject {
-    Q_OBJECT
-
-public:
-    struct QColors {
-        int red;
-        int green;
-        int blue;
-
-        QColors() {}
-        QColors(Colors color) {
-            red = color.red;
-            green = color.green;
-            blue = color.blue;
-        }
-        Colors getNColor() {
-            Colors color;
-
-            color.red = red;
-            color.green = green;
-            color.blue = blue;
-
-            return color;
-        }
-    };
-
-    QK10V() {
-        _k10v = new K10V;
-    }
-    virtual ~QK10V(void) {
-        delete _k10v;
-    }
-    QK10V(K10V k10v) {
-        _k10v = new K10V(k10v);
-    }
-    Q_PROPERTY(QColors* ColorField READ getColors WRITE setColors)
-
-    K10V getNK10v() {
-        return *_k10v;
-    }
-
-private:
-    K10V * _k10v;
-    QColors* getColors() {
-        return new QColors(_k10v->getColorField());
-    }
-    void setColors(QColors* value) {
-        _k10v->setColorField(value->getNColor());
-    }
-};
-
 class QKClmtr;
-class GenDevice : public QObject {
-    Q_OBJECT
-public:
-    enum GenType {
-        genTypeKClmtr,
-        genTypeCS2000,
-        genTypePR650,
-        genTypeBM7
-    };
-
-    virtual QString getModel() = 0;
-    virtual QString getSN() = 0;
-    virtual QString getPort() = 0;
-    virtual QMeasurement getNextMeasurement() = 0;
-    virtual GenType getType() = 0;
-    virtual bool isPortOpen() = 0;
-    virtual void closePort(bool) = 0;
-    virtual bool connect(QString* portName) = 0;
-
-signals:
-    void closed();
-};
-
-class GenClmtr : public GenDevice {
-    Q_OBJECT
-
-public:
-    virtual QString getModel() = 0;
-    virtual QString getSN() = 0;
-    virtual QString getPort() = 0;
-    virtual QMeasurement getNextMeasurement() = 0;
-    virtual GenType getType() = 0;
-    virtual bool isPortOpen() = 0;
-    virtual void closePort(bool) = 0;
-    virtual bool connect(QString* portName) = 0;
-
-    virtual QWhitespec* getWhiteSpec() = 0;
-
-    //CalFiles
-    virtual QStringList getCalFileList() = 0;
-    virtual int deleteCalFile(int CalFileID) = 0;
-    virtual int getCalFileID() = 0;
-    virtual void setCalFileID(int) = 0;
-    virtual QString getCalFileName() = 0;
-    virtual int storeCalFile(int ID, QString Name, Qwrgb* Reference, Qwrgb* Kclmtr, QWhitespec* whitespec) = 0;
-
-    //BlackCal
-    virtual QBlackMatrix* captureBlackLevel() = 0;
-    virtual QBlackMatrix* recallCoefficientMatrix() = 0;
-    virtual QBlackMatrix* recallRAMMatrix() = 0;
-    virtual QBlackMatrix* recallFlashMatrix() = 0;
-};
-
 class SubClass : public KClmtr {
 public:
-    SubClass(QKClmtr* _QKC) {
+    SubClass(QKClmtr *_QKC) {
         _QKClmtr = _QKC;
     }
 
     void printMeasure(Measurement m);
     void printFlicker(Flicker f);
-    QKClmtr* _QKClmtr;
+    QKClmtr *_QKClmtr;
 };
 /** @ingroup wrappers
  *  @brief Wraps the Native object to work easly in Qt
  */
-class QKClmtr : public GenClmtr {
+class QKClmtr : public GenDevice {
     Q_OBJECT
 
 public:
@@ -352,8 +37,8 @@ public:
     void setPort(QString value) {
         _kclmtr->setPort(value.toStdString());
     }
-    QString getSN() {
-        return QString::fromStdString(_kclmtr->getSN());
+    QString getSerialNumber() {
+        return QString::fromStdString(_kclmtr->getSerialNumber());
     }
     QString getModel() {
         return QString::fromStdString(_kclmtr->getModel());
@@ -386,24 +71,24 @@ public:
         }
     }
     const matrix getCalMatrix() {
-        return _kclmtr->getcalMatrix();
+        return _kclmtr->getCalMatrix();
     }
     const matrix getRGBMatrix() {
         return _kclmtr->getRGBMatrix();
     }
-    QWhitespec* getWhiteSpec() {
-        return new QWhitespec(_kclmtr->getWhiteSpec());
+    WhiteSpec getWhiteSpec() {
+        return _kclmtr->getWhiteSpec();
     }
     void resetWhiteSpec() {
         _kclmtr->resetWhiteSpec();
     }
 
-    void setWhiteSpec(QWhitespec* value) {
-        _kclmtr->setWhiteSpec(value->getNwhitespec());
+    void setWhiteSpec(WhiteSpec value) {
+        _kclmtr->setWhiteSpec(value);
     }
     QStringList getCalFileList() {
         QStringList CalList;
-        const string* calList  = _kclmtr->getCalFileList();
+        const string *calList  = _kclmtr->getCalFileList();
 
         for(int i = 0; i < 97;  i++) {
             CalList << QString::fromStdString(calList[i]);
@@ -411,16 +96,9 @@ public:
 
         return CalList;
     }
-    QK10V* getK10V() {
-        return new QK10V(_kclmtr->getVirtualK10());
-    }
-    void setK10V(QK10V* value) {
-        _kclmtr->setVirtualK10(value->getNK10v());
-    }
 
-
-    void setTempCalFile(QCorrectedCoefficient* Matrix, QWhitespec* whiteSpec) {
-        _kclmtr->setTempCalFile(Matrix->getNCorrectedCoefficient(), whiteSpec->getNwhitespec());
+    void setTempCalFile(CorrectedCoefficient matrix, WhiteSpec whiteSpec) {
+        _kclmtr->setTempCalFile(matrix, whiteSpec);
     }
     //Property - FFT
     bool getFFT_Cosine() {
@@ -441,11 +119,11 @@ public:
     void setFFT_RollOff(bool value) {
         _kclmtr->setFFT_RollOff(value);
     }
-    bool getFFT_samples() {
+    int getFFT_samples() {
         return _kclmtr->getFFT_Samples();
     }
-    void setFFT_samples(int value) {
-        _kclmtr->setFFT_Samples(value);
+    int setFFT_samples(int value) {
+        return _kclmtr->setFFT_Samples(value);
     }
 
 
@@ -459,38 +137,35 @@ public:
     void stopMeasuring() {
         _kclmtr->stopMeasuring();
     }
-    QMeasurement getNextMeasurement() {
-        return QMeasurement(_kclmtr->getNextMeasurement());
-    }
-    QMeasurement getNextMeasurement(int n = 1) {
-        return QMeasurement(_kclmtr->getNextMeasurement(n));
+    Measurement getNextMeasurement(int n = 1) {
+        return Measurement(_kclmtr->getNextMeasurement(n));
     }
     //Setting up to Store CalFiles
-    QCorrectedCoefficient* getCoefficientTestMatrix(Qwrgb* Reference, Qwrgb* Kclmtr) {
-        return new QCorrectedCoefficient(_kclmtr->getCoefficientTestMatrix(Reference->getNwrgb(), Kclmtr->getNwrgb()));
+    CorrectedCoefficient getCoefficientTestMatrix(wrgb Reference, wrgb Kclmtr) {
+        return _kclmtr->getCoefficientTestMatrix(Reference, Kclmtr);
     }
     int deleteCalFile(int CalFileID) {
         return _kclmtr->deleteCalFile(CalFileID);
     }
     //Storing CalFile
-    int storeCalFile(int ID, QString Name, Qwrgb* Reference, Qwrgb* Kclmtr, QWhitespec* whitespec) {
-        return _kclmtr->storeMatrices(ID, Name.toStdString(), Reference->getNwrgb(), Kclmtr->getNwrgb(), whitespec->getNwhitespec());
+    int storeCalFile(int ID, QString Name, wrgb reference, wrgb kclmtr, WhiteSpec whiteSpec) {
+        return _kclmtr->storeMatrices(ID, Name.toStdString(), reference, kclmtr, whiteSpec);
     }
 
     //BlackCal - Cold
-    QBlackMatrix* captureBlackLevel() {
-        return new QBlackMatrix(_kclmtr->captureBlackLevel());
+    BlackMatrix captureBlackLevel() {
+        return _kclmtr->captureBlackLevel();
     }
-    QBlackMatrix* recallFlashMatrix() {
-        return new QBlackMatrix(_kclmtr->recallFlashMatrix());
+    BlackMatrix getFlashMatrix() {
+        return _kclmtr->getFlashMatrix();
     }
 
     //BlackCal - Hot
-    QBlackMatrix* recallRAMMatrix() {
-        return new QBlackMatrix(_kclmtr->recallRAMMatrix());
+    BlackMatrix getRAMMatrix() {
+        return _kclmtr->getRAMMatrix();
     }
-    QBlackMatrix* recallCoefficientMatrix() {
-        return new QBlackMatrix(_kclmtr->recallCoefficientMatrix());
+    BlackMatrix getCoefficientMatrix() {
+        return _kclmtr->getCoefficientMatrix();
     }
 
     //FFT
@@ -508,6 +183,10 @@ public:
     }
 
     //setup/Close
+    bool connect(QString portName) {
+        setPort(portName);
+        return connect();
+    }
     bool connect() {
         if(_kclmtr->connect()) {
             _isOpen = true;
@@ -518,50 +197,25 @@ public:
             return false;
         }
     }
-    void closePort(bool resetThePortName) {
-        _kclmtr->closePort(resetThePortName);
-        _isOpen = false;
-        emit closed();
-    }
-    bool connect(QString *portName) {
-        setPort(portName[0]);
-        return connect();
+    void closePort() {
+        if(isPortOpen()) {
+            _kclmtr->closePort();
+            _isOpen = false;
+            emit closed();
+        }
     }
 
-    void printMeasure(QMeasurement measure) {
+    void printMeasure(Measurement measure) {
         emit measured(measure);
     }
-    void printFlicker(QFlicker flicker) {
+    void printFlicker(Flicker flicker) {
         emit flickered(flicker);
     }
 
     //functions for GenDevice
-    GenType getType() {
-        return genTypeKClmtr;
+    DeviceType getType() {
+        return typeKClmtr;
     }
-
-
-signals:
-    void connected();
-    void calfileChanged();
-    /** @brief Sends out measurement
-     *  @details You must Registring QMeasurement connect this singal to a slot.
-     *  @details Here is an example:
-     *  @details Header
-     *  @snippet QKClmtrExample.cpp Header_measure
-     *   Source
-     *  @snippet QKClmtrExample.cpp Source_measure
-     */
-    void measured(QMeasurement measure);
-    /** @brief Sends out flicker
-     *  @details You must Registring QFlicker connect this singal to a slot.
-     *  @details Here is an example:
-     *  @details Header
-     *  @snippet QKClmtrExample.cpp Header_flicker
-     *   Source
-     *  @snippet QKClmtrExample.cpp Source_flicker
-     */
-    void flickered(QFlicker flicker);
 
 private:
     bool _isOpen;
