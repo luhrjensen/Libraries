@@ -114,7 +114,7 @@ public:
         _kclmtr->setFFT_Smoothing(value);
     }
     bool getFFT_Rolloff() {
-        return _kclmtr->getFFT_RoolOff();
+        return _kclmtr->getFFT_RollOff();
     }
     void setFFT_RollOff(bool value) {
         _kclmtr->setFFT_RollOff(value);
