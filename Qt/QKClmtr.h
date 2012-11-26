@@ -1,8 +1,8 @@
 #ifndef QKCLMTR_H
 #define QKCLMTR_H
 
-#include <QtGui/QWidget>
-#include <portsystem/devices/gendevice.h>
+#include <QObject>
+#include <QStringList>
 #include "../kclmtr/KClmtr.h"
 
 class QKClmtr;
@@ -19,7 +19,7 @@ public:
 /** @ingroup wrappers
  *  @brief Wraps the Native object to work easly in Qt
  */
-class QKClmtr : public GenDevice {
+class QKClmtr : public QObject {
     Q_OBJECT
 
 public:
@@ -119,10 +119,10 @@ public:
     void setFFT_RollOff(bool value) {
         _kclmtr->setFFT_RollOff(value);
     }
-    int getFFT_samples() {
+    int getFFT_Samples() {
         return _kclmtr->getFFT_Samples();
     }
-    int setFFT_samples(int value) {
+    int setFFT_Samples(int value) {
         return _kclmtr->setFFT_Samples(value);
     }
 
@@ -212,14 +212,17 @@ public:
         emit flickered(flicker);
     }
 
-    //functions for GenDevice
-    DeviceType getType() {
-        return typeKClmtr;
-    }
 
 private:
     bool _isOpen;
     SubClass *_kclmtr;
+
+signals:
+    void closed();
+    void connected();
+    void measured(Measurement);
+    void flickered(Flicker);
+    void calfileChanged();
 };
 
 #endif // QKCLMTR_H
