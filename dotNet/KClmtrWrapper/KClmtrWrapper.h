@@ -15,51 +15,53 @@ namespace KClmtrWrapper {
 		wEBU = 1,
 		wREC709 = 2,
 		wSMPTE = 3,
-		wNUM_SPECS
+		wNUM_SPECS,
+		wDefaultGamut = wREC709
 	};
 
 	public enum class wMeasureErrorCodes {
-        wNONE                    = 0x00000000,
+        NONE                    = 0x00000000,
         //Serial Port
-        wNOT_OPEN                = 0x00000001,
-        wTIMED_OUT               = 0x00000002,
-        wLOST_CONNECTION         = 0x00000004,
+        NOT_OPEN                = 0x00000001,
+        TIMED_OUT               = 0x00000002,
+        LOST_CONNECTION         = 0x00000004,
 
         //Measurement
-        wCONVERTED_NM            = 0x00000008,
-        wKELVINS                 = 0x00000010,
-        wAIMING_LIGHTS           = 0x00000020,
-        wAVERAGING_LOW_LIGHT     = 0x00800000,
-		
-        //Ranges
-        wBOTTOM_UNDER_RANGE      = 0x00000040,
-        wTOP_OVER_RANGE          = 0x00000080,
-        wOVER_HIGH_RANGE         = 0x00000100,
+        BAD_VALUES              = 0x00000008,
+        CONVERTED_NM            = 0x00000010,
+        KELVINS                 = 0x00000020,
+        AIMING_LIGHTS           = 0x00000040,
+        AVERAGING_LOW_LIGHT     = 0x00000080,
+
+		//Ranges
+        BOTTOM_UNDER_RANGE      = 0x00000100,
+        TOP_OVER_RANGE          = 0x00000200,
+        OVER_HIGH_RANGE         = 0x00000400,
 
         //Black Cals
-        wBLACK_ZERO              = 0x00000200,
-        wBLACK_OVERDRIVE         = 0x00000400,
-        wBLACK_EXCESSIVE         = 0x00000800,
-        wBLACK_PARSING_ROM       = 0x00001000,
-        wBLACK_STORING_ROM       = 0x00002000,
+        BLACK_ZERO              = 0x00000800,
+        BLACK_OVERDRIVE         = 0x00001000,
+        BLACK_EXCESSIVE         = 0x00002000,
+        BLACK_PARSING_ROM       = 0x00004000,
+        BLACK_STORING_ROM       = 0x00008000,
 
         //CalFiles
-        wCAL_WHITE_RGB           = 0x00004000,
-        wCAL_STORING             = 0x00008000,
-        wCAL_CONVERT_BINARY      = 0x00010000,
+        CAL_WHITE_RGB           = 0x00010000,
+        CAL_STORING             = 0x00020000,
+        CAL_CONVERT_BINARY      = 0x00040000,
 
         //FFT
-        wFFT_BAD_STRING          = 0x00020000,
-        wFFT_RANGE_CAL           = 0x00040000,
-        wFFT_NO_XYZ              = 0x00080000,
-        wFFT_NO_RANGE            = 0x00100000,
-        wFFT_INSUFFICIENT_DATA   = 0x00200000,
-        wFFT_PREVIOUS_RANGE      = 0x00400000,
-        wFFT_NOT_SUPPORTED       = 0x00800000,
-
+        FFT_BAD_STRING          = 0x00080000,
+        FFT_RANGE_CAL           = 0x00100000,
+        FFT_NO_XYZ              = 0x00200000,
+        FFT_NO_RANGE            = 0x00400000,
+        FFT_INSUFFICIENT_DATA   = 0x00800000,
+        FFT_PREVIOUS_RANGE      = 0x01000000,
+        FFT_NOT_SUPPORTED       = 0x02000000,
+        FFT_BAD_SAMPLES         = 0x04000000,
 
         //Miscellaneous
-        wFIRMWARE                = 0x0000800000
+        wFIRMWARE                = 0x08000000
     };
 
 
@@ -74,66 +76,58 @@ namespace KClmtrWrapper {
 	};
 
 	public ref struct wMeasurement {
-		double x;               //The x in the xyl
-		double y;               //The y in the xyl
-		double l;               //The l in the xyl
-		double bigx;            //The x in the xyz
-		double bigy;            //The y in the xyz
-		double bigz;            //The z in the xyz
-		double bigxraw;         //The xraw in the xyz
-		double bigyraw;         //The yraw in the xyz
-		double bigzraw;         //The zraw in the xyz
-		double r;               //The r in the rgb
-		double g;               //The g in the rgb
-		double b;               //The b in the rgb
-		double u;               //The u' in the u'v'y
-		double v;               //The v' in the u'v'y
-		double nm;              //The nm in the nmdu'v'Y
-		double nmduv;              //The duv' in the nmdu'v'Y
-		//double L;               //The L in L*A*B*
-		//double A;               //The A in L*A*B*
-		//double B;               //The B in L*A*B*
-		String^ redrange;		//The range which the KClmtr is in red
-		String^ greenrange;		//The range which the KClmtr is in green
-		String^ bluerange;		//The range which the KClmtr is in blue
-		int range;              //The range which the KClmtr is in overall
-		double temp;            //The temperature in K
-		double tempduv;             //The distance off the curve
-		int errorcode;          //The error code whenever you are getting data
-		int averagingby;        //How many measurements we are averaging by
+		enum class MeasurmentRange {
+			range1 = 1,
+			range2 = range1 + 1,
+			range3 = range2 + 1,
+			range4 = range3 + 1,
+			range5 = range4 + 1,
+			range6 = range5 + 1,
 
-		wMeasurement(){}
+			range1B = range1,
+			range1T = range2,
+			range2B = range3,
+			range2T = range4,
+			range3B = range5,
+			range3T = range6,
+		};
 
-		wMeasurement(Measurement measurement) {
-			x = measurement.x;
-			y = measurement.y;
-			l = measurement.l;
-			bigx = measurement.bigx;
-			bigy = measurement.bigy;
-			bigz = measurement.bigz;
-			bigxraw = measurement.bigxraw;
-			bigyraw = measurement.bigyraw;
-			bigzraw = measurement.bigzraw;
-			r = measurement.r;
-			g = measurement.g;
-			b = measurement.b;
-			u = measurement.u;
-			v = measurement.v;
-			nm = measurement.nm;
-			nmduv = measurement.nmduv;
-			//L = measurement.L;
-			//A = measurement.A;
-			//B = measurement.B;
-			redrange = gcnew String(measurement.redrange.c_str());
-			greenrange = gcnew String(measurement.greenrange.c_str());
-			bluerange = gcnew String(measurement.bluerange.c_str());
-			range = measurement.range;
-			temp = measurement.temp;
-			tempduv = measurement.tempduv;
-			errorcode = measurement.errorcode;
-			averagingby = measurement.averagingby;
+		double x;
+		double y;
+		double bigx;
+		double bigy;
+		double bigz;
+		double bigxraw;
+		double bigyraw;
+		double bigzraw;
+		double red;
+		double green;
+		double blue;
+		double u;
+		double v;
+		double nm;
+		double nmduv;
+		double L;
+		double a;
+		double b;
+		double C;
+		double h;
+		MeasurmentRange redrange;
+		MeasurmentRange greenrange;
+		MeasurmentRange bluerange;
+		double temp;
+		double tempduv;
+		int errorcode;
+		int averagingby;
+
+		wMeasurement(){
+			convertNativeToManage(Measurement());
 		}
 
+		wMeasurement(Measurement measurement) {
+			convertNativeToManage(measurement);
+		}
+		
 		void fromXYZ(double X, double Y, double Z){
 			wMeasurement(Measurement::fromXYZ(X,Y,Z,NTSC));
 		}
@@ -167,6 +161,38 @@ namespace KClmtrWrapper {
 		void fromRGB(double r, double g, double b, wGamutSpec gs){
 			wMeasurement(Measurement::fromRGB(r, g, b, static_cast<gamutSpec>(gs)));
 		}
+
+private:
+	void convertNativeToManage(Measurement measurement) {
+			x = measurement.x;
+			y = measurement.y;
+			bigx = measurement.bigx;
+			bigy = measurement.bigy;
+			bigz = measurement.bigz;
+			bigxraw = measurement.bigxraw;
+			bigyraw = measurement.bigyraw;
+			bigzraw = measurement.bigzraw;
+			red = measurement.red;
+			green = measurement.green;
+			blue = measurement.blue;
+			u = measurement.u;
+			v = measurement.v;
+			nm = measurement.nm;
+			nmduv = measurement.nmduv;
+			L = measurement.L;
+			a = measurement.a;
+			b = measurement.b;
+			C = measurement.C;
+			h = measurement.h;
+			redrange = (MeasurmentRange)measurement.redrange;
+			greenrange = (MeasurmentRange)measurement.greenrange;
+			bluerange = (MeasurmentRange)measurement.bluerange;
+			temp = measurement.temp;
+			tempduv = measurement.tempduv;
+			errorcode = measurement.errorcode;
+			averagingby = measurement.averagingby;
+	}
+
 	};
 
 	public ref struct wwrgb {
@@ -199,17 +225,26 @@ namespace KClmtrWrapper {
 
 	public ref struct wBlackMatrix {
 		array<array<double>^>^ range;
-		double Therm;
+		double therm;
 		int errorcode;            //The error code whenever you are getting data
 
-		wBlackMatrix(){}
+
+		wBlackMatrix() {
+			convertNativeToManage(BlackMatrix());
+		}
+
 		wBlackMatrix(BlackMatrix black){
+			convertNativeToManage(black);
+		}
+
+	private:
+		void convertNativeToManage(BlackMatrix black){
 			for(int i = 0; i < 6; ++i){
 				range[i][0] = black.range[i][0];
 				range[i][1] = black.range[i][1];
 				range[i][2] = black.range[i][2];
 			}
-			Therm = black.Therm;
+			therm = black.therm;
 			errorcode = black.errorcode;
 		}
 	};
@@ -264,82 +299,36 @@ namespace KClmtrWrapper {
 		}
 	};
 
-	public ref struct wwhitespec {
+	public ref struct wWhiteSpec {
 		double x;                //The X to the Whitespect modifier
 		double y;                //The y to the Whitespect modifier
 		double z;                //The z to the Whitespect modifier
-		double xy;               //The allowed variance of xy
-		double l;                //The allowed variance of Y
-		wwhitespec(){}
-		wwhitespec(whitespec White){
-			x = White.x;
-			y = White.y;
-			z = White.z;
-			xy = White.xy;
-			l = White.l;
+		double xyVar;            //The allowed variance of xy
+		double yVar;             //The allowed variance of Y
+
+		wWhiteSpec() {
+			//wWhitSpec(WhiteSpec());
 		}
-		whitespec getNwhitespec(){
-			whitespec White;
+		
+		wWhiteSpec(WhiteSpec white){
+			x = white.x;
+			y = white.y;
+			z = white.z;
+			xyVar = white.xyVar;
+			yVar = white.yVar;
+		}
+
+		WhiteSpec getNwhitespec(){
+			WhiteSpec White;
 
 			White.x = x;
 			White.y = y;
 			White.z = z;
-			White.xy = xy;
-			White.l = l;
+			White.xyVar = xyVar;
+			White.yVar = yVar;
 
 			return White;
 		}
-	};
-
-	public ref class K10VWrap {
-	public:
-		ref struct wColors{
-			int red;
-			int green;
-			int blue;
-
-			wColors(){}
-			wColors(Colors color){
-				red = color.red;
-				green = color.green;
-				blue = color.blue;
-			}
-			Colors getNColor(){
-				Colors color;
-
-				color.red = red;
-				color.green = green;
-				color.blue = blue;
-
-				return color;
-			}
-		};
-
-		K10VWrap(){
-			_k10v = new K10V;
-		}
-		virtual ~K10VWrap(void){
-			delete _k10v;
-		}
-		K10VWrap(K10V k10v){
-			_k10v = new K10V(k10v);
-		}
-
-		property wColors^ ColorField{
-			wColors^ get(){
-				return gcnew wColors(_k10v->getColorField());
-			}
-			void set(wColors^ value){
-				_k10v->setColorField(value->getNColor());
-			}
-		}
-
-		K10V getNK10V(){
-			return *_k10v;
-		}
-
-	private:
-		K10V *_k10v;
 	};
 
 	/** @ingroup wrappers
@@ -378,9 +367,9 @@ namespace KClmtrWrapper {
 		/// <summary>
 		/// Gets the Serail Number of the Klein device
 		/// </summary>
-		property String^ SN{
+		property String^ SerialNumber{
 			String^ get(){
-				return NativeToDotNet(_kclmtr->getSN());
+				return NativeToDotNet(_kclmtr->getSerialNumber());
 			}
 		}
 		/// <summary>
@@ -437,7 +426,7 @@ namespace KClmtrWrapper {
 				array<double,2>^ matrix = gcnew array<double,2>(3,3);
 				for (int i = 0; i < 3; i++){
 					for(int x = 0; x < 3; x++){
-						matrix[i, x] = _kclmtr->getcalMatrix().v[i][x];
+						matrix[i, x] = _kclmtr->getCalMatrix().v[i][x];
 					}
 				}
 				return matrix;
@@ -460,11 +449,11 @@ namespace KClmtrWrapper {
 		/// <summary>
 		/// Gets or set the current Cal File's white spect
 		/// </summary>
-		property wwhitespec^ WhiteSpect{
-			wwhitespec^ get(){
-				return gcnew wwhitespec(_kclmtr->getWhiteSpec());
+		property wWhiteSpec^ WhiteSpect{
+			wWhiteSpec^ get(){
+				return gcnew wWhiteSpec(_kclmtr->getWhiteSpec());
 			}
-			void set(wwhitespec^ value){
+			void set(wWhiteSpec^ value){
 				_kclmtr->setWhiteSpec(value->getNwhitespec());
 			}
 		}
@@ -483,8 +472,8 @@ namespace KClmtrWrapper {
 		/// <summary>
 		/// set the temporary cal file spect
 		/// </summary>
-		void setTempCalFile(wCorrectedCoefficient^ Matrix, wwhitespec^ whiteSpect){
-			_kclmtr->setTempCalFile(Matrix->getNCorrectedCoefficient(), whiteSpect->getNwhitespec());
+		void setTempCalFile(wCorrectedCoefficient^ Matrix, wWhiteSpec^ whiteSpec){
+			_kclmtr->setTempCalFile(Matrix->getNCorrectedCoefficient(), whiteSpec->getNwhitespec());
 		}
 
 		//Property - FFT
@@ -515,7 +504,7 @@ namespace KClmtrWrapper {
 		/// </summary>
 		property bool FFT_RollOff{
 			bool get(){
-				return _kclmtr->getFFT_RoolOff();
+				return _kclmtr->getFFT_RollOff();
 			}
 			void set(bool value){
 				_kclmtr->setFFT_RollOff(value);
@@ -533,18 +522,6 @@ namespace KClmtrWrapper {
 				_kclmtr->setFFT_Samples(value);
 			}
 		}
-		/// <summary>
-		/// Get or Set the Virtual K10 object, K10V, to the KClmtr to be used during measurements
-		/// </summary>
-		property K10VWrap^ VirtualK10{
-			K10VWrap^ get(){
-				return gcnew K10VWrap(_kclmtr->getVirtualK10());
-			}
-			void set(K10VWrap^ value){
-				_kclmtr->setVirtualK10(value->getNK10V());
-			}
-		}
-
 		//XYZ
 		/// <summary>
 		/// Returns true if the device is measuring mode. Returns false if it is not in measuring mode.
@@ -600,7 +577,7 @@ namespace KClmtrWrapper {
 		/// <param name="Kclmtr">  Kclmtr The KClmtr's measurement </param>
 		/// <param name="whitespect> The white spect to be stored for the Calibration file </param>
 		/// <return>int Error code. 0 is Good</return>
-		int storeMatrices(int ID, String^ Name, wwrgb^ Reference, wwrgb^ Kclmtr, wwhitespec^ whitespec){
+		int storeMatrices(int ID, String^ Name, wwrgb^ Reference, wwrgb^ Kclmtr, wWhiteSpec^ whitespec){
 			return _kclmtr->storeMatrices(ID, MarshalString(Name), Reference->getNwrgb(), Kclmtr->getNwrgb(), whitespec->getNwhitespec());
 		}
 
@@ -614,22 +591,22 @@ namespace KClmtrWrapper {
 		/// <summary>
 		/// Reads matrix of saved counts from flash
 		/// </summary>
-		wBlackMatrix^ recallFlashMatrix(){
-			return gcnew wBlackMatrix(_kclmtr->recallFlashMatrix());
+		wBlackMatrix^ getFlashMatrix(){
+			return gcnew wBlackMatrix(_kclmtr->getFlashMatrix());
 		}
 
 		//BlackCal - Hot
 		/// <summary>
 		///  Reads matrix of saved counts from RAM
 		/// </summary>
-		wBlackMatrix^ recallRAMMatrix(){
-			return gcnew wBlackMatrix(_kclmtr->recallRAMMatrix());
+		wBlackMatrix^ getRAMMatrix(){
+			return gcnew wBlackMatrix(_kclmtr->getRAMMatrix());
 		}
 		/// <summary>
 		/// Reads matrix of black thermal correction coefficents
 		/// </summary>
-		wBlackMatrix^ recallCoefficientMatrix(){
-			return gcnew wBlackMatrix(_kclmtr->recallCoefficientMatrix());
+		wBlackMatrix^ getCoefficientMatrix(){
+			return gcnew wBlackMatrix(_kclmtr->getCoefficientMatrix());
 		}
 
 		//FFT
@@ -673,8 +650,8 @@ namespace KClmtrWrapper {
 		/// <summary>
 		/// Closes the port and reset all the propeties of the KClmtr object
 		/// </summary>
-		void closePort(bool resetThePortName){
-			_kclmtr->closePort(resetThePortName);
+		void closePort(){
+			_kclmtr->closePort();
 		}
 
 		delegate System::Void MeasureEventHandler(wMeasurement^);
