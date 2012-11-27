@@ -2,7 +2,7 @@
 <VisualStudioProject
 	ProjectType="Visual C++"
 	Version="9.00"
-	Name="KClmtrLib"
+	Name="KClmtr"
 	ProjectGUID="{2E499617-D9D9-4B84-977A-996CC99248B9}"
 	RootNamespace="KClmtrLib"
 	Keyword="Win32Proj"
@@ -28,6 +28,7 @@
 			/>
 			<Tool
 				Name="VCCustomBuildTool"
+				CommandLine="copy ../kclmtr/KClmtr.h $(TargetDir)&#x0D;&#x0A;"
 			/>
 			<Tool
 				Name="VCXMLDataGeneratorTool"
@@ -75,6 +76,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
+				CommandLine=""
 			/>
 		</Configuration>
 		<Configuration
@@ -137,7 +139,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine=""
+				CommandLine="copy $(ProjectDir)\..\..\kclmtr\*.h $(OutDir)"
 			/>
 		</Configuration>
 	</Configurations>
@@ -171,7 +173,7 @@
 					>
 					<Tool
 						Name="VCCustomBuildTool"
-						CommandLine="cp KClmtr.h $(TargetDir)"
+						CommandLine="cp KClmtr.h $(TargetDir)&#x0D;&#x0A;"
 					/>
 				</FileConfiguration>
 			</File>
