@@ -20,49 +20,49 @@ namespace KClmtrWrapper {
 	};
 
 	public enum class wMeasureErrorCodes {
-        NONE                    = 0x00000000,
-        //Serial Port
-        NOT_OPEN                = 0x00000001,
-        TIMED_OUT               = 0x00000002,
-        LOST_CONNECTION         = 0x00000004,
+		NONE                    = 0x00000000,
+		//Serial Port
+		NOT_OPEN                = 0x00000001,
+		TIMED_OUT               = 0x00000002,
+		LOST_CONNECTION         = 0x00000004,
 
-        //Measurement
-        BAD_VALUES              = 0x00000008,
-        CONVERTED_NM            = 0x00000010,
-        KELVINS                 = 0x00000020,
-        AIMING_LIGHTS           = 0x00000040,
-        AVERAGING_LOW_LIGHT     = 0x00000080,
+		//Measurement
+		BAD_VALUES              = 0x00000008,
+		CONVERTED_NM            = 0x00000010,
+		KELVINS                 = 0x00000020,
+		AIMING_LIGHTS           = 0x00000040,
+		AVERAGING_LOW_LIGHT     = 0x00000080,
 
 		//Ranges
-        BOTTOM_UNDER_RANGE      = 0x00000100,
-        TOP_OVER_RANGE          = 0x00000200,
-        OVER_HIGH_RANGE         = 0x00000400,
+		BOTTOM_UNDER_RANGE      = 0x00000100,
+		TOP_OVER_RANGE          = 0x00000200,
+		OVER_HIGH_RANGE         = 0x00000400,
 
-        //Black Cals
-        BLACK_ZERO              = 0x00000800,
-        BLACK_OVERDRIVE         = 0x00001000,
-        BLACK_EXCESSIVE         = 0x00002000,
-        BLACK_PARSING_ROM       = 0x00004000,
-        BLACK_STORING_ROM       = 0x00008000,
+		//Black Cals
+		BLACK_ZERO              = 0x00000800,
+		BLACK_OVERDRIVE         = 0x00001000,
+		BLACK_EXCESSIVE         = 0x00002000,
+		BLACK_PARSING_ROM       = 0x00004000,
+		BLACK_STORING_ROM       = 0x00008000,
 
-        //CalFiles
-        CAL_WHITE_RGB           = 0x00010000,
-        CAL_STORING             = 0x00020000,
-        CAL_CONVERT_BINARY      = 0x00040000,
+		//CalFiles
+		CAL_WHITE_RGB           = 0x00010000,
+		CAL_STORING             = 0x00020000,
+		CAL_CONVERT_BINARY      = 0x00040000,
 
-        //FFT
-        FFT_BAD_STRING          = 0x00080000,
-        FFT_RANGE_CAL           = 0x00100000,
-        FFT_NO_XYZ              = 0x00200000,
-        FFT_NO_RANGE            = 0x00400000,
-        FFT_INSUFFICIENT_DATA   = 0x00800000,
-        FFT_PREVIOUS_RANGE      = 0x01000000,
-        FFT_NOT_SUPPORTED       = 0x02000000,
-        FFT_BAD_SAMPLES         = 0x04000000,
+		//FFT
+		FFT_BAD_STRING          = 0x00080000,
+		FFT_RANGE_CAL           = 0x00100000,
+		FFT_NO_XYZ              = 0x00200000,
+		FFT_NO_RANGE            = 0x00400000,
+		FFT_INSUFFICIENT_DATA   = 0x00800000,
+		FFT_PREVIOUS_RANGE      = 0x01000000,
+		FFT_NOT_SUPPORTED       = 0x02000000,
+		FFT_BAD_SAMPLES         = 0x04000000,
 
-        //Miscellaneous
-        wFIRMWARE                = 0x08000000
-    };
+		//Miscellaneous
+		wFIRMWARE               = 0x08000000
+	};
 
 
 
@@ -127,43 +127,47 @@ namespace KClmtrWrapper {
 		wMeasurement(Measurement measurement) {
 			convertNativeToManage(measurement);
 		}
-		
-		void fromXYZ(double X, double Y, double Z){
-			wMeasurement(Measurement::fromXYZ(X,Y,Z,NTSC));
+
+		static wMeasurement^ fromXYZ(double X, double Y, double Z){
+			return fromXYZ(X, Y, Z, wGamutSpec::wDefaultGamut);
 		}
-		void fromXYZ(double X, double Y, double Z, wGamutSpec gs){
-			wMeasurement(Measurement::fromXYZ(X,Y,Z, static_cast<gamutSpec>(gs)));
+		static wMeasurement^ fromxyY(double x, double y, double Y){
+			return fromxyY(x, y, Y, wGamutSpec::wDefaultGamut);
 		}
-		void fromxyL(double x, double y, double L){
-			wMeasurement(Measurement::fromxyL(x,y,L,NTSC));
+		static wMeasurement^ fromuvprimeY(double u, double v, double Y){
+			return fromuvprimeY(u, v, Y, wGamutSpec::wDefaultGamut);
 		}
-		void fromxyL(double x, double y, double L, wGamutSpec gs){
-			wMeasurement(Measurement::fromxyL(x,y,L,static_cast<gamutSpec>(gs)));
+		static wMeasurement^ fromTempduvY(double _temp, double _tempduv, double Y){
+			return fromTempduvY(_temp, _tempduv, Y, wGamutSpec::wDefaultGamut);
 		}
-		void fromuvprimeL(double u, double v, double L){
-			wMeasurement(Measurement::fromuvprimeL(u,v,L,NTSC));
+		static wMeasurement^ fromnmduvY(double _nm, double _nmduv, double Y){
+			return fromnmduvY(_nm, _nmduv, Y, wGamutSpec::wDefaultGamut);
 		}
-		void fromTempduvL(double _temp, double _tempduv, double L){
-			wMeasurement(Measurement::fromTempduvL(_temp, _tempduv, L, NTSC));
-		}
-		void fromTempduvL(double _temp, double _tempduv, double L, wGamutSpec gs){
-			wMeasurement(Measurement::fromTempduvL(_temp, _tempduv, L, static_cast<gamutSpec>(gs)));
-		}
-		void fromnmduvL(double _nm, double _nmduv, double L){
-			wMeasurement(Measurement::fromnmduvL(_nm, _nmduv, L, NTSC));
-		}
-		void fromnmduvL(double _nm, double _nmduv, double L, wGamutSpec gs){
-			wMeasurement(Measurement::fromnmduvL(_nm, _nmduv, L, static_cast<gamutSpec>(gs)));
-		}
-		void fromRGB(double r, double g, double b){
-			wMeasurement(Measurement::fromRGB(r, g, b, NTSC));
-		}
-		void fromRGB(double r, double g, double b, wGamutSpec gs){
-			wMeasurement(Measurement::fromRGB(r, g, b, static_cast<gamutSpec>(gs)));
+		static wMeasurement^ fromRGB(double red, double green, double blue){
+			return fromRGB(red, green, blue, wGamutSpec::wDefaultGamut);
 		}
 
-private:
-	void convertNativeToManage(Measurement measurement) {
+		static wMeasurement^ fromXYZ(double X, double Y, double Z, wGamutSpec gs){
+			return gcnew wMeasurement(Measurement::fromXYZ(X, Y, Z, static_cast<gamutSpec>(gs)));
+		}
+		static wMeasurement^ fromxyY(double x, double y, double Y, wGamutSpec gs){
+			return gcnew wMeasurement(Measurement::fromxyY(x, y, Y, static_cast<gamutSpec>(gs)));
+		}
+		static wMeasurement^ fromuvprimeY(double u, double v, double Y, wGamutSpec gs){
+			return gcnew wMeasurement(Measurement::fromuvprimeY(u, v, Y, static_cast<gamutSpec>(gs)));
+		}
+		static wMeasurement^ fromTempduvY(double _temp, double _tempduv, double Y, wGamutSpec gs){
+			return gcnew wMeasurement(Measurement::fromTempduvY(_temp, _tempduv, Y, static_cast<gamutSpec>(gs)));
+		}
+		static wMeasurement^ fromnmduvY(double _nm, double _nmduv, double Y, wGamutSpec gs){
+			return gcnew wMeasurement(Measurement::fromnmduvY(_nm, _nmduv, Y, static_cast<gamutSpec>(gs)));
+		}
+		static wMeasurement^ fromRGB(double r, double g, double b, wGamutSpec gs){
+			return gcnew wMeasurement(Measurement::fromRGB(r, g, b, static_cast<gamutSpec>(gs)));
+		}
+
+	private:
+		void convertNativeToManage(Measurement measurement) {
 			x = measurement.x;
 			y = measurement.y;
 			bigx = measurement.bigx;
@@ -191,7 +195,7 @@ private:
 			tempduv = measurement.tempduv;
 			errorcode = measurement.errorcode;
 			averagingby = measurement.averagingby;
-	}
+		}
 
 	};
 
@@ -199,7 +203,7 @@ private:
 		//white, red, green, blue
 		//x, y, z
 		//The z from when the screen was blue
-		array<double,2>^ v;
+		array<double, 2>^ v;
 
 		wwrgb(){
 			v = gcnew array<double, 2>(4, 3);
@@ -208,7 +212,7 @@ private:
 			v = gcnew array<double, 2>(4, 3);
 			for(int i=0; i<4; ++i){
 				for(int j=0; j<3; ++j){
-					v[i,j] = WRGB.v[i][j];
+					v[i, j] = WRGB.v[i][j];
 				}
 			}
 		}
@@ -216,7 +220,7 @@ private:
 			wrgb WRGB;
 			for(int i=0; i<4; ++i){
 				for(int j=0; j<3; ++j){
-					WRGB.v[i][j] = v[i,j];
+					WRGB.v[i][j] = v[i, j];
 				}
 			}
 			return WRGB;
@@ -250,14 +254,14 @@ private:
 	};
 
 	public ref struct wCorrectedCoefficient {
-		static array<double,2>^ colorMatrix = gcnew array<double,2>(3,3);
-		static array<double,2>^ rgbMatrix = gcnew array<double,2>(3,3);
+		static array<double, 2>^ colorMatrix = gcnew array<double, 2>(3, 3);
+		static array<double, 2>^ rgbMatrix = gcnew array<double, 2>(3, 3);
 		wCorrectedCoefficient(){}
 		wCorrectedCoefficient(CorrectedCoefficient corrected){
 			for(int i = 0; i < 3; i++){
 				for(int x = 0; x < 3; x++){
-					colorMatrix[i,x] = corrected.colorMatrix[i][x];
-					rgbMatrix[i,x] = corrected.rgbMatrix[i][x];
+					colorMatrix[i, x] = corrected.colorMatrix[i][x];
+					rgbMatrix[i, x] = corrected.rgbMatrix[i][x];
 				}
 			}
 		}
@@ -265,8 +269,8 @@ private:
 			CorrectedCoefficient corrected;
 			for(int i = 0; i < 3; i++){
 				for(int x = 0; x < 3; x++){
-					corrected.colorMatrix[i][x] = colorMatrix[i,x];
-					corrected.rgbMatrix[i][x] = rgbMatrix[i,x];
+					corrected.colorMatrix[i][x] = colorMatrix[i, x];
+					corrected.rgbMatrix[i][x] = rgbMatrix[i, x];
 				}
 			}
 			return corrected;
@@ -275,7 +279,7 @@ private:
 
 	public ref struct wFlicker {
 		wMeasurement ^xyz;					//The measurement from XYZ
-		array<double,2> ^peakfrequency;		//The top 3 frequency of DB
+		array<double, 2> ^peakfrequency;		//The top 3 frequency of DB
 		array<double> ^flickerDB;			//The DB from 1hz to 100hz
 		array<double> ^flickerPercent;		//The Percent from 1hz to 100hz
 		int errorcode;						//The error code whenever you are getting data
@@ -288,7 +292,7 @@ private:
 			flickerPercent = gcnew array<double>(101);
 			for(int i = 0; i < 3; i++){
 				for(int x = 0; x < 3; x++){
-					peakfrequency[i,x] = flicker.peakfrequency[i][x];
+					peakfrequency[i, x] = flicker.peakfrequency[i][x];
 				}
 			}
 			for(int i = 0; i < 101; i++){
@@ -309,7 +313,7 @@ private:
 		wWhiteSpec() {
 			//wWhitSpec(WhiteSpec());
 		}
-		
+
 		wWhiteSpec(WhiteSpec white){
 			x = white.x;
 			y = white.y;
@@ -332,8 +336,8 @@ private:
 	};
 
 	/** @ingroup wrappers
-	 * 	@brief Wraps the Native object to work easly in .Net Framework
-	 */
+	* 	@brief Wraps the Native object to work easly in .Net Framework
+	*/
 	public ref class KClmtrWrap {
 	public:
 		KClmtrWrap(){
@@ -356,7 +360,7 @@ private:
 		property int port{
 			int get(){
 				string foobar = _kclmtr->getPort();
-				return Convert::ToInt16(NativeToDotNet(foobar.substr(3,1)));
+				return Convert::ToInt16(NativeToDotNet(foobar.substr(3, 1)));
 			}
 			void set(int value){
 				String^ port = "\\\\.\\COM" + value;
@@ -421,9 +425,9 @@ private:
 		/// <summary>
 		/// Gets the current Cal File's calaibration matrix
 		/// </summary>
-		property array<double,2>^ CalMatrix{
-			array<double,2>^ get(){
-				array<double,2>^ matrix = gcnew array<double,2>(3,3);
+		property array<double, 2>^ CalMatrix{
+			array<double, 2>^ get(){
+				array<double, 2>^ matrix = gcnew array<double, 2>(3, 3);
 				for (int i = 0; i < 3; i++){
 					for(int x = 0; x < 3; x++){
 						matrix[i, x] = _kclmtr->getCalMatrix().v[i][x];
@@ -435,9 +439,9 @@ private:
 		/// <summary>
 		/// Gets the current Cal File's color matrix
 		/// </summary>
-		property array<double,2>^ RGBMatrix{
-			array<double,2>^ get(){
-				array<double,2>^ matrix = gcnew array<double,2>(3,3);
+		property array<double, 2>^ RGBMatrix{
+			array<double, 2>^ get(){
+				array<double, 2>^ matrix = gcnew array<double, 2>(3, 3);
 				for (int i = 0; i < 3; i++){
 					for(int x = 0; x < 3; x++){
 						matrix[i, x] = _kclmtr->getRGBMatrix().v[i][x];
@@ -683,10 +687,10 @@ private:
 		}
 
 	private:
-		System::Void backgroundWorkerMeasure_DoWork(System::Object^  sender, System::ComponentModel::DoWorkEventArgs^  e) {
+		System::Void backgroundWorkerMeasure_DoWork(System::Object^ sender, System::ComponentModel::DoWorkEventArgs^ e) {
 			measureEvent((KClmtrWrapper::wMeasurement^) e->Argument);
 		}
-		System::Void backgroundWorkerFlicker_DoWork(System::Object^  sender, System::ComponentModel::DoWorkEventArgs^  e) {
+		System::Void backgroundWorkerFlicker_DoWork(System::Object^ sender, System::ComponentModel::DoWorkEventArgs^ e) {
 			flickerEvent((KClmtrWrapper::wFlicker^) e->Argument);
 		}
 
