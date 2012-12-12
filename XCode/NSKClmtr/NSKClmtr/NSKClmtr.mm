@@ -31,245 +31,152 @@ void SubClass::printMeasure(Measurement m)
     [pool release];
 
 }
-@implementation NSKMatrix
-
--(id)initWithMatrix:(matrix)Matrix{
-    self = [super init];
-    if(self){
-    for(int i = 0; i < 3; i++)
-        for(int x = 0; x < 3; x++)
-            v[i][x] = Matrix.v[i][x];
-    }
-    
-    return self;
-}
-
-@end
 @implementation NSMeasurement
--(id)initWithMeasurement:(Measurement)measurement
-{
+
+-(id)init{
     self = [super init];
     if(self){
-        x = measurement.x;
-        y = measurement.y;
-        l = measurement.l;
-        bigx = measurement.bigx;
-        bigy = measurement.bigy;
-        bigz = measurement.bigz;
-        bigxraw = measurement.bigxraw;
-        bigyraw = measurement.bigyraw;
-        bigzraw = measurement.bigzraw;
-        r = measurement.r;
-        g = measurement.g;
-        b = measurement.b;
-        u = measurement.u;
-        v = measurement.v;
-        nm = measurement.nm;
-        du = measurement.du;
-        //        L = measurement.L;
-        //        A = measurement.A;
-        //        B = measurement.B;
-        redrange = [NSString stringWithUTF8String:measurement.redrange.c_str()];
-        greenrange = [NSString stringWithUTF8String:measurement.greenrange.c_str()];
-        bluerange = [NSString stringWithUTF8String:measurement.bluerange.c_str()];
-        range = measurement.range;
-        temp = measurement.temp;
-        duv = measurement.duv;
-        errorcode = measurement.errorcode;
-        errorstring = [NSString stringWithUTF8String:measurement.errorstring.c_str()];
-        averagingby = measurement.averagingby;
-        readyflag = measurement.readyflag;
+        [self convertToC:Measurement()];
     }
     return self;
 }
-//-(void)release
-//{
-//    [redrange release];
-//    [greenrange release];
-//    [bluerange release];
-//    [errorstring release];
-//    
-//    [super release];
-//    //[super dealloc];
-//}
-@end
 
-@implementation NSwrgb
-
--(id)initWithWRGB:(wrgb)WRGB
-{
+-(id)initWithMeasurement:(Measurement)measure{
     self = [super init];
     if(self){
-        for(int i=0; i<4; ++i)
-            for(int j=0; j<3; ++j)
-                v[i][j] = WRGB.v[i][j];
+        [self convertToC:Measurement()];
     }
     return self;
 }
--(wrgb)getNwrgb;
-{
-    wrgb WRGB;
-    
-    for(int i=0; i<4; ++i)
-        for(int j=0; j<3; ++j)
-            WRGB.v[i][j] = v[i][j];
-    
-    return WRGB;
-}
-
-@end
-
-@implementation NSBlackMatrix
--(id)initWithBlackMatrix:(BlackMatrix)black;
-{
+-(id)initwithXYZ:(double)_X Y:(double)_Y Z:(double)_Z{
     self = [super init];
     if(self){
-        for(int i = 0; i < 3; i++)
-        {
-            range1[i] = black.range1[i];
-            range2[i] = black.range2[i];
-            range3[i] = black.range3[i];
-            range4[i] = black.range4[i];
-            range5[i] = black.range5[i];
-            range6[i] = black.range6[i];
-        }
-        Therm = black.Therm;
-        errorcode = black.errorcode;
-        errorstring = [NSString stringWithUTF8String:black.errorstring.c_str()];
+        [self convertToC:Measurement::fromXYZ(_X, _Y, _Z)];
     }
     return self;
+}
+-(id)initWithXYZ:(double)_X Y:(double)_Y Z:(double)_Z gs:(gamutSpec)gs{
+    self = [super init];
+    if(self){
+        [self convertToC:Measurement::fromXYZ(_X, _Y, _Z, gs)];
+    }
+    return self;
+}
+-(id)initwithxyY:(double)_x y:(double)_y Y:(double)_Y{
+    self = [super init];
+    if(self){
+        [self convertToC:Measurement::fromxyY(_x, _y, _Y)];
+    }
+    return self;
+}
+-(id)initwithxyY:(double)_x y:(double)_y Y:(double)_Y gs:(gamutSpec)gs{
+    self = [super init];
+    if(self){
+        [self convertToC:Measurement::fromxyY(_x, _y, _Y, gs)];
+    }
+    return self;
+}
+-(id)initwithuvprimeY:(double)_u u:(double)_v Y:(double)_Y{
+    self = [super init];
+    if(self){
+        [self convertToC:Measurement::fromuvprimeY(_u, _v, _Y)];
+    }
+    return self;
+}
+-(id)initwithuvprimeY:(double)_u u:(double)_v Y:(double)_Y gs:(gamutSpec)gs{
+    self = [super init];
+    if(self){
+        [self convertToC:Measurement::fromuvprimeY(_u, _v, _Y, gs)];
+    }
+    return self;
+}
+-(id)initwithTempduvY:(double)_temp duv:(double)_duv Y:(double)_Y{
+    self = [super init];
+    if(self){
+        [self convertToC:Measurement::fromTempduvY(_temp, _duv, _Y)];
+    }
+    return self;
+}
+-(id)initWithTempduvY:(double)_temp duv:(double)_duv Y:(double)_Y gs:(gamutSpec)gs{
+    self = [super init];
+    if(self){
+        [self convertToC:Measurement::fromTempduvY(_temp, _duv, _Y, gs)];
+    }
+    return self;
+}
+-(id)initWithRGB:(double)_red green:(double)_green blue:(double)_blue{
+    self = [super init];
+    if(self){
+        [self convertToC:Measurement::fromRGB(_red, _green, _blue)];
+    }
+    return self;
+}
+-(id)initWithRGB:(double)_red green:(double)_green blue:(double)_blue gs:(gamutSpec)gs{
+    self = [super init];
+    if(self){
+        [self convertToC:Measurement::fromRGB(_red, _green, _blue, gs)];
+    }
+    return self;
+}
+-(void)convertToC:(Measurement)measure{
+    x = measure.x;
+    y = measure.y;
+    bigx = measure.bigx;
+    bigy = measure.bigy;
+    bigz = measure.bigz;
+    bigxraw = measure.bigxraw;
+    bigyraw = measure.bigyraw;
+    bigzraw = measure.bigzraw;
+    red = measure.red;
+    green = measure.green;
+    blue = measure.blue;
+    u = measure.u;
+    v = measure.v;
+    nm = measure.nm;
+    nmduv = measure.nmduv;
+    L = measure.L;
+    a = measure.a;
+    b = measure.b;
+    C = measure.C;
+    h = measure.h;
+    redrange = measure.redrange;
+    greenrange = measure.greenrange;
+    bluerange = measure.bluerange;
+    temp = measure.temp;
+    tempduv = measure.tempduv;
+    errorcode = measure.errorcode;
+    averagingby = measure.averagingby;
 }
 
 @end
 
 @implementation NSFlicker
-
--(id)initWithFlicker:(Flicker)flicker
-{
+-(id)init{
     self = [super init];
     if(self){
-        xyz = [[NSMeasurement alloc] initWithMeasurement:flicker.xyz];
-    
-        for(int i = 0; i < 3; i++)
-        {
-            for(int x = 0; x < 3; x++)
-            {
-                peakfrequency[i][x] = flicker.peakfrequency[i][x];
-            }
-        }
-        for(int i = 0; i < 101; i++)
-        {
-            flickerDB[i] = flicker.flickerDB[i];
-            flickerPercent[i] = flicker.flickerPercent[i];
-        }
-        errorcode = flicker.errorcode;
-        errorstring = [NSString stringWithUTF8String:flicker.errorstring.c_str()];
-        readyflag = flicker.readyflag;
+        [self convertToC:Flicker()];
     }
     return self;
 }
-@end
-
-@implementation NSWhiteSpect
-
--(id)initWithWhite:(whitespect)White
-{
-    self = [super init];
-    if(self)
-    {
-        x = White.x;
-        y = White.y;
-        z = White.z;
-        xy = White.xy;
-        l = White.l;
-    }
-    return self;
-}
--(whitespect)getNwhitespect
-{
-    whitespect White;
-    
-    White.x = x;
-    White.y = y;
-    White.z = z;
-    White.xy = xy;
-    White.l = l;
-    
-    return White;
-}
-
-@end
-
-@implementation NSCorrectedCoefficient
-
--(id)initWithCorrectedCoefficient:(CorrectedCoefficient) corrected;
-{
+-(id)initWithFlicker:(Flicker) flicker{
     self = [super init];
     if(self){
-    for(int i = 0; i < 3; i++)
-        {
-            for(int x = 0; x < 3; x++)
-            {
-                colorMatrix[i][x] = corrected.colorMatrix[i][x];
-                rgbMatrix[i][x] = corrected.rgbMatrix[i][x];
-            }
+        [self convertToC:flicker];
+    }
+    return self;
+}
+-(void)convertToC:(Flicker) flicker {
+    [xyz initWithMeasurement:flicker.xyz];
+    for(int i = 0; i < 3; ++i){
+        for(int x = 0; x < 3; ++x){
+            peakfrequency[i][x] = flicker.peakfrequency[i][x];
         }
     }
-    return self;
-}
--(CorrectedCoefficient)getNCorrectedCoefficient
-{
-    CorrectedCoefficient corrected;
-    for(int i = 0; i < 3; i++)
-    {
-        for(int x = 0; x < 3; x++)
-        {
-            corrected.colorMatrix[i][x] = colorMatrix[i][x];
-            corrected.rgbMatrix[i][x] = rgbMatrix[i][x];
-        }
+    for(int i = 0; i < 129; ++i){
+        flickerDB[i] = flicker.flickerDB[i];
+        flickerPercent[i] = flicker.flickerPercent[i];
     }
-    return corrected;
-}
-@end
-@implementation NSColors
-
--(id)initwithColors:(Colors)colors{
-    self = [super init];
-    if(self){
-        red = colors.red;
-        green = colors.green;
-        blue = colors.blue;
-    }
-    return self;
-}
--(Colors)getNColor{
-    Colors color;
-    color.red = red;
-    color.green = green;
-    color.blue = blue;
-    
-    return color;
-}
-
-@end
-@implementation NSK10V
-
--(id)initWithK10V:(K10V)k10V{
-    self = [super init];
-    if(self)
-    {
-        _k10v = new K10V();
-    }
-    return self;
-}
--(K10V)getNK10V{
-    return *_k10v;
-}
--(NSColors*)getColors{
-    return [[NSColors alloc]initwithColors: _k10v->getColorField()];
-}
--(void)setColors:(NSColors*)colors{
-    _k10v->setColorField([colors getNColor]);
+    errorcode = flicker.errorcode;
 }
 @end
 
@@ -297,8 +204,8 @@ void SubClass::printMeasure(Measurement m)
 {
     _kclmtr->setPort([PortName UTF8String]);
 }
--(NSString*)getSN{
-    return [NSString stringWithUTF8String:_kclmtr->getSN().c_str()];
+-(NSString*)getSerialNumber{
+    return [NSString stringWithUTF8String:_kclmtr->getSerialNumber().c_str()];
 }
 -(NSString*)getModel{
     return [NSString stringWithUTF8String:_kclmtr->getModel().c_str()];
@@ -315,30 +222,27 @@ void SubClass::printMeasure(Measurement m)
 -(NSString*)getCalfileName{
     return [NSString stringWithUTF8String:_kclmtr->getCalFileName().c_str()];
 }
--(void)setCalFileName:(NSString*)calFileName{
-     _kclmtr->setCalFileName([calFileName UTF8String]);
-}
 -(int)getCalFileID{
     return _kclmtr->getCalFileID();
 }
 -(void)setCalFileID:(int)calFileID{
     _kclmtr->setCalFileID(calFileID);
 }
--(NSMatrix*)getCalMatrix{
-    return [[NSKMatrix alloc] initWithMatrix:_kclmtr->getcalMatrix()];
+-(matrix)getCalMatrix{
+    return _kclmtr->getCalMatrix();
 }
--(NSMatrix*)getRGBMatrix{
-    return [[NSKMatrix alloc] initWithMatrix:_kclmtr->getRGBMatrix()];
+-(matrix)getRGBMatrix{
+    return _kclmtr->getRGBMatrix();
 }
--(NSWhiteSpect*) getWhiteSpect{
-    return [[NSWhiteSpect alloc] initWithWhite:_kclmtr->getWhiteSpect()];
+-(WhiteSpec)getWhiteSpec{
+    return _kclmtr->getWhiteSpec();
 }
--(void)resetWhiteSpect{
-    _kclmtr->resetWhiteSpect();
+-(void)resetWhiteSpec{
+    _kclmtr->resetWhiteSpec();
 }
 
--(void)setWhiteSpect:(NSWhiteSpect*)whiteSpect{
-    _kclmtr->setWhiteSpect([whiteSpect getNwhitespect]);
+-(void)setWhiteSpec:(WhiteSpec)whiteSpec{
+    _kclmtr->setWhiteSpec(whiteSpec);
 }
 -(NSArray*)getCalfileList{
     NSMutableArray *calListboo = [[NSMutableArray alloc] init];;
@@ -349,15 +253,9 @@ void SubClass::printMeasure(Measurement m)
     
     return calListboo;
 }
--(NSK10V*)getK10V{
-    return [[NSKClmtr alloc] initWithK10V:_kclmtr->getVirtualK10()];
-}
--(void)setK10V:(NSK10V*)value{
-    _kclmtr->setVirtualK10([value getNK10V]);
-}
 
--(void)setTempCalFile:(NSCorrectedCoefficient*)matrix whitespect:(NSWhiteSpect*)whitespect{
-    _kclmtr->setTempCalFile([matrix getNCorrectedCoefficient],[whitespect getNwhitespect]);
+-(void)setTempCalFile:(CorrectedCoefficient)matrix whitespec:(WhiteSpec)whitespec{
+    _kclmtr->setTempCalFile(matrix, whitespec);
 }
 
 //Properties - FFT
@@ -374,7 +272,7 @@ void SubClass::printMeasure(Measurement m)
     _kclmtr->setFFT_Smoothing(value);
 }
 -(bool)getFFT_RollOff{
-    return _kclmtr->getFFT_RoolOff();
+    return _kclmtr->getFFT_RollOff();
 }
 -(void)setFFT_RollOff:(bool)value{
     _kclmtr->setFFT_RollOff(value);
@@ -396,41 +294,41 @@ void SubClass::printMeasure(Measurement m)
 -(void)stopMeasuring{
     _kclmtr->stopMeasuring();
 }
--(NSMeasurement*)getNextMeasurment{
-    return [[NSMeasurement alloc] initWithMeasurement:_kclmtr->getNextMeasurement()];
+-(NSMeasurement*)getNextMeasurment:(int)n{
+    return [[NSMeasurement alloc] initWithMeasurement:_kclmtr->getNextMeasurement(n)];
 }
--(NSCorrectedCoefficient*)getCofficintTestMatrix:(NSwrgb*)Reference kclmtr:(NSwrgb*)kclmtr{
-    return [[NSCorrectedCoefficient alloc] initWithCorrectedCoefficient:_kclmtr->getCoefficientTestMatrix([Reference getNwrgb], [kclmtr getNwrgb])];
+-(CorrectedCoefficient)getCofficintTestMatrix:(wrgb)Reference kclmtr:(wrgb)kclmtr{
+    return _kclmtr->getCoefficientTestMatrix(Reference, kclmtr);
 }
 -(int)deleteCalFile:(int)calFileID{
     return _kclmtr->deleteCalFile(calFileID);
 }
--(int)storeCalFile:(int)idNumber name:(NSString*)Name ref:(NSwrgb*)Reference kclmtr:(NSwrgb*)kclmtr whitespect:(NSWhiteSpect*)whitespect{
-    return _kclmtr->storeMatrices(idNumber, [Name UTF8String], [Reference getNwrgb], [kclmtr getNwrgb], [whitespect getNwhitespect]);
+-(int)storeCalFile:(int)idNumber name:(NSString*)Name ref:(wrgb)Reference kclmtr:(wrgb)kclmtr whitespec:(WhiteSpec)whitespec{
+    return _kclmtr->storeMatrices(idNumber, [Name UTF8String], Reference, kclmtr, whitespec);
 }
 
 //BlackCal - Cold
--(NSBlackMatrix*)captureBlackLevel{
-    return [[NSBlackMatrix alloc] initWithBlackMatrix:_kclmtr->captureBlackLevel()];
+-(BlackMatrix)captureBlackLevel{
+    return _kclmtr->captureBlackLevel();
 }
--(NSBlackMatrix*)recallFlashMatrix{
-    return [[NSBlackMatrix alloc] initWithBlackMatrix:_kclmtr->recallFlashMatrix()];
+-(BlackMatrix)getFlashMatrix{
+    return _kclmtr->getFlashMatrix();
 }
 
 //BlackCal - hot
--(NSBlackMatrix*)recallRAMMatrix{
-    return [[NSBlackMatrix alloc] initWithBlackMatrix:_kclmtr->recallRAMMatrix()];
+-(BlackMatrix)getRAMMatrix{
+    return _kclmtr->getRAMMatrix();
 }
--(NSBlackMatrix*)recallCoefficientMatrix{
-    return [[NSBlackMatrix alloc] initWithBlackMatrix:_kclmtr->recallCoefficientMatrix()];
+-(BlackMatrix)getCoefficientMatrix{
+    return _kclmtr->getCoefficientMatrix();
 }
 
 //FFT
 -(bool)isFlickering{
     return _kclmtr->isFlickering();
 }
--(NSString*)startFlicker:(bool)grabConstantly{
-    return [NSString stringWithUTF8String:_kclmtr->startFlicker(grabConstantly).c_str()];
+-(int)startFlicker:(bool)grabConstantly{
+    return _kclmtr->startFlicker(grabConstantly);
 }
 -(NSFlicker*)getNextFlicker{
     return [[NSFlicker alloc] initWithFlicker:_kclmtr->getNextFlicker()];
@@ -447,8 +345,8 @@ void SubClass::printMeasure(Measurement m)
 -(bool)connect:(NSString*)portName{
     return _kclmtr->connect([portName UTF8String]);
 }
--(void)closePort:(bool)resetThePortName{
-    _kclmtr->closePort(resetThePortName);
+-(void)closePort{
+    _kclmtr->closePort();
 }
 
 -(void)sendMeasure:(NSMeasurement*)measurement
