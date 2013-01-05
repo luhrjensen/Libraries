@@ -137,8 +137,8 @@ public:
     void stopMeasuring() {
         _kclmtr->stopMeasuring();
     }
-    Measurement getNextMeasurement(int n = 1) {
-        return Measurement(_kclmtr->getNextMeasurement(n));
+    AvgMeasurement getNextMeasurement(int n = 1) {
+        return _kclmtr->getNextMeasurement(n);
     }
     //Setting up to Store CalFiles
     CorrectedCoefficient getCoefficientTestMatrix(wrgb Reference, wrgb Kclmtr) {
