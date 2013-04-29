@@ -31,19 +31,19 @@ public:
         delete _kclmtr;
     }
     //Property
-    QString getPort() const {
+    QString getPort() {
         return QString::fromStdString(_kclmtr->getPort());
     }
     void setPort(const QString &value) {
         _kclmtr->setPort(value.toStdString());
     }
-    QString getSerialNumber() const {
+    QString getSerialNumber() {
         return QString::fromStdString(_kclmtr->getSerialNumber());
     }
-    QString getModel() const {
+    QString getModel() {
         return QString::fromStdString(_kclmtr->getModel());
     }
-    bool isPortOpen() const {
+    bool isPortOpen() {
         if(_isOpen && !_kclmtr->isPortOpen()) {
             emit closed();
         }
@@ -52,15 +52,15 @@ public:
     }
 
 
-    void setAimingLights(const bool onOff) const {
+    void setAimingLights(const bool onOff) {
         _kclmtr->setAimingLights(onOff);
     }
 
     //Property - CalFiles
-    QString getCalFileName() const {
+    QString getCalFileName() {
         return QString::fromStdString(_kclmtr->getCalFileName());
     }
-    int getCalFileID() const {
+    int getCalFileID() {
         return _kclmtr->getCalFileID();
     }
     void setCalFileID(const int calFileID) {
@@ -70,13 +70,13 @@ public:
             emit calfileChanged();
         }
     }
-    matrix getCalMatrix() const {
+    matrix getCalMatrix() {
         return _kclmtr->getCalMatrix();
     }
-    matrix getRGBMatrix() const {
+    matrix getRGBMatrix() {
         return _kclmtr->getRGBMatrix();
     }
-    WhiteSpec getWhiteSpec() const {
+    WhiteSpec getWhiteSpec() {
         return _kclmtr->getWhiteSpec();
     }
     void resetWhiteSpec() {
@@ -86,7 +86,7 @@ public:
     void setWhiteSpec(const WhiteSpec &value) {
         _kclmtr->setWhiteSpec(value);
     }
-    QStringList getCalFileList() const {
+    QStringList getCalFileList() {
         QStringList CalList;
         const string *calList  = _kclmtr->getCalFileList();
 
@@ -101,40 +101,40 @@ public:
         _kclmtr->setTempCalFile(matrix, whiteSpec);
     }
     //Property - FFT
-    bool getFFT_Cosine() const {
+    bool getFFT_Cosine() {
         return _kclmtr->getFFT_Cosine();
     }
     void setFFT_Cosine(const bool value) {
         _kclmtr->setFFT_Cosine(value);
     }
-    bool getFFT_Smoothing() const {
+    bool getFFT_Smoothing() {
         return _kclmtr->getFFT_Smoothing();
     }
     void setFFT_Smoothing(const bool value) {
         _kclmtr->setFFT_Smoothing(value);
     }
-    bool getFFT_Rolloff() const {
+    bool getFFT_Rolloff() {
         return _kclmtr->getFFT_RollOff();
     }
     void setFFT_RollOff(const bool value) {
         _kclmtr->setFFT_RollOff(value);
     }
-    int getFFT_Samples() const {
+    int getFFT_Samples() {
         return _kclmtr->getFFT_Samples();
     }
-    int setFFT_Samples(int value) const {
+    int setFFT_Samples(int value) {
         return _kclmtr->setFFT_Samples(value);
     }
 
 
     //XYZ
-    bool isMeasuring() const {
+    bool isMeasuring() {
         return _kclmtr->isMeasuring();
     }
-    void startMeasuring() const {
+    void startMeasuring() {
         _kclmtr->startMeasuring();
     }
-    void stopMeasuring() const {
+    void stopMeasuring() {
         _kclmtr->stopMeasuring();
     }
     AvgMeasurement getNextMeasurement(const int n = 1) {
@@ -148,34 +148,34 @@ public:
         return _kclmtr->deleteCalFile(CalFileID);
     }
     //Storing CalFile
-    int storeCalFile(const int ID, const QString &Name, const wrgb &reference, const wrgb &kclmtr, const WhiteSpec &whiteSpec) const {
+    int storeCalFile(const int ID, const QString &Name, const wrgb &reference, const wrgb &kclmtr, const WhiteSpec &whiteSpec) {
         return _kclmtr->storeMatrices(ID, Name.toStdString(), reference, kclmtr, whiteSpec);
     }
 
     //BlackCal - Cold
-    BlackMatrix captureBlackLevel() const {
+    BlackMatrix captureBlackLevel() {
         return _kclmtr->captureBlackLevel();
     }
-    BlackMatrix getFlashMatrix() const {
+    BlackMatrix getFlashMatrix() {
         return _kclmtr->getFlashMatrix();
     }
 
     //BlackCal - Hot
-    BlackMatrix getRAMMatrix() const {
+    BlackMatrix getRAMMatrix() {
         return _kclmtr->getRAMMatrix();
     }
-    BlackMatrix getCoefficientMatrix() const {
+    BlackMatrix getCoefficientMatrix() {
         return _kclmtr->getCoefficientMatrix();
     }
 
     //FFT
-    bool isFlickering() const {
+    bool isFlickering() {
         return _kclmtr->isFlickering();
     }
-    int startFlicker(bool grabConstantly) const {
+    int startFlicker(bool grabConstantly) {
         return _kclmtr->startFlicker(grabConstantly);
     }
-    Flicker getNextFlicker() const {
+    Flicker getNextFlicker() {
         return Flicker(_kclmtr->getNextFlicker());
     }
     void stopFlicker() {
@@ -183,11 +183,11 @@ public:
     }
 
     //setup/Close
-    bool connect(const QString &portName) const {
+    bool connect(const QString &portName) {
         setPort(portName);
         return connect();
     }
-    bool connect() const {
+    bool connect() {
         if(_kclmtr->connect()) {
             _isOpen = true;
             emit connected();
