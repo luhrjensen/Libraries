@@ -31,19 +31,19 @@ public:
         delete _kclmtr;
     }
     //Property
-    QString getPort() {
+    QString getPort() const {
         return QString::fromStdString(_kclmtr->getPort());
     }
-    void setPort(QString value) {
+    void setPort(const QString &value) {
         _kclmtr->setPort(value.toStdString());
     }
-    QString getSerialNumber() {
+    QString getSerialNumber() const {
         return QString::fromStdString(_kclmtr->getSerialNumber());
     }
-    QString getModel() {
+    QString getModel() const {
         return QString::fromStdString(_kclmtr->getModel());
     }
-    bool isPortOpen() {
+    bool isPortOpen() const {
         if(_isOpen && !_kclmtr->isPortOpen()) {
             emit closed();
         }
@@ -52,41 +52,41 @@ public:
     }
 
 
-    void setAimingLights(bool onOff) {
+    void setAimingLights(const bool onOff) const {
         _kclmtr->setAimingLights(onOff);
     }
 
     //Property - CalFiles
-    QString getCalFileName() {
+    QString getCalFileName() const {
         return QString::fromStdString(_kclmtr->getCalFileName());
     }
-    int getCalFileID() {
+    int getCalFileID() const {
         return _kclmtr->getCalFileID();
     }
-    void setCalFileID(int calFileID) {
+    void setCalFileID(const int calFileID) {
         //will it really change
         if(getCalFileID() != calFileID) {
             _kclmtr->setCalFileID(calFileID);
             emit calfileChanged();
         }
     }
-    const matrix getCalMatrix() {
+    matrix getCalMatrix() const {
         return _kclmtr->getCalMatrix();
     }
-    const matrix getRGBMatrix() {
+    matrix getRGBMatrix() const {
         return _kclmtr->getRGBMatrix();
     }
-    WhiteSpec getWhiteSpec() {
+    WhiteSpec getWhiteSpec() const {
         return _kclmtr->getWhiteSpec();
     }
     void resetWhiteSpec() {
         _kclmtr->resetWhiteSpec();
     }
 
-    void setWhiteSpec(WhiteSpec value) {
+    void setWhiteSpec(const WhiteSpec &value) {
         _kclmtr->setWhiteSpec(value);
     }
-    QStringList getCalFileList() {
+    QStringList getCalFileList() const {
         QStringList CalList;
         const string *calList  = _kclmtr->getCalFileList();
 
@@ -97,85 +97,85 @@ public:
         return CalList;
     }
 
-    void setTempCalFile(CorrectedCoefficient matrix, WhiteSpec whiteSpec) {
+    void setTempCalFile(const CorrectedCoefficient &matrix, const WhiteSpec &whiteSpec) {
         _kclmtr->setTempCalFile(matrix, whiteSpec);
     }
     //Property - FFT
-    bool getFFT_Cosine() {
+    bool getFFT_Cosine() const {
         return _kclmtr->getFFT_Cosine();
     }
-    void setFFT_Cosine(bool value) {
+    void setFFT_Cosine(const bool value) {
         _kclmtr->setFFT_Cosine(value);
     }
-    bool getFFT_Smoothing() {
+    bool getFFT_Smoothing() const {
         return _kclmtr->getFFT_Smoothing();
     }
-    void setFFT_Smoothing(bool value) {
+    void setFFT_Smoothing(const bool value) {
         _kclmtr->setFFT_Smoothing(value);
     }
-    bool getFFT_Rolloff() {
+    bool getFFT_Rolloff() const {
         return _kclmtr->getFFT_RollOff();
     }
-    void setFFT_RollOff(bool value) {
+    void setFFT_RollOff(const bool value) {
         _kclmtr->setFFT_RollOff(value);
     }
-    int getFFT_Samples() {
+    int getFFT_Samples() const {
         return _kclmtr->getFFT_Samples();
     }
-    int setFFT_Samples(int value) {
+    int setFFT_Samples(int value) const {
         return _kclmtr->setFFT_Samples(value);
     }
 
 
     //XYZ
-    bool isMeasuring() {
+    bool isMeasuring() const {
         return _kclmtr->isMeasuring();
     }
-    void startMeasuring() {
+    void startMeasuring() const {
         _kclmtr->startMeasuring();
     }
-    void stopMeasuring() {
+    void stopMeasuring() const {
         _kclmtr->stopMeasuring();
     }
-    AvgMeasurement getNextMeasurement(int n = 1) {
+    AvgMeasurement getNextMeasurement(const int n = 1) {
         return _kclmtr->getNextMeasurement(n);
     }
     //Setting up to Store CalFiles
-    CorrectedCoefficient getCoefficientTestMatrix(wrgb Reference, wrgb Kclmtr) {
+    CorrectedCoefficient getCoefficientTestMatrix(const wrgb &Reference, const wrgb &Kclmtr) {
         return _kclmtr->getCoefficientTestMatrix(Reference, Kclmtr);
     }
     int deleteCalFile(int CalFileID) {
         return _kclmtr->deleteCalFile(CalFileID);
     }
     //Storing CalFile
-    int storeCalFile(int ID, QString Name, wrgb reference, wrgb kclmtr, WhiteSpec whiteSpec) {
+    int storeCalFile(const int ID, const QString &Name, const wrgb &reference, const wrgb &kclmtr, const WhiteSpec &whiteSpec) const {
         return _kclmtr->storeMatrices(ID, Name.toStdString(), reference, kclmtr, whiteSpec);
     }
 
     //BlackCal - Cold
-    BlackMatrix captureBlackLevel() {
+    BlackMatrix captureBlackLevel() const {
         return _kclmtr->captureBlackLevel();
     }
-    BlackMatrix getFlashMatrix() {
+    BlackMatrix getFlashMatrix() const {
         return _kclmtr->getFlashMatrix();
     }
 
     //BlackCal - Hot
-    BlackMatrix getRAMMatrix() {
+    BlackMatrix getRAMMatrix() const {
         return _kclmtr->getRAMMatrix();
     }
-    BlackMatrix getCoefficientMatrix() {
+    BlackMatrix getCoefficientMatrix() const {
         return _kclmtr->getCoefficientMatrix();
     }
 
     //FFT
-    bool isFlickering() {
+    bool isFlickering() const {
         return _kclmtr->isFlickering();
     }
-    int startFlicker(bool grabConstantly) {
+    int startFlicker(bool grabConstantly) const {
         return _kclmtr->startFlicker(grabConstantly);
     }
-    Flicker getNextFlicker() {
+    Flicker getNextFlicker() const {
         return Flicker(_kclmtr->getNextFlicker());
     }
     void stopFlicker() {
@@ -183,11 +183,11 @@ public:
     }
 
     //setup/Close
-    bool connect(QString portName) {
+    bool connect(const QString &portName) const {
         setPort(portName);
         return connect();
     }
-    bool connect() {
+    bool connect() const {
         if(_kclmtr->connect()) {
             _isOpen = true;
             emit connected();
@@ -205,10 +205,10 @@ public:
         }
     }
 
-    void printMeasure(Measurement measure) {
+    void printMeasure(const Measurement &measure) {
         emit measured(measure);
     }
-    void printFlicker(Flicker flicker) {
+    void printFlicker(const Flicker &flicker) {
         emit flickered(flicker);
     }
 
@@ -220,8 +220,8 @@ private:
 signals:
     void closed();
     void connected();
-    void measured(Measurement);
-    void flickered(Flicker);
+    void measured(const Measurement&);
+    void flickered(const Flicker&);
     void calfileChanged();
 };
 
