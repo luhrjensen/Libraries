@@ -148,7 +148,7 @@ public:
         return _kclmtr->deleteCalFile(CalFileID);
     }
     //Storing CalFile
-    int storeCalFile(const int ID, const QString &Name, const wrgb &reference, const wrgb &kclmtr, const WhiteSpec &whiteSpec) {
+    int storeCalFile(int ID, const QString &Name, const wrgb &reference, const wrgb &kclmtr, const WhiteSpec &whiteSpec) {
         return _kclmtr->storeMatrices(ID, Name.toStdString(), reference, kclmtr, whiteSpec);
     }
 
