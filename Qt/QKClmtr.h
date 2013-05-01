@@ -60,7 +60,7 @@ public:
     QString getCalFileName() {
         return QString::fromStdString(_kclmtr->getCalFileName());
     }
-    int getCalFileID() {
+    int getCalFileID() const {
         return _kclmtr->getCalFileID();
     }
     void setCalFileID(const int calFileID) {
