@@ -220,8 +220,8 @@ private:
 signals:
     void closed();
     void connected();
-    void measured(const Measurement&);
-    void flickered(const Flicker&);
+    void measured(const Measurement &);
+    void flickered(const Flicker &);
     void calfileChanged();
 };
 
