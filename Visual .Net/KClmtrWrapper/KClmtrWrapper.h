@@ -71,7 +71,7 @@ namespace KClmtrWrapper {
 	public:
 		SubClass(gcroot<KClmtrWrap^> _kcw);
 		void printMeasure(Measurement m);
-		void printFlick(Flicker f);
+		void printFlicker(Flicker f);
 		gcroot<KClmtrWrap^>  _kclmtrwrapper;
 	};
 
@@ -661,7 +661,7 @@ namespace KClmtrWrapper {
 		delegate System::Void MeasureEventHandler(wMeasurement^);
 		delegate System::Void FlickerEventHandler(wFlicker^);
 		/** @brief Sends out measurement
-		*  @details You must add the event to the object, and then make sure the thread can touch your thread
+		*  @details You must add the event to the object, and then make sure the thread can touch your threadf
 		*  @details Here is an example: 
 		*  @details Header
 		*  @snippet KClmtrWrapperExample.cpp measure
