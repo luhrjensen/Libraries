@@ -34,7 +34,7 @@ public:
     QString getPort() {
         return QString::fromStdString(_kclmtr->getPort());
     }
-    void setPort(QString value) {
+    void setPort(const QString &value) {
         _kclmtr->setPort(value.toStdString());
     }
     QString getSerialNumber() {
@@ -52,7 +52,7 @@ public:
     }
 
 
-    void setAimingLights(bool onOff) {
+    void setAimingLights(const bool onOff) {
         _kclmtr->setAimingLights(onOff);
     }
 
@@ -60,20 +60,20 @@ public:
     QString getCalFileName() {
         return QString::fromStdString(_kclmtr->getCalFileName());
     }
-    int getCalFileID() {
+    int getCalFileID() const {
         return _kclmtr->getCalFileID();
     }
-    void setCalFileID(int calFileID) {
+    void setCalFileID(const int calFileID) {
         //will it really change
         if(getCalFileID() != calFileID) {
             _kclmtr->setCalFileID(calFileID);
             emit calfileChanged();
         }
     }
-    const matrix getCalMatrix() {
+    matrix getCalMatrix() {
         return _kclmtr->getCalMatrix();
     }
-    const matrix getRGBMatrix() {
+    matrix getRGBMatrix() {
         return _kclmtr->getRGBMatrix();
     }
     WhiteSpec getWhiteSpec() {
@@ -83,7 +83,7 @@ public:
         _kclmtr->resetWhiteSpec();
     }
 
-    void setWhiteSpec(WhiteSpec value) {
+    void setWhiteSpec(const WhiteSpec &value) {
         _kclmtr->setWhiteSpec(value);
     }
     QStringList getCalFileList() {
@@ -97,26 +97,26 @@ public:
         return CalList;
     }
 
-    void setTempCalFile(CorrectedCoefficient matrix, WhiteSpec whiteSpec) {
+    void setTempCalFile(const CorrectedCoefficient &matrix, const WhiteSpec &whiteSpec) {
         _kclmtr->setTempCalFile(matrix, whiteSpec);
     }
     //Property - FFT
     bool getFFT_Cosine() {
         return _kclmtr->getFFT_Cosine();
     }
-    void setFFT_Cosine(bool value) {
+    void setFFT_Cosine(const bool value) {
         _kclmtr->setFFT_Cosine(value);
     }
     bool getFFT_Smoothing() {
         return _kclmtr->getFFT_Smoothing();
     }
-    void setFFT_Smoothing(bool value) {
+    void setFFT_Smoothing(const bool value) {
         _kclmtr->setFFT_Smoothing(value);
     }
     bool getFFT_Rolloff() {
         return _kclmtr->getFFT_RollOff();
     }
-    void setFFT_RollOff(bool value) {
+    void setFFT_RollOff(const bool value) {
         _kclmtr->setFFT_RollOff(value);
     }
     int getFFT_Samples() {
@@ -137,18 +137,18 @@ public:
     void stopMeasuring() {
         _kclmtr->stopMeasuring();
     }
-    Measurement getNextMeasurement(int n = 1) {
-        return Measurement(_kclmtr->getNextMeasurement(n));
+    AvgMeasurement getNextMeasurement(const int n = 1) {
+        return _kclmtr->getNextMeasurement(n);
     }
     //Setting up to Store CalFiles
-    CorrectedCoefficient getCoefficientTestMatrix(wrgb Reference, wrgb Kclmtr) {
+    CorrectedCoefficient getCoefficientTestMatrix(const wrgb &Reference, const wrgb &Kclmtr) {
         return _kclmtr->getCoefficientTestMatrix(Reference, Kclmtr);
     }
     int deleteCalFile(int CalFileID) {
         return _kclmtr->deleteCalFile(CalFileID);
     }
     //Storing CalFile
-    int storeCalFile(int ID, QString Name, wrgb reference, wrgb kclmtr, WhiteSpec whiteSpec) {
+    int storeCalFile(int ID, const QString &Name, const wrgb &reference, const wrgb &kclmtr, const WhiteSpec &whiteSpec) {
         return _kclmtr->storeMatrices(ID, Name.toStdString(), reference, kclmtr, whiteSpec);
     }
 
@@ -183,7 +183,7 @@ public:
     }
 
     //setup/Close
-    bool connect(QString portName) {
+    bool connect(const QString &portName) {
         setPort(portName);
         return connect();
     }
@@ -205,10 +205,10 @@ public:
         }
     }
 
-    void printMeasure(Measurement measure) {
+    void printMeasure(const Measurement &measure) {
         emit measured(measure);
     }
-    void printFlicker(Flicker flicker) {
+    void printFlicker(const Flicker &flicker) {
         emit flickered(flicker);
     }
 
@@ -220,8 +220,8 @@ private:
 signals:
     void closed();
     void connected();
-    void measured(Measurement);
-    void flickered(Flicker);
+    void measured(const Measurement &);
+    void flickered(const Flicker &);
     void calfileChanged();
 };
 
