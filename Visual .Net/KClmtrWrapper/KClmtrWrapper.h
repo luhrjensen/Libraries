@@ -166,7 +166,8 @@ namespace KClmtrWrapper {
 			return gcnew wMeasurement(Measurement::fromRGB(r, g, b, static_cast<gamutSpec>(gs)));
 		}
 
-	private:
+	
+	protected:
 		void convertNativeToManage(Measurement measurement) {
 			x = measurement.x;
 			y = measurement.y;
@@ -199,6 +200,77 @@ namespace KClmtrWrapper {
 
 	};
 
+	public ref struct wAvgMeasurement : public wMeasurement{
+		double minX;
+		double minY;
+		double minZ;
+		double maxX;
+		double maxY;
+		double maxZ;
+
+		wAvgMeasurement() {
+			wMeasurement();
+
+			minX = bigx;
+			maxX = bigx;
+			minY = bigy;
+			maxY = bigy;
+			minZ = bigz;
+			maxZ = bigz;
+		};
+		wAvgMeasurement(wMeasurement m) {
+		    x = m.x;
+			y = m.y;
+			bigx = m.bigx;
+			bigy = m.bigy;
+			bigz = m.bigz;
+			bigxraw = m.bigxraw;
+			bigyraw = m.bigyraw;
+			bigzraw = m.bigzraw;
+			red = m.red;
+			green = m.green;
+			blue = m.blue;
+			u = m.u;
+			v = m.v;
+			nm = m.nm;
+			nmduv = m.nmduv;
+			L = m.L;
+			a = m.a;
+			b = m.b;
+			C = m.C;
+			h = m.h;
+			redrange = m.redrange;
+			greenrange = m.greenrange;
+			bluerange = m.bluerange;
+			temp = m.temp;
+			tempduv = m.tempduv;
+			errorcode = m.errorcode;
+			averagingby = m.averagingby;
+
+			minX = bigx;
+			maxX = bigx;
+			minY = bigy;
+			maxY = bigy;
+			minZ = bigz;
+			maxZ = bigz;
+		};
+
+		wAvgMeasurement(AvgMeasurement m) {
+			convertNativeToManage(m);
+		};
+
+	protected:
+		void convertNativeToManage(AvgMeasurement m) {
+			minX = m.minX;
+			maxX = m.maxX;
+			minY = m.minY;
+			maxY = m.maxY;
+			minZ = m.minZ;
+			maxZ = m.maxZ;
+			
+			wMeasurement::convertNativeToManage(m);
+		}
+	};
 	public ref struct wwrgb {
 		//white, red, green, blue
 		//x, y, z
@@ -550,8 +622,8 @@ namespace KClmtrWrapper {
 		/// <summary>
 		/// Returns one measurement from the device. Do not need to startMeasuring() to use this method.
 		/// </summary>
-		wMeasurement ^getNextMeasurement(int n){
-			return gcnew wMeasurement(_kclmtr->getNextMeasurement(n));
+		wAvgMeasurement ^getNextMeasurement(int n){
+			return gcnew wAvgMeasurement(_kclmtr->getNextMeasurement(n));
 		}
 
 		//Setting up to Store CalFiles
