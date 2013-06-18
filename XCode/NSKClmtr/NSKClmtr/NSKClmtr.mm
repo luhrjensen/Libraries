@@ -2,7 +2,7 @@
 //  NSKClmtr.m
 //  NSKClmtr
 //
-//  Created by LUHR JENSEN on 5/14/12.
+//  Created by Klein Instruments on 5/14/12.
 //  Copyright 2012 Klein Instruments. All rights reserved.
 //
 

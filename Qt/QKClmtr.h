@@ -6,6 +6,7 @@
 #include "../kclmtr/KClmtr.h"
 
 class QKClmtr;
+/** @cond */
 class SubClass : public KClmtr {
 public:
     SubClass(QKClmtr *_QKC) {
@@ -16,6 +17,7 @@ public:
     void printFlicker(Flicker f);
     QKClmtr *_QKClmtr;
 };
+/** @endcond */
 /** @ingroup wrappers
  *  @brief Wraps the Native object to work easly in Qt
  */
@@ -204,7 +206,6 @@ public:
             emit closed();
         }
     }
-
     void printMeasure(const Measurement &measure) {
         emit measured(measure);
     }
@@ -220,7 +221,23 @@ private:
 signals:
     void closed();
     void connected();
+	/** @brief Sends out Measure
+	 *  @details You must setup the target where the flicker needs to go to.
+	 *  @details Here is an example: 
+	 *  @details Header
+	 *  @snippet QKclmtrExample.cpp Header_flicker
+	 *   Source
+	 *  @snippet QKclmtrExample.cpp Source_flicker
+	 */
     void measured(const Measurement &);
+	/** @brief Sends out flicker
+	 *  @details You must setup the target where the flicker needs to go to.
+	 *  @details Here is an example: 
+	 *  @details Header
+	 *  @snippet QKclmtrExample.cpp Header_flicker
+	 *   Source
+	 *  @snippet QKclmtrExample.cpp Source_flicker
+	 */
     void flickered(const Flicker &);
     void calfileChanged();
 };
