@@ -15,7 +15,7 @@ System::String^ KClmtrWrapper::KClmtrWrap::NativeToDotNet(std::string input){
 void KClmtrWrapper::SubClass::printMeasure(Measurement m){
 	_kclmtrwrapper->printMeasure(gcnew wMeasurement(m));
 }
-void KClmtrWrapper::SubClass::printFlick(Flicker f){
+void KClmtrWrapper::SubClass::printFlicker(Flicker f){
 	_kclmtrwrapper->printFlicker(gcnew wFlicker(f));
 }
 KClmtrWrapper::SubClass::SubClass(gcroot<KClmtrWrap^> _kcw){
