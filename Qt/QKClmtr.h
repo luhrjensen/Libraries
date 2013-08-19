@@ -76,16 +76,14 @@ public:
     matrix getRGBMatrix() {
         return _kclmtr->getRGBMatrix();
     }
-    WhiteSpec getWhiteSpec() {
-        return _kclmtr->getWhiteSpec();
+    gamutSpec getGamutSpec() {
+        return _kclmtr->getGamutSpec();
     }
-    void resetWhiteSpec() {
-        _kclmtr->resetWhiteSpec();
+    void setGamutSpec(const gamutSpec &gs) {
+        _kclmtr->setGamutSpec(gs);
+        emit gamutSpecChanged();
     }
 
-    void setWhiteSpec(const WhiteSpec &value) {
-        _kclmtr->setWhiteSpec(value);
-    }
     QStringList getCalFileList() {
         QStringList CalList;
         const string *calList  = _kclmtr->getCalFileList();
@@ -97,8 +95,8 @@ public:
         return CalList;
     }
 
-    void setTempCalFile(const CorrectedCoefficient &matrix, const WhiteSpec &whiteSpec) {
-        _kclmtr->setTempCalFile(matrix, whiteSpec);
+    void setTempCalFile(const CorrectedCoefficient &matrix/*, const WhiteSpec &whiteSpec*/) {
+        _kclmtr->setTempCalFile(matrix/*, whiteSpec*/);
     }
     //Property - FFT
     bool getFFT_Cosine() {
@@ -148,8 +146,8 @@ public:
         return _kclmtr->deleteCalFile(CalFileID);
     }
     //Storing CalFile
-    int storeCalFile(int ID, const QString &Name, const wrgb &reference, const wrgb &kclmtr, const WhiteSpec &whiteSpec) {
-        return _kclmtr->storeMatrices(ID, Name.toStdString(), reference, kclmtr, whiteSpec);
+    int storeCalFile(int ID, const QString &Name, const wrgb &reference, const wrgb &kclmtr) {
+        return _kclmtr->storeMatrices(ID, Name.toStdString(), reference, kclmtr);
     }
 
     //BlackCal - Cold
@@ -223,6 +221,7 @@ signals:
     void measured(const Measurement &);
     void flickered(const Flicker &);
     void calfileChanged();
+    void gamutSpecChanged();
 };
 
 #endif // QKCLMTR_H
