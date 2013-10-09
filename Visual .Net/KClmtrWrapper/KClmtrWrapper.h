@@ -398,7 +398,6 @@ namespace KClmtrWrapper {
 			
 			gs = gcnew wGamutSpec(measurement.getGamutSpec());
 		}
-	private:
 		wGamutSpec^ gs;
 		
 	};
@@ -442,6 +441,9 @@ namespace KClmtrWrapper {
 			b = m.b;
 			C = m.C;
 			h = m.h;
+			hue = m.hue;
+			saturation = m.saturation;
+			value = m.saturation;
 			redrange = m.redrange;
 			greenrange = m.greenrange;
 			bluerange = m.bluerange;
@@ -449,6 +451,8 @@ namespace KClmtrWrapper {
 			tempduv = m.tempduv;
 			errorcode = m.errorcode;
 			averagingby = m.averagingby;
+		
+			gs = m.getGamutSpec();
 
 			minX = bigx;
 			maxX = bigx;
