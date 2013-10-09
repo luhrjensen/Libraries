@@ -9,16 +9,6 @@ namespace KClmtrWrapper {
 
 	ref class KClmtrWrap;
 
-	//ENUMS
-	public enum class wGamutSpec {
-		wNTSC = 0,
-		wEBU = 1,
-		wREC709 = 2,
-		wSMPTE = 3,
-		wNUM_SPECS,
-		wDefaultGamut = wREC709
-	};
-
 	public enum class wMeasureErrorCodes {
 		NONE                    = 0x00000000,
 		//Serial Port
@@ -75,7 +65,147 @@ namespace KClmtrWrapper {
 		gcroot<KClmtrWrap^>  _kclmtrwrapper;
 	};
 	/** @endcond */
+	public ref struct wMatrix {
+		int row;
+		int column;
+		double **v;
 
+		wMatrix() {
+			row = 0;
+			column = 0;
+		}
+		~wMatrix() {
+			deleteV();
+		}
+		void  initializeV(int _row, int _column) {
+			deleteV();
+			row = _row;
+			column = _column;
+			v = new double *[row];
+
+			for(int i = 0; i < row; ++i) {
+				v[i] = new double[column];
+			}
+
+			clear();
+		}
+		void clear() {
+			for(int i = 0; i < row; ++i) {
+				for(int j = 0; j < column; ++j) {
+					v[i][j] = 0;
+				}
+			}
+		}
+
+		static wMatrix^ fromNative(const matrix &other) {
+			wMatrix^ m = gcnew wMatrix();
+			m->initializeV(other.row, other.column);
+
+			for(int i = 0; i < m->row; ++i) {
+				for(int j = 0; j < m->column; ++j) {
+					m->v[i][j] = other.v[i][j];
+				}
+			}
+			
+			return m;
+		}
+
+	private:
+		void deleteV() {
+			for(int i = 0; i < row; ++i) {
+				delete[] v[i];
+			}
+
+			if(row > 0) {
+				delete[] v;
+			}
+
+			column = 0;
+			row = 0;
+		}
+	};
+	public ref struct wGamutSpec {
+		enum class wGamutCode {
+			NTSC,
+			EBU,
+			REC709,
+			SMPTE,
+			DCIP3,
+			USER_DEFINE,
+			defaultGamut = REC709
+		};
+		~wGamutSpec() {
+			delete gs;
+		}
+		wGamutSpec() {
+			gs = new gamutSpec();
+		}
+		wGamutSpec(gamutSpec _gs) {
+			gs = new gamutSpec(_gs);
+		}
+		wGamutSpec(double redX, double redY,
+				   double greenX, double greenY,
+				   double blueX, double blueY,
+				   double whiteX, double whiteY, double whiteBigY) {
+					  gs = new gamutSpec(redX, redY,
+										greenX, greenY,
+										blueX, blueY,
+										whiteX, whiteY, whiteBigY);
+		}
+
+		static wGamutSpec^ fromCode(wGamutCode code){
+			return fromCode(code, 100);
+		}
+		static wGamutSpec^ fromCode(wGamutCode code, double whiteBigY){
+			wGamutSpec^ wgs = gcnew wGamutSpec();
+			gamutSpec g = gamutSpec::fromCode(static_cast<gamutSpec::gamutCode>(code), whiteBigY);
+			wgs->gs = new gamutSpec(g);
+			return wgs;
+		}
+
+		wGamutSpec::wGamutCode getCodeSpec() {
+			return static_cast<wGamutSpec::wGamutCode>(gs->getCodeSpec());
+		}
+
+		void setRed(double x, double y) {
+			gs->setRed(x, y);
+		}
+		void setGreen(double x, double y) {
+			gs->setGreen(x, y);
+		}
+		void setBlue(double x, double y) {
+			gs->setBlue(x, y);
+		}
+		void setWhite(double x, double y, double bigY) {
+			gs->setWhite(x, y, bigY);
+		}
+
+		void getWhite(double &x, double &y, double &bigY) {
+			gs->getWhite(x, y, bigY);
+		}
+		void getRed(double &x, double &y, double &bigY) {
+			gs->getRed(x, y, bigY);
+		}
+		void getGreen(double &x, double &y, double &bigY) {
+			gs->getGreen(x, y, bigY);
+		}
+		void getBlue(double &x, double &y, double &bigY) {
+			gs->getBlue(x, y, bigY);
+		}
+
+		wMatrix^ getRGBtoXYZ() {
+			return wMatrix::fromNative(gs->getRGBtoXYZ());
+		}
+		wMatrix^ getXYZtoRGB()  {
+			return wMatrix::fromNative(gs->getXYZtoRGB());
+		}
+
+		gamutSpec getNative() {
+			return *gs;
+		}
+	private:
+		gamutSpec *gs;
+	};
 	public ref struct wMeasurement {
 		enum class MeasurmentRange {
 			range1 = 1,
@@ -113,6 +243,9 @@ namespace KClmtrWrapper {
 		double b;
 		double C;
 		double h;
+		double hue;
+		double saturation;
+		double value;
 		MeasurmentRange redrange;
 		MeasurmentRange greenrange;
 		MeasurmentRange bluerange;
@@ -130,44 +263,106 @@ namespace KClmtrWrapper {
 		}
 
 		static wMeasurement^ fromXYZ(double X, double Y, double Z){
-			return fromXYZ(X, Y, Z, wGamutSpec::wDefaultGamut);
+			return fromXYZ(X, Y, Z, wGamutSpec::fromCode(wGamutSpec::wGamutCode::defaultGamut));
 		}
 		static wMeasurement^ fromxyY(double x, double y, double Y){
-			return fromxyY(x, y, Y, wGamutSpec::wDefaultGamut);
+			return fromxyY(x, y, Y, wGamutSpec::fromCode(wGamutSpec::wGamutCode::defaultGamut));
 		}
 		static wMeasurement^ fromuvprimeY(double u, double v, double Y){
-			return fromuvprimeY(u, v, Y, wGamutSpec::wDefaultGamut);
+			return fromuvprimeY(u, v, Y, wGamutSpec::fromCode(wGamutSpec::wGamutCode::defaultGamut));
 		}
 		static wMeasurement^ fromTempduvY(double _temp, double _tempduv, double Y){
-			return fromTempduvY(_temp, _tempduv, Y, wGamutSpec::wDefaultGamut);
+			return fromTempduvY(_temp, _tempduv, Y, wGamutSpec::fromCode(wGamutSpec::wGamutCode::defaultGamut));
 		}
 		static wMeasurement^ fromnmduvY(double _nm, double _nmduv, double Y){
-			return fromnmduvY(_nm, _nmduv, Y, wGamutSpec::wDefaultGamut);
+			return fromnmduvY(_nm, _nmduv, Y, wGamutSpec::fromCode(wGamutSpec::wGamutCode::defaultGamut));
 		}
 		static wMeasurement^ fromRGB(double red, double green, double blue){
-			return fromRGB(red, green, blue, wGamutSpec::wDefaultGamut);
+			return fromRGB(red, green, blue, wGamutSpec::fromCode(wGamutSpec::wGamutCode::defaultGamut));
 		}
 
-		static wMeasurement^ fromXYZ(double X, double Y, double Z, wGamutSpec gs){
-			return gcnew wMeasurement(Measurement::fromXYZ(X, Y, Z, static_cast<gamutSpec>(gs)));
+		static wMeasurement^ fromXYZ(double X, double Y, double Z, wGamutSpec^ gs){
+			return gcnew wMeasurement(Measurement::fromXYZ(X, Y, Z, gs->getNative()));
 		}
-		static wMeasurement^ fromxyY(double x, double y, double Y, wGamutSpec gs){
-			return gcnew wMeasurement(Measurement::fromxyY(x, y, Y, static_cast<gamutSpec>(gs)));
+		static wMeasurement^ fromxyY(double x, double y, double Y, wGamutSpec^ gs){
+			return gcnew wMeasurement(Measurement::fromxyY(x, y, Y, gs->getNative()));
 		}
-		static wMeasurement^ fromuvprimeY(double u, double v, double Y, wGamutSpec gs){
-			return gcnew wMeasurement(Measurement::fromuvprimeY(u, v, Y, static_cast<gamutSpec>(gs)));
+		static wMeasurement^ fromuvprimeY(double u, double v, double Y, wGamutSpec^ gs){
+			return gcnew wMeasurement(Measurement::fromuvprimeY(u, v, Y, gs->getNative()));
 		}
-		static wMeasurement^ fromTempduvY(double _temp, double _tempduv, double Y, wGamutSpec gs){
-			return gcnew wMeasurement(Measurement::fromTempduvY(_temp, _tempduv, Y, static_cast<gamutSpec>(gs)));
+		static wMeasurement^ fromTempduvY(double _temp, double _tempduv, double Y, wGamutSpec^ gs){
+			return gcnew wMeasurement(Measurement::fromTempduvY(_temp, _tempduv, Y, gs->getNative()));
 		}
-		static wMeasurement^ fromnmduvY(double _nm, double _nmduv, double Y, wGamutSpec gs){
-			return gcnew wMeasurement(Measurement::fromnmduvY(_nm, _nmduv, Y, static_cast<gamutSpec>(gs)));
+		static wMeasurement^ fromnmduvY(double _nm, double _nmduv, double Y, wGamutSpec^ gs){
+			return gcnew wMeasurement(Measurement::fromnmduvY(_nm, _nmduv, Y, gs->getNative()));
 		}
-		static wMeasurement^ fromRGB(double r, double g, double b, wGamutSpec gs){
-			return gcnew wMeasurement(Measurement::fromRGB(r, g, b, static_cast<gamutSpec>(gs)));
+		static wMeasurement^ fromRGB(double r, double g, double b, wGamutSpec^ gs){
+			return gcnew wMeasurement(Measurement::fromRGB(r, g, b, gs->getNative()));
+		}
+		static wMeasurement^ fromHSV(double hue, double saturation, double value, wGamutSpec^ gs) {
+			return gcnew wMeasurement(Measurement::fromHSV(hue, saturation, value, gs->getNative()));
+		}
+		
+		double deltaE1976(wMeasurement^ spec) {
+			return getNative().deltaE1976(spec->getNative());
+		}
+		double deltaE1994(wMeasurement^ spec) {
+			return getNative().deltaE1994(spec->getNative());
+		}
+		double deltaE2000(wMeasurement^ spec) {
+			return getNative().deltaE2000(spec->getNative());
 		}
 
-	
+		void setGamutSpec(wGamutSpec^ gs) {
+			Measurement m = Measurement::fromXYZ(bigx, bigy, bigz, gs->getNative());
+			convertNativeToManage(m);
+		}
+		wGamutSpec^ getGamutSpec() {
+			return gs;
+		}
+
+		static double toNits(double FootLamberts) {
+			return Measurement::toNits(FootLamberts);
+		}
+		static double toFootLamberts(double nits) {
+			return Measurement::toFootLamberts(nits);
+		}
+		
+		Measurement getNative() {
+			Measurement m;
+			m.x = x;
+			m.y = y;
+			m.bigx = bigx;
+			m.bigy = bigy;
+			m.bigz = bigz;
+			m.bigxraw = bigxraw;
+			m.bigyraw = bigyraw;
+			m.bigzraw = bigzraw;
+			m.red = red;
+			m.green = green;
+			m.blue = blue;
+			m.u = u;
+			m.v = v;
+			m.nm = nm;
+			m.nmduv = nmduv;
+			m.L = L;
+			m.a = a;
+			m.b = b;
+			m.C = C;
+			m.h = h;
+			m.hue = hue;
+			m.saturation = saturation;
+			m.value = value;
+			m.redrange = static_cast<Measurement::MeasurmentRange>(redrange);
+			m.greenrange = static_cast<Measurement::MeasurmentRange>(greenrange);
+			m.bluerange = static_cast<Measurement::MeasurmentRange>(bluerange);
+			m.temp = temp;
+			m.tempduv = tempduv;
+			m.errorcode = errorcode;
+			m.averagingby = averagingby;
+			m.setGamutSpec(gs->getNative());
+			return m;
+		}
 	protected:
 		void convertNativeToManage(Measurement measurement) {
 			x = measurement.x;
@@ -190,6 +385,9 @@ namespace KClmtrWrapper {
 			b = measurement.b;
 			C = measurement.C;
 			h = measurement.h;
+			hue = measurement.hue;
+			saturation = measurement.saturation;
+			value = measurement.value;
 			redrange = (MeasurmentRange)measurement.redrange;
 			greenrange = (MeasurmentRange)measurement.greenrange;
 			bluerange = (MeasurmentRange)measurement.bluerange;
@@ -197,8 +395,12 @@ namespace KClmtrWrapper {
 			tempduv = measurement.tempduv;
 			errorcode = measurement.errorcode;
 			averagingby = measurement.averagingby;
+			
+			gs = gcnew wGamutSpec(measurement.getGamutSpec());
 		}
-
+	private:
+		wGamutSpec^ gs;
+		
 	};
 
 	public ref struct wAvgMeasurement : public wMeasurement{
@@ -289,7 +491,7 @@ namespace KClmtrWrapper {
 				}
 			}
 		}
-		wrgb getNwrgb(){
+		wrgb getNative(){
 			wrgb WRGB;
 			for(int i=0; i<4; ++i){
 				for(int j=0; j<3; ++j){
@@ -353,58 +555,22 @@ namespace KClmtrWrapper {
 	public ref struct wFlicker {
 		wMeasurement ^xyz;					//The measurement from XYZ
 		array<double, 2> ^peakfrequency;		//The top 3 frequency of DB
-		array<double> ^flickerDB;			//The DB from 1hz to 100hz
-		array<double> ^flickerPercent;		//The Percent from 1hz to 100hz
+		wMatrix ^flickerDB;			//The DB from 1hz to 100hz
+		wMatrix ^flickerPercent;		//The Percent from 1hz to 100hz
 		int errorcode;						//The error code whenever you are getting data
 
 		wFlicker(){}
 		wFlicker(Flicker flicker){
 			xyz = gcnew wMeasurement(flicker.xyz);
 			peakfrequency = gcnew array<double, 2>(3, 3);
-			flickerDB = gcnew array<double>(101);	
-			flickerPercent = gcnew array<double>(101);
+			flickerDB = wMatrix::fromNative(flicker.flickerDB);	
+			flickerPercent = wMatrix::fromNative(flicker.flickerPercent);
 			for(int i = 0; i < 3; i++){
 				for(int x = 0; x < 3; x++){
 					peakfrequency[i, x] = flicker.peakfrequency[i][x];
 				}
 			}
-			for(int i = 0; i < 101; i++){
-				flickerDB[i] =  flicker.flickerDB[i];
-				flickerPercent[i] = flicker.flickerPercent[i];
-			}
 			errorcode = flicker.errorcode;
-		}
-	};
-
-	public ref struct wWhiteSpec {
-		double x;                //The X to the Whitespect modifier
-		double y;                //The y to the Whitespect modifier
-		double z;                //The z to the Whitespect modifier
-		double xyVar;            //The allowed variance of xy
-		double yVar;             //The allowed variance of Y
-
-		wWhiteSpec() {
-			//wWhitSpec(WhiteSpec());
-		}
-
-		wWhiteSpec(WhiteSpec white){
-			x = white.x;
-			y = white.y;
-			z = white.z;
-			xyVar = white.xyVar;
-			yVar = white.yVar;
-		}
-
-		WhiteSpec getNwhitespec(){
-			WhiteSpec White;
-
-			White.x = x;
-			White.y = y;
-			White.z = z;
-			White.xyVar = xyVar;
-			White.yVar = yVar;
-
-			return White;
 		}
 	};
 
@@ -499,40 +665,28 @@ namespace KClmtrWrapper {
 		/// <summary>
 		/// Gets the current Cal File's calaibration matrix
 		/// </summary>
-		property array<double, 2>^ CalMatrix{
-			array<double, 2>^ get(){
-				array<double, 2>^ matrix = gcnew array<double, 2>(3, 3);
-				for (int i = 0; i < 3; i++){
-					for(int x = 0; x < 3; x++){
-						matrix[i, x] = _kclmtr->getCalMatrix().v[i][x];
-					}
-				}
-				return matrix;
+		property wMatrix^ CalMatrix {
+			wMatrix^ get(){
+				return wMatrix::fromNative(_kclmtr->getCalMatrix());
 			}
 		}
 		/// <summary>
 		/// Gets the current Cal File's color matrix
 		/// </summary>
-		property array<double, 2>^ RGBMatrix{
-			array<double, 2>^ get(){
-				array<double, 2>^ matrix = gcnew array<double, 2>(3, 3);
-				for (int i = 0; i < 3; i++){
-					for(int x = 0; x < 3; x++){
-						matrix[i, x] = _kclmtr->getRGBMatrix().v[i][x];
-					}
-				}
-				return matrix;
+		property wMatrix^ RGBMatrix {
+			wMatrix^ get(){
+				return wMatrix::fromNative(_kclmtr->getRGBMatrix());
 			}
 		}
 		/// <summary>
-		/// Gets or set the current Cal File's white spect
+		/// Gets or set the current GamutSpec that KClmtr is using to make Measurement
 		/// </summary>
-		property wWhiteSpec^ WhiteSpect{
-			wWhiteSpec^ get(){
-				return gcnew wWhiteSpec(_kclmtr->getWhiteSpec());
+		property wGamutSpec^ GamutSpec {
+			wGamutSpec^ get(){
+				return gcnew wGamutSpec(_kclmtr->getGamutSpec());
 			}
-			void set(wWhiteSpec^ value){
-				_kclmtr->setWhiteSpec(value->getNwhitespec());
+			void set(wGamutSpec^ value){
+				_kclmtr->setGamutSpec(value->getNative());
 			}
 		}
 		/// <summary>
@@ -550,8 +704,8 @@ namespace KClmtrWrapper {
 		/// <summary>
 		/// set the temporary cal file spect
 		/// </summary>
-		void setTempCalFile(wCorrectedCoefficient^ Matrix, wWhiteSpec^ whiteSpec){
-			_kclmtr->setTempCalFile(Matrix->getNCorrectedCoefficient(), whiteSpec->getNwhitespec());
+		void setTempCalFile(wCorrectedCoefficient^ Matrix){
+			_kclmtr->setTempCalFile(Matrix->getNCorrectedCoefficient());
 		}
 
 		//Property - FFT
@@ -637,7 +791,7 @@ namespace KClmtrWrapper {
 		/// <param name="Kclmtr">  Kclmtr The KClmtr's measurement </param>
 		/// <return> The meatrix that would be stored to the KClmtr, but does not </return>
 		wCorrectedCoefficient^ getCoefficientTestMatrix(wwrgb^ Reference, wwrgb^ Kclmtr){
-			return gcnew wCorrectedCoefficient(_kclmtr->getCoefficientTestMatrix(Reference->getNwrgb(), Kclmtr->getNwrgb()));
+			return gcnew wCorrectedCoefficient(_kclmtr->getCoefficientTestMatrix(Reference->getNative(), Kclmtr->getNative()));
 		}
 		/// <summary>
 		/// Deletes a Calibration file with it's ID.
@@ -656,8 +810,8 @@ namespace KClmtrWrapper {
 		/// <param name="Kclmtr">  Kclmtr The KClmtr's measurement </param>
 		/// <param name="whitespect> The white spect to be stored for the Calibration file </param>
 		/// <return>int Error code. 0 is Good</return>
-		int storeMatrices(int ID, String^ Name, wwrgb^ Reference, wwrgb^ Kclmtr, wWhiteSpec^ whitespec){
-			return _kclmtr->storeMatrices(ID, MarshalString(Name), Reference->getNwrgb(), Kclmtr->getNwrgb(), whitespec->getNwhitespec());
+		int storeMatrices(int ID, String^ Name, wwrgb^ Reference, wwrgb^ Kclmtr){
+			return _kclmtr->storeMatrices(ID, MarshalString(Name), Reference->getNative(), Kclmtr->getNative());
 		}
 
 		//BlackCal - Cold
