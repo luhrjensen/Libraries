@@ -65,7 +65,7 @@ namespace KClmtrWrapper {
 	};
 
 
-
+	/** @cond */
 	class SubClass : public KClmtr {
 
 	public:
@@ -74,6 +74,7 @@ namespace KClmtrWrapper {
 		void printFlicker(Flicker f);
 		gcroot<KClmtrWrap^>  _kclmtrwrapper;
 	};
+	/** @endcond */
 
 	public ref struct wMeasurement {
 		enum class MeasurmentRange {
@@ -425,6 +426,7 @@ namespace KClmtrWrapper {
 		}
 
 		//Property
+		/** @cond */
 		/// <summary>
 		/// Gets or sets the com port's number
 		/// </summary>
@@ -621,6 +623,7 @@ namespace KClmtrWrapper {
 		}
 		/// <summary>
 		/// Returns one measurement from the device. Do not need to startMeasuring() to use this method.
+		/// <param name="n"> Number of measurment needs average by. Good number is 8 measurement(one second)</param>
 		/// </summary>
 		wAvgMeasurement ^getNextMeasurement(int n){
 			return gcnew wAvgMeasurement(_kclmtr->getNextMeasurement(n));
@@ -732,6 +735,7 @@ namespace KClmtrWrapper {
 
 		delegate System::Void MeasureEventHandler(wMeasurement^);
 		delegate System::Void FlickerEventHandler(wFlicker^);
+		/** @endcond */
 		/** @brief Sends out measurement
 		*  @details You must add the event to the object, and then make sure the thread can touch your threadf
 		*  @details Here is an example: 
