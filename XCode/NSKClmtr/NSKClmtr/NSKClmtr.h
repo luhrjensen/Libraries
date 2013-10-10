@@ -47,12 +47,10 @@ public:
 -(void)setCalFileID:(int)calFileID;
 -(matrix)getCalMatrix;
 -(matrix)getRGBMatrix;
--(WhiteSpec)getWhiteSpec;
--(void)resetWhiteSpec;
-
--(void)setWhiteSpec:(WhiteSpec)whiteSpec;
+-(gamutSpec)getGamutSpec;
+-(void)setGamutSpec:(gamutSpec)gamutSpec;
 -(NSArray*)getCalfileList;
--(void)setTempCalFile:(CorrectedCoefficient)matrix whitespec:(WhiteSpec)whitespec;
+-(void)setTempCalFile:(CorrectedCoefficient)matrix;
 
 //Properties - FFT
 -(bool)getFFT_Cosine;
@@ -71,7 +69,7 @@ public:
 -(AvgMeasurement)getNextMeasurment:(int)n;
 -(CorrectedCoefficient)getCofficintTestMatrix:(wrgb) Reference kclmtr:(wrgb)kclmtr;
 -(int)deleteCalFile:(int)calFileID;
--(int)storeCalFile:(int)idNumber name:(NSString*)Name ref:(wrgb)Reference kclmtr:(wrgb)kclmtr whitespec:(WhiteSpec)whitespec;
+-(int)storeCalFile:(int)idNumber name:(NSString*)Name ref:(wrgb)Reference kclmtr:(wrgb)kclmtr;
 
 //BlackCal - Cold
 -(BlackMatrix)captureBlackLevel;
