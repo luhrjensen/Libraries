@@ -32,7 +32,7 @@ PROJECT_NAME           = "KClmtr SDK"
 # This could be handy for archiving the generated documentation or 
 # if some version control system is used.
 
-PROJECT_NUMBER         = 2.31.180
+PROJECT_NUMBER         = 2.35.194
 
 # Using the PROJECT_BRIEF tag one can provide an optional one line description 
 # for a project that appears at the top of each page and should give viewer 
@@ -45,14 +45,14 @@ PROJECT_BRIEF          =
 # exceed 55 pixels and the maximum width should not exceed 200 pixels. 
 # Doxygen will copy the logo to the output directory.
 
-PROJECT_LOGO           = ChromaSurf48.png
+PROJECT_LOGO           = C:/Programs/examples/libraries/Docs/ChromaSurf48.png
 
 # The OUTPUT_DIRECTORY tag is used to specify the (relative or absolute) 
 # base path where the generated documentation will be put. 
 # If a relative path is entered, it will be relative to the location 
 # where doxygen was started. If left blank the current directory will be used.
 
-OUTPUT_DIRECTORY       = "../../../../Users/ThomasNelson/Desktop/KClmtr SDK 2.31.180/SDK Documents"
+OUTPUT_DIRECTORY       = "../../../../Users/ThomasNelson/Desktop/KClmtr SDK  2.35.194/SDK Documents"
 
 # If the CREATE_SUBDIRS tag is set to YES, then doxygen will create 
 # 4096 sub-directories (in 2 levels) under the output directory of each output 
@@ -219,7 +219,7 @@ TCL_SUBST              =
 # For instance, some of the names that are used will be different. The list 
 # of all members will be omitted, etc.
 
-OPTIMIZE_OUTPUT_FOR_C  = YES
+OPTIMIZE_OUTPUT_FOR_C  = NO
 
 # Set the OPTIMIZE_OUTPUT_JAVA tag to YES if your project consists of Java 
 # sources only. Doxygen will then generate output that is more tailored for 
@@ -281,7 +281,7 @@ BUILTIN_STL_SUPPORT    = NO
 # If you use Microsoft's C++/CLI language, you should set this option to YES to 
 # enable parsing support.
 
-CPP_CLI_SUPPORT        = NO
+CPP_CLI_SUPPORT        = YES
 
 # Set the SIP_SUPPORT tag to YES if your project consists of sip sources only. 
 # Doxygen will parse them like normal C++ but will assume all classes use public 
@@ -445,7 +445,7 @@ CASE_SENSE_NAMES       = NO
 # will show members with their full class and namespace scopes in the 
 # documentation. If set to YES the scope will be hidden.
 
-HIDE_SCOPE_NAMES       = YES
+HIDE_SCOPE_NAMES       = NO
 
 # If the SHOW_INCLUDE_FILES tag is set to YES (the default) then Doxygen 
 # will put a list of the files that are included by a file in the documentation 
