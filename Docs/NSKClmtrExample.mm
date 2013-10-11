@@ -1,13 +1,9 @@
 //! [Header_measure]
 @interface Sample_Continuously_MeasuringAppDelegate : NSObject <NSApplicationDelegate> {
 @private
-    NSWindow *window;
     NSKClmtr *kclmtr;
 }
-
-@property (assign) IBOutlet NSWindow *window;
-
--(void)printTheMeasurement:(NSMeasurement*)m;
+-(void)printTheMeasurement:(id)m;
 
 @end
 //! [Header_measure]
@@ -16,24 +12,27 @@
 {
     kclmtr = [[NSKClmtr alloc] init];
     //Setting up where to send Measurement
-    [kclmtr addTarget:self action:@selector(printTheMeasurement:) forEvent:true];
+    [kclmtr addTargetForMeasure:self action:@selector(printTheMeasurement:)];
 }
--(void)printTheMeasurement:(NSMeasurement*)m
+- (void)printTheMeasurement:(id)m
 {
-    //Send out the Measurement
+    Measurement measure;
+    [m getValue:&measure];
+	if(measure.errorcode == 0){
+		// output
+	}else{
+		// ERROR
+	}
 }
 @end
 //! [Source_measure]
 //! [Header_flicker]
 @interface Sample_Continuously_MeasuringAppDelegate : NSObject <NSApplicationDelegate> {
 @private
-    NSWindow *window;
     NSKClmtr *kclmtr;
 }
 
-@property (assign) IBOutlet NSWindow *window;
-
--(void)printTheMeasurement:(NSMeasurement*)m;
+-(void)printTheMeasurement:(id)m;
 
 @end
 //! [Header_flicker]
@@ -42,11 +41,17 @@
 {
     kclmtr = [[NSKClmtr alloc] init];
     //Setting up where to send Flicker
-    [kclmtr addTarget:self action:@selector(printTheFlicker:) forEvent:false];
+    [kclmtr addTargetForFlicker:self action:@selector(printTheFlicker:)];
 }
--(void)printTheFlicker:(NSFlicker*)f
+- (void)printTheFlicker:(id)f
 {
-    //Send out the Flicker
+    Flicker flicker;
+    [f getValue:&flicker];
+	if(flicker.errorcode == 0){
+		// output
+	}else{
+		// ERROR
+	}
 }
 @end
 //! [Source_flicker]

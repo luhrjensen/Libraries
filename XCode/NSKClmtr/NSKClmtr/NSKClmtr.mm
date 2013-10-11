@@ -2,7 +2,7 @@
 //  NSKClmtr.m
 //  NSKClmtr
 //
-//  Created by LUHR JENSEN on 5/14/12.
+//  Created by Klein Instruments on 5/14/12.
 //  Copyright 2012 Klein Instruments. All rights reserved.
 //
 
@@ -84,15 +84,11 @@ void SubClass::printMeasure(Measurement m)
 -(matrix)getRGBMatrix{
     return _kclmtr->getRGBMatrix();
 }
--(WhiteSpec)getWhiteSpec{
-    return _kclmtr->getWhiteSpec();
+-(gamutSpec)getGamutSpec{
+    return _kclmtr->getGamutSpec();
 }
--(void)resetWhiteSpec{
-    _kclmtr->resetWhiteSpec();
-}
-
--(void)setWhiteSpec:(WhiteSpec)whiteSpec{
-    _kclmtr->setWhiteSpec(whiteSpec);
+-(void)setGamutSpec:(gamutSpec)gamutSpec{
+    _kclmtr->setGamutSpec(gamutSpec);
 }
 -(NSArray*)getCalfileList{
     NSMutableArray *calListboo = [[NSMutableArray alloc] init];;
@@ -104,8 +100,8 @@ void SubClass::printMeasure(Measurement m)
     return calListboo;
 }
 
--(void)setTempCalFile:(CorrectedCoefficient)matrix whitespec:(WhiteSpec)whitespec{
-    _kclmtr->setTempCalFile(matrix, whitespec);
+-(void)setTempCalFile:(CorrectedCoefficient)matrix {
+    _kclmtr->setTempCalFile(matrix);
 }
 
 //Properties - FFT
@@ -153,8 +149,8 @@ void SubClass::printMeasure(Measurement m)
 -(int)deleteCalFile:(int)calFileID{
     return _kclmtr->deleteCalFile(calFileID);
 }
--(int)storeCalFile:(int)idNumber name:(NSString*)Name ref:(wrgb)Reference kclmtr:(wrgb)kclmtr whitespec:(WhiteSpec)whitespec{
-    return _kclmtr->storeMatrices(idNumber, [Name UTF8String], Reference, kclmtr, whitespec);
+-(int)storeCalFile:(int)idNumber name:(NSString*)Name ref:(wrgb)Reference kclmtr:(wrgb)kclmtr {
+    return _kclmtr->storeMatrices(idNumber, [Name UTF8String], Reference, kclmtr);
 }
 
 //BlackCal - Cold
@@ -201,11 +197,11 @@ void SubClass::printMeasure(Measurement m)
 
 -(void)sendMeasure:(Measurement)measurement
 {
-    [targetMeasure performSelector:printMeasure withObject:[NSValue value:&measurement withObjCType:@encode(Measurement)]] ;
+    [targetMeasure performSelector:printMeasure withObject:[NSValue value:new Measurement(measurement) withObjCType:@encode(Measurement)]] ;
 }
 -(void)sendFlicker:(Flicker)flicker
 {
-    [targetFlicker performSelector:printFlicker withObject:[NSValue value:&flicker withObjCType:@encode(Flicker)]];
+    [targetFlicker performSelector:printFlicker withObject:[NSValue value:new Flicker(flicker) withObjCType:@encode(Flicker)]];
 }
 -(void)addTargetForMeasure:(id)target action:(SEL)action
 {

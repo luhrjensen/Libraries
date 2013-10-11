@@ -4,9 +4,9 @@ class subClass : public KClmtr
 public:
 	void printMeasure(Measurement measure)
 	{
-		if(measure.errorcode == 0)
+		if(measure.errorcode == 0){
 			// output
-		else{
+		}else{
 			// ERROR
 		}
 	}
@@ -18,9 +18,9 @@ class subClass : public KClmtr
 public:
 	void printFlicker(Flicker flicker)
 	{
-		if(flicker.errorcode == 0)
+		if(flicker.errorcode == 0){
 			// output
-		else{
+		}else{
 			// ERROR
 		}
 	}

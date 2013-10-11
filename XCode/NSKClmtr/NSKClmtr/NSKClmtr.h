@@ -2,7 +2,7 @@
 //  NSKClmtr.h
 //  NSKClmtr
 //
-//  Created by LUHR JENSEN on 5/14/12.
+//  Created by Klein Instruments on 5/14/12.
 //  Copyright 2012 Klein Instruments. All rights reserved.
 //
 
@@ -10,7 +10,7 @@
 #import "../../../kclmtr/KClmtr.h"
 
 @class  NSKClmtr;
-
+/** @cond */
 class SubClass : public KClmtr {
 public:
     SubClass(NSKClmtr* _NSK);
@@ -18,7 +18,7 @@ public:
     void printFlicker(Flicker f);
     NSKClmtr* _NSKClmtr;
 };
-
+/** @endcond */
 /** @ingroup wrappers
  * 	@brief Wraps the Native object to work easly in XCode
  */
@@ -47,12 +47,10 @@ public:
 -(void)setCalFileID:(int)calFileID;
 -(matrix)getCalMatrix;
 -(matrix)getRGBMatrix;
--(WhiteSpec)getWhiteSpec;
--(void)resetWhiteSpec;
-
--(void)setWhiteSpec:(WhiteSpec)whiteSpec;
+-(gamutSpec)getGamutSpec;
+-(void)setGamutSpec:(gamutSpec)gamutSpec;
 -(NSArray*)getCalfileList;
--(void)setTempCalFile:(CorrectedCoefficient)matrix whitespec:(WhiteSpec)whitespec;
+-(void)setTempCalFile:(CorrectedCoefficient)matrix;
 
 //Properties - FFT
 -(bool)getFFT_Cosine;
@@ -71,7 +69,7 @@ public:
 -(AvgMeasurement)getNextMeasurment:(int)n;
 -(CorrectedCoefficient)getCofficintTestMatrix:(wrgb) Reference kclmtr:(wrgb)kclmtr;
 -(int)deleteCalFile:(int)calFileID;
--(int)storeCalFile:(int)idNumber name:(NSString*)Name ref:(wrgb)Reference kclmtr:(wrgb)kclmtr whitespec:(WhiteSpec)whitespec;
+-(int)storeCalFile:(int)idNumber name:(NSString*)Name ref:(wrgb)Reference kclmtr:(wrgb)kclmtr;
 
 //BlackCal - Cold
 -(BlackMatrix)captureBlackLevel;
@@ -92,32 +90,26 @@ public:
 -(bool)connect:(NSString*)portName;
 -(void)closePort;
  
-/** @brief Sends out flicker
- *  @details You must setup the target where the flicker needs to go to.
- *  @details Here is an example: 
- *  @details Header
- *  @snippet NSKClmtrExample.mm Header_flicker
- *   Source
- *  @snippet NSKClmtrExample.mm Source_flicker
- */
 -(void)sendFlicker:(Flicker)flicker;
-/** @brief Sends out measurement
- *  @details You must setup the target where the measure needs to go to.
- *  @details Here is an example: 
- *  @details Header
- *  @snippet NSKClmtrExample.mm Header_measure
- *   Source
- *  @snippet NSKClmtrExample.mm Source_measure
- */
 -(void)sendMeasure:(Measurement)measurement;
 /** @brief Sets up where the measurement goes to
  *  @param target The object that needs to be sent to
  *  @param action The function that needs to be sent to
+ *  @details Here is an example: 
+ *  @details Header
+ *  @snippet NSKClmtrExample.mm Header_flicker
+ *  Source
+ *  @snippet NSKClmtrExample.mm Source_flicker
  */
 -(void)addTargetForMeasure:(id)target action:(SEL)action;
 /** @brief Sets up where the flicker goes to
  *  @param target The object that needs to be sent to
  *  @param action The function that needs to be sent to
+ *  @details Here is an example: 
+ *  @details Header
+ *  @snippet NSKClmtrExample.mm Header_measure
+ *  Source
+ *  @snippet NSKClmtrExample.mm Source_measure
  */
 -(void)addTargetForFlicker:(id)target action:(SEL)action;
 
