@@ -561,7 +561,7 @@ namespace KClmtrWrapper {
 			flickerPercent = wMatrix::fromNative(flicker.flickerPercent);
 			for(int i = 0; i < 3; i++){
 				for(int x = 0; x < 3; x++){
-					peakfrequency[i, x] = flicker.peakfrequency[i][x];
+					peakfrequency[i, x] = flicker.peakfrequency.v[i][x];
 				}
 			}
 			errorcode = flicker.errorcode;
