@@ -68,7 +68,7 @@ namespace KClmtrWrapper {
 	public ref struct wMatrix {
 		int row;
 		int column;
-		double **v;
+		array<double, 2>^ v;
 
 		wMatrix() {
 			row = 0;
@@ -81,18 +81,14 @@ namespace KClmtrWrapper {
 			deleteV();
 			row = _row;
 			column = _column;
-			v = new double *[row];
-
-			for(int i = 0; i < row; ++i) {
-				v[i] = new double[column];
-			}
+			v = gcnew array<double, 2>(row,column);
 
 			clear();
 		}
 		void clear() {
 			for(int i = 0; i < row; ++i) {
 				for(int j = 0; j < column; ++j) {
-					v[i][j] = 0;
+					v[i,j] = 0;
 				}
 			}
 		}
@@ -103,7 +99,7 @@ namespace KClmtrWrapper {
 
 			for(int i = 0; i < m->row; ++i) {
 				for(int j = 0; j < m->column; ++j) {
-					m->v[i][j] = other.v[i][j];
+					m->v[i,j] = other.v[i][j];
 				}
 			}
 			
@@ -112,13 +108,7 @@ namespace KClmtrWrapper {
 
 	private:
 		void deleteV() {
-			for(int i = 0; i < row; ++i) {
-				delete[] v[i];
-			}
-
-			if(row > 0) {
-				delete[] v;
-			}
+			delete v;
 
 			column = 0;
 			row = 0;
