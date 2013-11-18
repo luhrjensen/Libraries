@@ -548,7 +548,7 @@ namespace KClmtrWrapper {
 
 	public ref struct wFlicker {
 		wMeasurement ^xyz;					//The measurement from XYZ
-		array<double, 2> ^peakfrequency;		//The top 3 frequency of DB
+		wMatrix ^peakfrequency;		//The top 3 frequency of DB
 		wMatrix ^flickerDB;			//The DB from 1hz to 100hz
 		wMatrix ^flickerPercent;		//The Percent from 1hz to 100hz
 		int errorcode;						//The error code whenever you are getting data
@@ -556,14 +556,9 @@ namespace KClmtrWrapper {
 		wFlicker(){}
 		wFlicker(Flicker flicker){
 			xyz = gcnew wMeasurement(flicker.xyz);
-			peakfrequency = gcnew array<double, 2>(3, 3);
+			peakfrequency = wMatrix::fromNative(flicker.peakfrequency);
 			flickerDB = wMatrix::fromNative(flicker.flickerDB);	
 			flickerPercent = wMatrix::fromNative(flicker.flickerPercent);
-			for(int i = 0; i < 3; i++){
-				for(int x = 0; x < 3; x++){
-					peakfrequency[i, x] = flicker.peakfrequency.v[i][x];
-				}
-			}
 			errorcode = flicker.errorcode;
 		}
 	};
