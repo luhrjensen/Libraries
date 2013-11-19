@@ -6,7 +6,7 @@
 	ProjectGUID="{7A1A814F-41D5-4BD1-8BC3-5756A0704FD7}"
 	RootNamespace="KClmtrWrapper"
 	Keyword="ManagedCProj"
-	TargetFrameworkVersion="196613"
+	TargetFrameworkVersion="131072"
 	>
 	<Platforms>
 		<Platform

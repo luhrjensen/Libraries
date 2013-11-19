@@ -93,20 +93,22 @@ namespace KClmtrWrapper {
 			}
 		}
 
-		static wMatrix^ fromNative(const matrix &other) {
-			wMatrix^ m = gcnew wMatrix();
-			m->initializeV(other.row, other.column);
-
-			for(int i = 0; i < m->row; ++i) {
-				for(int j = 0; j < m->column; ++j) {
-					m->v[i,j] = other.v[i][j];
-				}
-			}
-			
-			return m;
+		wMatrix(matrix other) {
+			convertFromNative(other);	
 		}
 
 	private:
+		void convertFromNative(matrix other) {
+			initializeV(other.row, other.column);
+
+			for(int i = 0; i < row; ++i) {
+				for(int j = 0; j < column; ++j) {
+					v[i,j] = other.v[i][j];
+				}
+			}
+		
+		}
+
 		void deleteV() {
 			delete v;
 
@@ -184,10 +186,10 @@ namespace KClmtrWrapper {
 		}
 
 		wMatrix^ getRGBtoXYZ() {
-			return wMatrix::fromNative(gs->getRGBtoXYZ());
+			return gcnew wMatrix(gs->getRGBtoXYZ());
 		}
 		wMatrix^ getXYZtoRGB()  {
-			return wMatrix::fromNative(gs->getXYZtoRGB());
+			return gcnew wMatrix(gs->getXYZtoRGB());
 		}
 
 		gamutSpec getNative() {
@@ -556,9 +558,9 @@ namespace KClmtrWrapper {
 		wFlicker(){}
 		wFlicker(Flicker flicker){
 			xyz = gcnew wMeasurement(flicker.xyz);
-			peakfrequency = wMatrix::fromNative(flicker.peakfrequency);
-			flickerDB = wMatrix::fromNative(flicker.flickerDB);	
-			flickerPercent = wMatrix::fromNative(flicker.flickerPercent);
+			peakfrequency = gcnew wMatrix(flicker.peakfrequency);
+			flickerDB = gcnew wMatrix(flicker.flickerDB);	
+			flickerPercent = gcnew wMatrix(flicker.flickerPercent);
 			errorcode = flicker.errorcode;
 		}
 	};
@@ -656,7 +658,7 @@ namespace KClmtrWrapper {
 		/// </summary>
 		property wMatrix^ CalMatrix {
 			wMatrix^ get(){
-				return wMatrix::fromNative(_kclmtr->getCalMatrix());
+				return gcnew wMatrix(_kclmtr->getCalMatrix());
 			}
 		}
 		/// <summary>
@@ -664,7 +666,7 @@ namespace KClmtrWrapper {
 		/// </summary>
 		property wMatrix^ RGBMatrix {
 			wMatrix^ get(){
-				return wMatrix::fromNative(_kclmtr->getRGBMatrix());
+				return gcnew wMatrix(_kclmtr->getRGBMatrix());
 			}
 		}
 		/// <summary>
