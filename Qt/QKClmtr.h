@@ -219,23 +219,23 @@ private:
 signals:
     void closed();
     void connected();
-	/** @brief Sends out Measure
-	 *  @details You must setup the target where the flicker needs to go to.
-	 *  @details Here is an example: 
-	 *  @details Header
-	 *  @snippet QKclmtrExample.cpp Header_flicker
-	 *   Source
-	 *  @snippet QKclmtrExample.cpp Source_flicker
-	 */
+    /** @brief Sends out Measure
+     *  @details You must setup the target where the flicker needs to go to.
+     *  @details Here is an example:
+     *  @details Header
+     *  @snippet QKclmtrExample.cpp Header_flicker
+     *   Source
+     *  @snippet QKclmtrExample.cpp Source_flicker
+     */
     void measured(const Measurement &);
-	/** @brief Sends out flicker
-	 *  @details You must setup the target where the flicker needs to go to.
-	 *  @details Here is an example: 
-	 *  @details Header
-	 *  @snippet QKclmtrExample.cpp Header_flicker
-	 *   Source
-	 *  @snippet QKclmtrExample.cpp Source_flicker
-	 */
+    /** @brief Sends out flicker
+     *  @details You must setup the target where the flicker needs to go to.
+     *  @details Here is an example:
+     *  @details Header
+     *  @snippet QKclmtrExample.cpp Header_flicker
+     *   Source
+     *  @snippet QKclmtrExample.cpp Source_flicker
+     */
     void flickered(const Flicker &);
     void calfileChanged();
     void gamutSpecChanged();
