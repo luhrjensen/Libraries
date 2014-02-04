@@ -113,12 +113,6 @@ public:
     void setFFT_Smoothing(const bool value) {
         _kclmtr->setFFT_Smoothing(value);
     }
-    bool getFFT_Rolloff() {
-        return _kclmtr->getFFT_RollOff();
-    }
-    void setFFT_RollOff(const bool value) {
-        _kclmtr->setFFT_RollOff(value);
-    }
     int getFFT_Samples() {
         return _kclmtr->getFFT_Samples();
     }
