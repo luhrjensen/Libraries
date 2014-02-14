@@ -57,6 +57,9 @@ public:
     void setAimingLights(const bool onOff) {
         _kclmtr->setAimingLights(onOff);
     }
+    void setRange(const int range){
+        _kclmtr->setRange(range);
+    }
 
     //Property - CalFiles
     QString getCalFileName() {
