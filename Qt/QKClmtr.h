@@ -60,6 +60,9 @@ public:
     void setRange(const int range){
         _kclmtr->setRange(range);
     }
+    int getRange() {
+        _kclmtr->getRange();
+    }
 
     //Property - CalFiles
     QString getCalFileName() {
