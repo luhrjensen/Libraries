@@ -61,7 +61,7 @@ public:
         _kclmtr->setRange(range);
     }
     int getRange() {
-        _kclmtr->getRange();
+        return _kclmtr->getRange();
     }
 
     //Property - CalFiles
