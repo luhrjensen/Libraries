@@ -49,9 +49,10 @@ namespace KClmtrWrapper {
 		FFT_PREVIOUS_RANGE      = 0x01000000,
 		FFT_NOT_SUPPORTED       = 0x02000000,
 		FFT_BAD_SAMPLES         = 0x04000000,
+        FFT_OVER_SATURATED      = 0x08000000,
 
-		//Miscellaneous
-		wFIRMWARE               = 0x08000000
+        //Miscellaneous
+        FIRMWARE                = 0x10000000
 	};
 
 
@@ -198,23 +199,22 @@ namespace KClmtrWrapper {
 	private:
 		gamutSpec *gs;
 	};
+	enum class wMeasurmentRange {
+		range1 = 1,
+		range2 = range1 + 1,
+		range3 = range2 + 1,
+		range4 = range3 + 1,
+		range5 = range4 + 1,
+		range6 = range5 + 1,
+
+		range1B = range1,
+		range1T = range2,
+		range2B = range3,
+		range2T = range4,
+		range3B = range5,
+		range3T = range6,
+	};
 	public ref struct wMeasurement {
-		enum class MeasurmentRange {
-			range1 = 1,
-			range2 = range1 + 1,
-			range3 = range2 + 1,
-			range4 = range3 + 1,
-			range5 = range4 + 1,
-			range6 = range5 + 1,
-
-			range1B = range1,
-			range1T = range2,
-			range2B = range3,
-			range2T = range4,
-			range3B = range5,
-			range3T = range6,
-		};
-
 		double x;
 		double y;
 		double bigx;
@@ -345,9 +345,9 @@ namespace KClmtrWrapper {
 			m.hue = hue;
 			m.saturation = saturation;
 			m.value = value;
-			m.redrange = static_cast<Measurement::MeasurmentRange>(redrange);
-			m.greenrange = static_cast<Measurement::MeasurmentRange>(greenrange);
-			m.bluerange = static_cast<Measurement::MeasurmentRange>(bluerange);
+			m.redrange = static_cast<MeasurmentRange>(redrange);
+			m.greenrange = static_cast<MeasurmentRange>(greenrange);
+			m.bluerange = static_cast<MeasurmentRange>(bluerange);
 			m.temp = temp;
 			m.tempduv = tempduv;
 			m.errorcode = errorcode;
@@ -549,18 +549,24 @@ namespace KClmtrWrapper {
 	};
 
 	public ref struct wFlicker {
-		wMeasurement ^xyz;					//The measurement from XYZ
+		double bigY;				//The Y from XYZ
+		wMeasurement ^xyz;			//The measurement from XYZ
+		wMeasurmentRange range;		//Range for Green aka for Y
 		wMatrix ^peakfrequency;		//The top 3 frequency of DB
 		wMatrix ^flickerDB;			//The DB from 1hz to 100hz
-		wMatrix ^flickerPercent;		//The Percent from 1hz to 100hz
-		int errorcode;						//The error code whenever you are getting data
+		wMatrix ^flickerPercent;	//The Percent from 1hz to 100hz
+		wMatrix ^singal;			//The Signal over Time
+		wMatrix ^amplitude;			//The amplitude
+		int errorcode;				//The error code whenever you are getting data
 
 		wFlicker(){}
 		wFlicker(Flicker flicker){
-			xyz = gcnew wMeasurement(flicker.xyz);
+			bigY = flicker.bigY;
 			peakfrequency = gcnew wMatrix(flicker.peakfrequency);
 			flickerDB = gcnew wMatrix(flicker.flickerDB);	
 			flickerPercent = gcnew wMatrix(flicker.flickerPercent);
+			singal = gcnew wMatrix(flicker.singal);;
+			amplitude = gcnew wMatrix(flicker.amplitude );;
 			errorcode = flicker.errorcode;
 		}
 	};
@@ -622,6 +628,18 @@ namespace KClmtrWrapper {
 		property bool AimingLights{
 			void set(bool value){
 				_kclmtr->setAimingLights(value);
+			}
+		}
+		/// <summary>
+		/// Sets the Range 1-6
+		/// </summary>
+		/// <value> Ranges from 1 - 6, AutoRange and default = -1  </value>
+		property int Range{
+			void set(const int range){
+				_kclmtr->setRange(range);
+			}
+			int get(){
+				return _kclmtr->getRange();
 			}
 		}
 		/// <summary>
@@ -720,17 +738,6 @@ namespace KClmtrWrapper {
 			}
 			void set(bool value){
 				_kclmtr->setFFT_Smoothing(value);
-			}
-		}
-		/// <summary>
-		/// Get or Set the use of the EIAJ Roll off in the flicker output
-		/// </summary>
-		property bool FFT_RollOff{
-			bool get(){
-				return _kclmtr->getFFT_RollOff();
-			}
-			void set(bool value){
-				_kclmtr->setFFT_RollOff(value);
 			}
 		}
 		/// <summary>
