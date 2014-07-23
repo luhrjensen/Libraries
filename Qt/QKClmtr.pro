@@ -22,27 +22,15 @@ HEADERS  += QKClmtr.h \
     ../kclmtr/KClmtr.h \
 
 
-CONFIG(debug, debug|release) {
-    DESTDIR = build/debug
-    TARGET = qkclmtr
-} else {
-    TARGET = qkclmtr
+TARGET = qkclmtr
 
-    QHeader.files = QKClmtr.h
-    QHeader.path = ../bin/qt/Headers/
-    KClmtr_header.files += ../kclmtr/serialPort.h
-    KClmtr_header.files += ../kclmtr/KClmtr.h
-    KClmtr_header.path = ../bin/qt/Headers/kclmtr
-    INSTALLS += QHeader
-    INSTALLS += KClmtr_header
+QHeader.files = QKClmtr.h
+QHeader.path = ../bin/qt/Headers/
+KClmtr_header.files += ../kclmtr/serialPort.h
+KClmtr_header.files += ../kclmtr/KClmtr.h
+KClmtr_header.path = ../bin/qt/Headers/kclmtr
+INSTALLS += QHeader
+INSTALLS += KClmtr_header
 
-    win32: DESTDIR = ../bin/qt/win
-    macx: DESTDIR = ../bin/qt/mac
-}
-
-
-
-
-
-
-
+win32: DESTDIR = ../bin/qt/win
+macx: DESTDIR = ../bin/qt/mac
