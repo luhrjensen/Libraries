@@ -57,10 +57,10 @@ public:
 -(void)setFFT_Cosine:(bool)value;
 -(bool)getFFT_Smoothing;
 -(void)setFFT_Smoothing:(bool)value;
--(bool)getFFT_RollOff;
--(void)setFFT_RollOff:(bool)value;
 -(int)getFFT_Samples;
 -(void)setFFT_Samples:(int)value;
+
+-(bool)getFlicker:(Flicker&) f;
 
 //Measurements
 -(bool)isMeasuring;
@@ -70,6 +70,8 @@ public:
 -(CorrectedCoefficient)getCofficintTestMatrix:(wrgb) Reference kclmtr:(wrgb)kclmtr;
 -(int)deleteCalFile:(int)calFileID;
 -(int)storeCalFile:(int)idNumber name:(NSString*)Name ref:(wrgb)Reference kclmtr:(wrgb)kclmtr;
+
+-(bool)getMeasurement:(Measurement&) m;
 
 //BlackCal - Cold
 -(BlackMatrix)captureBlackLevel;

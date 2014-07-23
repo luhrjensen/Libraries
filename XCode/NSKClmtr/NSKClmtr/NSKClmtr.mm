@@ -117,19 +117,15 @@ void SubClass::printMeasure(Measurement m)
 -(void)setFFT_Smoothing:(bool)value{
     _kclmtr->setFFT_Smoothing(value);
 }
--(bool)getFFT_RollOff{
-    return _kclmtr->getFFT_RollOff();
-}
--(void)setFFT_RollOff:(bool)value{
-    _kclmtr->setFFT_RollOff(value);
-}
 -(int)getFFT_Samples{
     return _kclmtr->getFFT_Samples();
 }
 -(void)setFFT_Samples:(int)value{
     _kclmtr->setFFT_Samples(value);
 }
-
+-(bool)getFlicker:(Flicker&) f {
+	return _kclmtr->getFlicker(f);
+}
 //Measurements
 -(bool)isMeasuring{
     return _kclmtr->isMeasuring();
@@ -152,7 +148,10 @@ void SubClass::printMeasure(Measurement m)
 -(int)storeCalFile:(int)idNumber name:(NSString*)Name ref:(wrgb)Reference kclmtr:(wrgb)kclmtr {
     return _kclmtr->storeMatrices(idNumber, [Name UTF8String], Reference, kclmtr);
 }
-
+-(bool)getMeasurement:(Measurement&) m; {
+	return _kclmtr->getMeasurement(m);
+}
+	
 //BlackCal - Cold
 -(BlackMatrix)captureBlackLevel{
     return _kclmtr->captureBlackLevel();
