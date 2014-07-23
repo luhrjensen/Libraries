@@ -20,7 +20,10 @@ public:
 };
 /** @endcond */
 /** @ingroup wrappers
- * 	@brief Wraps the Native object to work easly in XCode
+ *  @{
+ */
+/**
+ * 	@brief Wraps the Native object to work easily in XCode
  */
 @interface NSKClmtr : NSObject {
 
@@ -116,3 +119,4 @@ public:
 -(void)addTargetForFlicker:(id)target action:(SEL)action;
 
 @end
+/** @} */

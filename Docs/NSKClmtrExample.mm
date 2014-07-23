@@ -18,6 +18,7 @@
 {
     Measurement measure;
     [m getValue:&measure];
+	// If the code is 0 then there was no error, there are other errors that could be dropped, take a look at the examples
 	if(measure.errorcode == 0){
 		// output
 	}else{
@@ -47,6 +48,7 @@
 {
     Flicker flicker;
     [f getValue:&flicker];
+	// If the code is 0 then there was no error, there are other errors that could be dropped, take a look at the examples
 	if(flicker.errorcode == 0){
 		// output
 	}else{
