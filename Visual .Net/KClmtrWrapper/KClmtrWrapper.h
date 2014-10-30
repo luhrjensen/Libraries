@@ -550,7 +550,6 @@ namespace KClmtrWrapper {
 
 	public ref struct wFlicker {
 		double bigY;				//The Y from XYZ
-		wMeasurement ^xyz;			//The measurement from XYZ
 		wMeasurmentRange range;		//Range for Green aka for Y
 		wMatrix ^peakfrequency;		//The top 3 frequency of DB
 		wMatrix ^flickerDB;			//The DB from 1hz to 100hz
@@ -774,6 +773,17 @@ namespace KClmtrWrapper {
 			_kclmtr->stopMeasuring();
 		}
 		/// <summary>
+		/// Grabs and returns one measurement from the class buffer. Use startMeasering().
+		/// </summary>
+		/// <param name="m"> the measurement that was in the buffer
+		/// <return> to see if the measurement was already grabbed, and it's old data. 
+		bool getMeasreument(wMeasurement^ %m) {
+			Measurement _m;
+			bool returnFresh = _kclmtr->getMeasurement(_m);
+			m = gcnew wMeasurement(_m);
+			return returnFresh;
+		}
+		/// <summary>
 		/// Returns one measurement from the device. Do not need to startMeasuring() to use this method.
 		/// <param name="n"> Number of measurment needs average by. Good number is 8 measurement(one second)</param>
 		/// </summary>
@@ -846,19 +856,41 @@ namespace KClmtrWrapper {
 		/// </summary>
 		/// <param name="grabConstantly"> If you are planning to use getNextFlicker() set this to be false. If you want it to return flicker has soon has it grabs one, set it to be true </param>
 		/// <return> Error string, OK is good </return> 
-		int StartFlicker(bool grabConstantly){
+		int startFlicker(bool grabConstantly){
 			return _kclmtr->startFlicker(grabConstantly);
 		}
 		/// <summary>
-		/// Grabs and returns one flicker measurement. The speed which this returns is based on the getFFT_Samples()
+		/// Grabs and returns one flicker measurement from the class buffer. Use startFlicker().
+		/// </summary>
+		/// <param name="f"> the flicker measurement that was in the buffer
+		/// <return> to see if the flicker measurement was already grabbed, and it's old data. 
+		bool getFlicker(wFlicker^ %f) {
+			Flicker _f;
+			bool returnFresh = _kclmtr->getFlicker(_f);
+			f = gcnew wFlicker(_f);
+			return returnFresh;
+		}
+		/// <summary>
+		/// Grabs and returns one flicker measurement. Do not use startFlicker(). The speed which this returns is based on the getFFT_Samples()
 		/// </summary>
 		wFlicker^ getNextFlicker(){
 			return gcnew wFlicker(_kclmtr->getNextFlicker());
 		}
 		/// <summary>
+		/// Grabs and returns one measurement from the class buffer. Use startMeasering().
+		/// </summary>
+		/// <param name="m"> the measurement that was in the buffer
+		/// <return> to see if the measurement was already grabbed, and it's old data. 
+		bool getFlicker(wFlicker^ %f) {
+			Flicker _f;
+			bool returnFresh = _kclmtr->getFlicker(_f);
+			f = gcnew wFlicker(_f);
+			return returnFresh;
+		}
+		/// <summary>
 		/// Stops the device from being in flicker mode. This also needs to be if you set the grabConstanly param in startFlicker()
 		/// </summary>
-		void StopFlicker(){
+		void stopFlicker(){
 			_kclmtr->stopFlicker();
 		}
 

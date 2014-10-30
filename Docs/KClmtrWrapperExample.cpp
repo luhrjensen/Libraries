@@ -22,14 +22,11 @@ public ref class Form1 : public System::Windows::Forms::Form {
 					// In case you closed the form before it could stop the measuring
 				}
 			}else{
-				// If its ready to display it, we can then(but you can display it even if its not ready.
-				if(xyL->readyflag == true){
-					// If the code is 0 then there was no error
-					if(xyL->errorcode == 0){
-						// Output
-					}else{
-						// There was an error
-					}
+				// If the code is 0 then there was no error
+				if(xyL->errorcode == 0){
+					// Output
+				}else{
+					// There was an error
 				}
 			}
 		}
@@ -59,15 +56,11 @@ public ref class Form1 : public System::Windows::Forms::Form {
 				}catch(...){
 					// In case you closed the form before it could stop the measuring
 				}
-			}else{
-				// If its ready to display it, we can then(but you can display it even if its not ready.
-				if(flicker->readyflag == true){
-					// If the code is 0 then there was no error
-					if(flicker->errorcode == 0){
-						// Output
-					}else{
-						// There was an error
-					}
+				// If the code is 0 then there was no error, there are other errors that could be dropped, take a look at the examples
+				if(flicker->errorcode == 0){
+					// Output
+				}else{
+					// There was an error
 				}
 			}
 		}
