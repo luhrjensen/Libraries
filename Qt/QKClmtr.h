@@ -38,6 +38,9 @@ public:
     QString getCalFileName() {
         return QString::fromStdString(KClmtr::getCalFileName());
     }
+    int storeMatrices(int ID, const QString &Name, const wrgb &reference, const wrgb &kclmtr) {
+        return KClmtr::storeMatrices(ID, Name.toStdString(), reference, kclmtr);
+    }
     void setCalFileID(const int calFileID) {
         //will it really change
         if(getCalFileID() != calFileID) {
@@ -86,7 +89,13 @@ public:
     void printFlicker(Flicker flicker) {
         emit flickered(flicker);
     }
-
+protected:
+    int sendMessageToKColorimeter(const QString &strMsg, int expected, int timeOut_Sec, QString &readString) {
+        string readStdString = "";
+        int error = KClmtr::sendMessageToKColorimeter(strMsg.toStdString(), expected, timeOut_Sec, readStdString);
+        readString = QString::fromStdString(readStdString);
+        return error;
+    }
 
 private:
     bool _isOpen;
