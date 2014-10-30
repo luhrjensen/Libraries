@@ -877,6 +877,17 @@ namespace KClmtrWrapper {
 			return gcnew wFlicker(_kclmtr->getNextFlicker());
 		}
 		/// <summary>
+		/// Grabs and returns one measurement from the class buffer. Use startMeasering().
+		/// </summary>
+		/// <param name="m"> the measurement that was in the buffer
+		/// <return> to see if the measurement was already grabbed, and it's old data. 
+		bool getFlicker(wFlicker^ %f) {
+			Flicker _f;
+			bool returnFresh = _kclmtr->getFlicker(_f);
+			f = gcnew wFlicker(_f);
+			return returnFresh;
+		}
+		/// <summary>
 		/// Stops the device from being in flicker mode. This also needs to be if you set the grabConstanly param in startFlicker()
 		/// </summary>
 		void stopFlicker(){
