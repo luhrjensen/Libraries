@@ -551,9 +551,9 @@ namespace KClmtrWrapper {
 	public ref struct wFlicker {
 		double bigY;				//The Y from XYZ
 		wMeasurmentRange range;		//Range for Green aka for Y
-		wMatrix ^peakfrequency;		//The top 3 frequency of DB
-		wMatrix ^flickerDB;			//The DB from 1hz to 100hz
-		wMatrix ^flickerPercent;	//The Percent from 1hz to 100hz
+		wMatrix ^peakfrequency;		//The top 3 frequency of DB, first element Hz, second percent, third dB
+		wMatrix ^flickerDB;			//The DB First element is Hz, Second is dB
+		wMatrix ^flickerPercent;	//The Percent First element is Hz, Second is percent
 		wMatrix ^singal;			//The Signal over Time
 		wMatrix ^amplitude;			//The amplitude
 		int errorcode;				//The error code whenever you are getting data
@@ -875,17 +875,6 @@ namespace KClmtrWrapper {
 		/// </summary>
 		wFlicker^ getNextFlicker(){
 			return gcnew wFlicker(_kclmtr->getNextFlicker());
-		}
-		/// <summary>
-		/// Grabs and returns one measurement from the class buffer. Use startMeasering().
-		/// </summary>
-		/// <param name="m"> the measurement that was in the buffer
-		/// <return> to see if the measurement was already grabbed, and it's old data. 
-		bool getFlicker(wFlicker^ %f) {
-			Flicker _f;
-			bool returnFresh = _kclmtr->getFlicker(_f);
-			f = gcnew wFlicker(_f);
-			return returnFresh;
 		}
 		/// <summary>
 		/// Stops the device from being in flicker mode. This also needs to be if you set the grabConstanly param in startFlicker()
