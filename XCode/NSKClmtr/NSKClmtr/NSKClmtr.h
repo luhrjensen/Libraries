@@ -63,8 +63,6 @@ public:
 -(int)getFFT_Samples;
 -(void)setFFT_Samples:(int)value;
 
--(bool)getFlicker:(Flicker&) f;
-
 //Measurements
 -(bool)isMeasuring;
 -(void)startMeasuring;
@@ -89,6 +87,7 @@ public:
 -(int)startFlicker:(bool)grabConstantly;
 -(Flicker)getNextFlicker;
 -(void)stopFlickering;
+-(bool)getFlicker:(Flicker&)f;
 
 //Setup/closing
 -(bool)connect;

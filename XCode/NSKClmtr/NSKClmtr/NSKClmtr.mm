@@ -123,9 +123,6 @@ void SubClass::printMeasure(Measurement m)
 -(void)setFFT_Samples:(int)value{
     _kclmtr->setFFT_Samples(value);
 }
--(bool)getFlicker:(Flicker&) f {
-	return _kclmtr->getFlicker(f);
-}
 //Measurements
 -(bool)isMeasuring{
     return _kclmtr->isMeasuring();
@@ -181,7 +178,9 @@ void SubClass::printMeasure(Measurement m)
 -(void)stopFlickering{
     _kclmtr->stopFlicker();
 }
-
+-(bool)getFlicker:(Flicker&) f {
+	return _kclmtr->getFlicker(f);
+}
 
 //Setup/closing
 -(bool)connect{
