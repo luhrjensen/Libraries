@@ -13,14 +13,6 @@ OBJECTS_DIR = build/obj
 MOC_DIR = build/moc
 CONFIG += x86_64
 
-CONFIG(debug, debug|release) {
-    DESTDIR = build/debug
-    TARGET = qkclmtr
-} else {
-    DESTDIR = build/release
-    TARGET = qkclmtr
-}
-
 SOURCES += QKClmtr.cpp \
     ../kclmtr/serialPort.cpp \
     ../kclmtr/KClmtr.cpp \
@@ -30,9 +22,15 @@ HEADERS  += QKClmtr.h \
     ../kclmtr/KClmtr.h \
 
 
+TARGET = qkclmtr
 
+QHeader.files = QKClmtr.h
+QHeader.path = ../bin/qt/Headers/
+KClmtr_header.files += ../kclmtr/serialPort.h
+KClmtr_header.files += ../kclmtr/KClmtr.h
+KClmtr_header.path = ../bin/qt/Headers/kclmtr
+INSTALLS += QHeader
+INSTALLS += KClmtr_header
 
-
-
-
-
+win32: DESTDIR = ../bin/qt/win
+macx: DESTDIR = ../bin/qt/mac

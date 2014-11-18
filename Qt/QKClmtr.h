@@ -1,194 +1,73 @@
 #ifndef QKCLMTR_H
 #define QKCLMTR_H
 
-#include <QtGui/QWidget>
-#include <portsystem/devices/gendevice.h>
+#include <QObject>
+#include <QStringList>
 #include "../kclmtr/KClmtr.h"
 
-class QKClmtr;
-class SubClass : public KClmtr {
-public:
-    SubClass(QKClmtr *_QKC) {
-        _QKClmtr = _QKC;
-    }
-
-    void printMeasure(Measurement m);
-    void printFlicker(Flicker f);
-    QKClmtr *_QKClmtr;
-};
 /** @ingroup wrappers
  *  @brief Wraps the Native object to work easly in Qt
  */
-class QKClmtr : public GenDevice {
+class QKClmtr : public QObject, public KClmtr {
     Q_OBJECT
 
 public:
     QKClmtr() {
         _isOpen = false;
-        _kclmtr = new SubClass(this);
-    }
-    virtual ~QKClmtr(void) {
-        delete _kclmtr;
     }
     //Property
     QString getPort() {
-        return QString::fromStdString(_kclmtr->getPort());
+        return QString::fromStdString(KClmtr::getPort());
     }
-    void setPort(QString value) {
-        _kclmtr->setPort(value.toStdString());
+    void setPort(const QString &value) {
+        KClmtr::setPort(value.toStdString());
     }
     QString getSerialNumber() {
-        return QString::fromStdString(_kclmtr->getSerialNumber());
+        return QString::fromStdString(KClmtr::getSerialNumber());
     }
     QString getModel() {
-        return QString::fromStdString(_kclmtr->getModel());
+        return QString::fromStdString(KClmtr::getModel());
     }
     bool isPortOpen() {
-        if(_isOpen && !_kclmtr->isPortOpen()) {
+        if(_isOpen && !KClmtr::isPortOpen()) {
             emit closed();
         }
-
-        return _kclmtr->isPortOpen();
+        return KClmtr::isPortOpen();
     }
-
-
-    void setAimingLights(bool onOff) {
-        _kclmtr->setAimingLights(onOff);
-    }
-
     //Property - CalFiles
     QString getCalFileName() {
-        return QString::fromStdString(_kclmtr->getCalFileName());
+        return QString::fromStdString(KClmtr::getCalFileName());
     }
-    int getCalFileID() {
-        return _kclmtr->getCalFileID();
+    int storeMatrices(int ID, const QString &Name, const wrgb &reference, const wrgb &kclmtr) {
+        return KClmtr::storeMatrices(ID, Name.toStdString(), reference, kclmtr);
     }
-    void setCalFileID(int calFileID) {
+    void setCalFileID(const int calFileID) {
         //will it really change
         if(getCalFileID() != calFileID) {
-            _kclmtr->setCalFileID(calFileID);
+            KClmtr::setCalFileID(calFileID);
             emit calfileChanged();
         }
     }
-    const matrix getCalMatrix() {
-        return _kclmtr->getCalMatrix();
-    }
-    const matrix getRGBMatrix() {
-        return _kclmtr->getRGBMatrix();
-    }
-    WhiteSpec getWhiteSpec() {
-        return _kclmtr->getWhiteSpec();
-    }
-    void resetWhiteSpec() {
-        _kclmtr->resetWhiteSpec();
+    void setGamutSpec(const gamutSpec &gs) {
+        KClmtr::setGamutSpec(gs);
+        emit gamutSpecChanged();
     }
 
-    void setWhiteSpec(WhiteSpec value) {
-        _kclmtr->setWhiteSpec(value);
-    }
     QStringList getCalFileList() {
         QStringList CalList;
-        const string *calList  = _kclmtr->getCalFileList();
-
+        const string *calList  = KClmtr::getCalFileList();
         for(int i = 0; i < 97;  i++) {
             CalList << QString::fromStdString(calList[i]);
         }
-
         return CalList;
     }
-
-    void setTempCalFile(CorrectedCoefficient matrix, WhiteSpec whiteSpec) {
-        _kclmtr->setTempCalFile(matrix, whiteSpec);
-    }
-    //Property - FFT
-    bool getFFT_Cosine() {
-        return _kclmtr->getFFT_Cosine();
-    }
-    void setFFT_Cosine(bool value) {
-        _kclmtr->setFFT_Cosine(value);
-    }
-    bool getFFT_Smoothing() {
-        return _kclmtr->getFFT_Smoothing();
-    }
-    void setFFT_Smoothing(bool value) {
-        _kclmtr->setFFT_Smoothing(value);
-    }
-    bool getFFT_Rolloff() {
-        return _kclmtr->getFFT_RoolOff();
-    }
-    void setFFT_RollOff(bool value) {
-        _kclmtr->setFFT_RollOff(value);
-    }
-    int getFFT_samples() {
-        return _kclmtr->getFFT_Samples();
-    }
-    int setFFT_samples(int value) {
-        return _kclmtr->setFFT_Samples(value);
-    }
-
-
-    //XYZ
-    bool isMeasuring() {
-        return _kclmtr->isMeasuring();
-    }
-    void startMeasuring() {
-        _kclmtr->startMeasuring();
-    }
-    void stopMeasuring() {
-        _kclmtr->stopMeasuring();
-    }
-    Measurement getNextMeasurement(int n = 1) {
-        return Measurement(_kclmtr->getNextMeasurement(n));
-    }
-    //Setting up to Store CalFiles
-    CorrectedCoefficient getCoefficientTestMatrix(wrgb Reference, wrgb Kclmtr) {
-        return _kclmtr->getCoefficientTestMatrix(Reference, Kclmtr);
-    }
-    int deleteCalFile(int CalFileID) {
-        return _kclmtr->deleteCalFile(CalFileID);
-    }
-    //Storing CalFile
-    int storeCalFile(int ID, QString Name, wrgb reference, wrgb kclmtr, WhiteSpec whiteSpec) {
-        return _kclmtr->storeMatrices(ID, Name.toStdString(), reference, kclmtr, whiteSpec);
-    }
-
-    //BlackCal - Cold
-    BlackMatrix captureBlackLevel() {
-        return _kclmtr->captureBlackLevel();
-    }
-    BlackMatrix getFlashMatrix() {
-        return _kclmtr->getFlashMatrix();
-    }
-
-    //BlackCal - Hot
-    BlackMatrix getRAMMatrix() {
-        return _kclmtr->getRAMMatrix();
-    }
-    BlackMatrix getCoefficientMatrix() {
-        return _kclmtr->getCoefficientMatrix();
-    }
-
-    //FFT
-    bool isFlickering() {
-        return _kclmtr->isFlickering();
-    }
-    int startFlicker(bool grabConstantly) {
-        return _kclmtr->startFlicker(grabConstantly);
-    }
-    Flicker getNextFlicker() {
-        return Flicker(_kclmtr->getNextFlicker());
-    }
-    void stopFlicker() {
-        _kclmtr->stopFlicker();
-    }
-
     //setup/Close
-    bool connect(QString portName) {
+    bool connect(const QString &portName) {
         setPort(portName);
         return connect();
     }
     bool connect() {
-        if(_kclmtr->connect()) {
+        if(KClmtr::connect()) {
             _isOpen = true;
             emit connected();
             return true;
@@ -199,27 +78,51 @@ public:
     }
     void closePort() {
         if(isPortOpen()) {
-            _kclmtr->closePort();
+            KClmtr::closePort();
             _isOpen = false;
             emit closed();
         }
     }
-
     void printMeasure(Measurement measure) {
         emit measured(measure);
     }
     void printFlicker(Flicker flicker) {
         emit flickered(flicker);
     }
-
-    //functions for GenDevice
-    DeviceType getType() {
-        return typeKClmtr;
+protected:
+    int sendMessageToKColorimeter(const QString &strMsg, int expected, int timeOut_Sec, QString &readString) {
+        string readStdString = "";
+        int error = KClmtr::sendMessageToKColorimeter(strMsg.toStdString(), expected, timeOut_Sec, readStdString);
+        readString = QString::fromStdString(readStdString);
+        return error;
     }
 
 private:
     bool _isOpen;
-    SubClass *_kclmtr;
+
+signals:
+    void closed();
+    void connected();
+    /** @brief Sends out Measure
+     *  @details You must setup the target where the flicker needs to go to.
+     *  @details Here is an example:
+     *  @details Header
+     *  @snippet QKclmtrExample.cpp Header_flicker
+     *   Source
+     *  @snippet QKclmtrExample.cpp Source_flicker
+     */
+    void measured(const Measurement &);
+    /** @brief Sends out flicker
+     *  @details You must setup the target where the flicker needs to go to.
+     *  @details Here is an example:
+     *  @details Header
+     *  @snippet QKclmtrExample.cpp Header_flicker
+     *   Source
+     *  @snippet QKclmtrExample.cpp Source_flicker
+     */
+    void flickered(const Flicker &);
+    void calfileChanged();
+    void gamutSpecChanged();
 };
 
 #endif // QKCLMTR_H

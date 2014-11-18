@@ -15,6 +15,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
 }
 void MainWindow::on_Measure(QMeasurement measurement){
+	// If the code is 0 then there was no error, there are other errors that could be dropped, take a look at the examples
     if(measurement.errorcode == 0){
         //Output the measurement
     }else{
@@ -41,6 +42,7 @@ MainWindow::MainWindow(QWidget *parent) :
 }
 
 void MainWindow::on_flicker(QFlicker flicker){
+	// If the code is 0 then there was no error, there are other errors that could be dropped, take a look at the examples
     if(flicker.errorcode == 0){
         //Output the measurement
     }else{
