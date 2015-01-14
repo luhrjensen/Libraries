@@ -89,12 +89,8 @@ public:
     void printFlicker(Flicker flicker) {
         emit flickered(flicker);
     }
-protected:
-    int sendMessageToKColorimeter(const QString &strMsg, int expected, int timeOut_Sec, QString &readString) {
-        string readStdString = "";
-        int error = KClmtr::sendMessageToKColorimeter(strMsg.toStdString(), expected, timeOut_Sec, readStdString);
-        readString = QString::fromStdString(readStdString);
-        return error;
+    int sendMessageToKColorimeter(const string &strMsg, int expected, int timeOut_Sec, string &readString) {
+        return KClmtr::sendMessageToKColorimeter(strMsg, expected, timeOut_Sec, readString);
     }
 
 private:
