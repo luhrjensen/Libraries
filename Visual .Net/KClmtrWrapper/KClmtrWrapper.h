@@ -97,7 +97,16 @@ namespace KClmtrWrapper {
 		wMatrix(matrix other) {
 			convertFromNative(other);	
 		}
-
+		matrix getNative() {
+			matrix native;
+			native.initializeV(row, column);
+			for(int i = 0; i < row; ++i) {
+				for(int j = 0; j < column; ++j) {
+					native.v[i][j] = v[i, j];
+				}
+			}
+			return native;
+		}
 	private:
 		void convertFromNative(matrix other) {
 			initializeV(other.row, other.column);
@@ -525,25 +534,20 @@ namespace KClmtrWrapper {
 	};
 
 	public ref struct wCorrectedCoefficient {
-		static array<double, 2>^ colorMatrix = gcnew array<double, 2>(3, 3);
-		static array<double, 2>^ rgbMatrix = gcnew array<double, 2>(3, 3);
-		wCorrectedCoefficient(){}
-		wCorrectedCoefficient(CorrectedCoefficient corrected){
-			for(int i = 0; i < 3; i++){
-				for(int x = 0; x < 3; x++){
-					colorMatrix[i, x] = corrected.colorMatrix[i][x];
-					rgbMatrix[i, x] = corrected.rgbMatrix[i][x];
-				}
-			}
+		wMatrix ^colorMatrix;
+		wMatrix ^rgbMatrix;
+		wCorrectedCoefficient(){
+			colorMatrix = gcnew wMatrix();		
+			rgbMatrix = gcnew wMatrix();
 		}
-		CorrectedCoefficient getNCorrectedCoefficient(){
+		wCorrectedCoefficient(CorrectedCoefficient corrected){
+			colorMatrix = gcnew wMatrix(corrected.colorMatrix);
+			rgbMatrix = gcnew wMatrix(corrected.rgbMatrix);
+		}
+		CorrectedCoefficient getNative(){
 			CorrectedCoefficient corrected;
-			for(int i = 0; i < 3; i++){
-				for(int x = 0; x < 3; x++){
-					corrected.colorMatrix[i][x] = colorMatrix[i, x];
-					corrected.rgbMatrix[i][x] = rgbMatrix[i, x];
-				}
-			}
+			corrected.colorMatrix = colorMatrix->getNative();
+			corrected.rgbMatrix = rgbMatrix->getNative();
 			return corrected;
 		}
 	};
@@ -551,17 +555,29 @@ namespace KClmtrWrapper {
 	public ref struct wFlicker {
 		double bigY;				//The Y from XYZ
 		wMeasurmentRange range;		//Range for Green aka for Y
-		wMatrix ^peakfrequency;		//The top 3 frequency of DB, first element Hz, second percent, third dB
+		array<wMatrix ^> ^peakfrequency; //The top 3 frequency of DB, first element Hz, second percent, third dB
 		wMatrix ^flickerDB;			//The DB First element is Hz, Second is dB
 		wMatrix ^flickerPercent;	//The Percent First element is Hz, Second is percent
 		wMatrix ^singal;			//The Signal over Time
 		wMatrix ^amplitude;			//The amplitude
 		int errorcode;				//The error code whenever you are getting data
 
-		wFlicker(){}
+		wFlicker() {
+			bigY = 0;
+			peakfrequency = gcnew array<wMatrix ^>(2);
+			peakfrequency[0] = gcnew wMatrix();
+			peakfrequency[1] = gcnew wMatrix();
+			flickerDB = gcnew wMatrix();	
+			flickerPercent = gcnew wMatrix();
+			singal = gcnew wMatrix();
+			amplitude = gcnew wMatrix();
+			errorcode = 0;
+		}
 		wFlicker(Flicker flicker){
 			bigY = flicker.bigY;
-			peakfrequency = gcnew wMatrix(flicker.peakfrequency);
+			peakfrequency = gcnew array<wMatrix ^>(2);
+			peakfrequency[0] = gcnew wMatrix(flicker.peakfrequency[0]);
+			peakfrequency[1] = gcnew wMatrix(flicker.peakfrequency[1]);
 			flickerDB = gcnew wMatrix(flicker.flickerDB);	
 			flickerPercent = gcnew wMatrix(flicker.flickerPercent);
 			singal = gcnew wMatrix(flicker.singal);;
@@ -713,7 +729,7 @@ namespace KClmtrWrapper {
 		/// set the temporary cal file spect
 		/// </summary>
 		void setTempCalFile(wCorrectedCoefficient^ Matrix){
-			_kclmtr->setTempCalFile(Matrix->getNCorrectedCoefficient());
+			_kclmtr->setTempCalFile(Matrix->getNative());
 		}
 
 		//Property - FFT
@@ -813,13 +829,33 @@ namespace KClmtrWrapper {
 		/// This will store a Calibration file into the device, based on the reference device's measurement and the KClmtr's measurement
 		/// </summary>
 		/// <param name="ID"> The location which the Calibration file will be stored </param>
-		/// <param name"name"> e The name of the Calibration file </param>
+		/// <param name"name"> The name of the Calibration file </param>
 		/// <param name="Reference"> Reference The reference device's measurement </param>
 		/// <param name="Kclmtr">  Kclmtr The KClmtr's measurement </param>
 		/// <param name="whitespect> The white spect to be stored for the Calibration file </param>
 		/// <return>int Error code. 0 is Good</return>
 		int storeMatrices(int ID, String^ Name, wwrgb^ Reference, wwrgb^ Kclmtr){
 			return _kclmtr->storeMatrices(ID, MarshalString(Name), Reference->getNative(), Kclmtr->getNative());
+		}
+
+		/// <summary>
+		/// This will store a Calibration file into the device
+		/// </summary>
+		/// <param name="ID"> The location which the Calibration file will be stored </param>
+		/// <param name"name"> The name of the Calibration file </param>
+		/// <param name="correctionMatrix"> correctionMatrix The XYZ 3x3 matrix and The RGB 3x3 matrix, this is obsolete if using chromaSurf or this SDK. Now using GamaSpect </param>
+		/// <return>int Error code. 0 is Good</return>
+		int storeMatrices(int ID, String^ Name, wCorrectedCoefficient ^correctionMatrix) {
+			return _kclmtr->storeMatrices(ID, MarshalString(Name), correctionMatrix->getNative());
+		}
+		/// <summary>
+		/// This will store a Calibration file into the device
+		/// </summary>
+		/// <param name="ID"> The location which the Calibration file will be stored </param>
+		/// <param name"name"> The name of the Calibration file </param>
+		/// <param name="correctedXYZ"> The XYZ 3x3 matrix </param>
+		int storeMatrices(int ID, String^ Name, wMatrix ^correctedXYZ) {
+			return _kclmtr->storeMatrices(ID, MarshalString(Name), correctedXYZ->getNative());
 		}
 
 		//BlackCal - Cold
