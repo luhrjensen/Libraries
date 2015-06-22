@@ -90,6 +90,7 @@
     <OutDir>$(SolutionDir)..\bin\visual .net\</OutDir>
     <IntDir>$(Platform)\$(Configuration)\</IntDir>
     <LinkIncremental>false</LinkIncremental>
+    <TargetName>$(ProjectName)_64</TargetName>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -169,6 +170,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\kclmtr\Flicker.cpp" />
+    <ClCompile Include="..\..\kclmtr\Measurement.cpp" />
     <ClCompile Include="AssemblyInfo.cpp" />
     <ClCompile Include="..\..\kclmtr\KClmtr.cpp">
       <CompileAsManaged Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">OldSyntax</CompileAsManaged>
@@ -193,7 +196,11 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\kclmtr\ErrorCodes.h" />
+    <ClInclude Include="..\..\kclmtr\Flicker.h" />
     <ClInclude Include="..\..\kclmtr\KClmtr.h" />
+    <ClInclude Include="..\..\kclmtr\matrix.h" />
+    <ClInclude Include="..\..\kclmtr\Measurement.h" />
     <ClInclude Include="KClmtrWrapper.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="..\..\kclmtr\serialPort.h" />
