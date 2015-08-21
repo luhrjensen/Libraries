@@ -558,7 +558,8 @@ namespace KClmtrWrapper {
 		array<wMatrix ^> ^peakfrequency; //The top 3 frequency of DB, first element Hz, second percent, third dB
 		wMatrix ^flickerDB;			//The DB First element is Hz, Second is dB
 		wMatrix ^flickerPercent;	//The Percent First element is Hz, Second is percent
-		wMatrix ^singal;			//The Signal over Time
+		wMatrix ^counts;			//The counts over Time
+		wMatrix ^nits;				//The nits over Time
 		wMatrix ^amplitude;			//The amplitude
 		int errorcode;				//The error code whenever you are getting data
 
@@ -569,7 +570,8 @@ namespace KClmtrWrapper {
 			peakfrequency[1] = gcnew wMatrix();
 			flickerDB = gcnew wMatrix();	
 			flickerPercent = gcnew wMatrix();
-			singal = gcnew wMatrix();
+			counts = gcnew wMatrix();
+			nits = gcnew wMatrix();
 			amplitude = gcnew wMatrix();
 			errorcode = 0;
 		}
@@ -580,7 +582,8 @@ namespace KClmtrWrapper {
 			peakfrequency[1] = gcnew wMatrix(flicker.peakfrequency[1]);
 			flickerDB = gcnew wMatrix(flicker.flickerDB);	
 			flickerPercent = gcnew wMatrix(flicker.flickerPercent);
-			singal = gcnew wMatrix(flicker.singal);;
+			counts = gcnew wMatrix(flicker.counts);
+			nits = gcnew wMatrix(flicker.nits);
 			amplitude = gcnew wMatrix(flicker.amplitude );;
 			errorcode = flicker.errorcode;
 		}
