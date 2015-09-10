@@ -16,10 +16,16 @@ CONFIG += x86_64
 SOURCES += QKClmtr.cpp \
     ../kclmtr/serialPort.cpp \
     ../kclmtr/KClmtr.cpp \
+    ../kclmtr/Flicker.cpp \
+    ../kclmtr/Measurement.cpp
 
 HEADERS  += QKClmtr.h \
     ../kclmtr/serialPort.h \
     ../kclmtr/KClmtr.h \
+    ../kclmtr/ErrorCodes.h \
+    ../kclmtr/Flicker.h \
+    ../kclmtr/matrix.h \
+    ../kclmtr/Measurement.h
 
 
 TARGET = qkclmtr
