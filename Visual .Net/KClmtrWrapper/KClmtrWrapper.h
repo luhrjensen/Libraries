@@ -552,8 +552,9 @@ namespace KClmtrWrapper {
 		}
 	};
 
+	
 	public ref struct wFlicker {
-		double bigY;				//The Y from XYZ
+		double bigY;				// The Y from XYZ
 		wMeasurmentRange range;		//Range for Green aka for Y
 		array<wMatrix ^> ^peakfrequency; //The top 3 frequency of DB, first element Hz, second percent, third dB
 		wMatrix ^flickerDB;			//The DB First element is Hz, Second is dB
@@ -589,18 +590,27 @@ namespace KClmtrWrapper {
 		}
 	};
 
+	public ref class MeasureEventArgs : EventArgs {
+	public:
+		property wMeasurement^ m;
+		MeasureEventArgs(wMeasurement ^ _m) {
+			m = _m;
+		}
+	};
+	public ref class FlickerEventArgs : EventArgs {
+	public:
+		property wFlicker^ f;
+		FlickerEventArgs(wFlicker^ _f) {
+			f = _f;
+		}
+	};
 	/** @ingroup wrappers
 	* 	@brief Wraps the Native object to work easly in .Net Framework
 	*/
-	public ref class KClmtrWrap {
+	public ref class KClmtrWrap : Object {
 	public:
 		KClmtrWrap(){
 			_kclmtr = new SubClass(this);
-
-			this->backgroundWorkerMeasure = (gcnew System::ComponentModel::BackgroundWorker());
-			this->backgroundWorkerFlicker = (gcnew System::ComponentModel::BackgroundWorker());
-			this->backgroundWorkerMeasure->DoWork += gcnew System::ComponentModel::DoWorkEventHandler(this, &KClmtrWrap::backgroundWorkerMeasure_DoWork);
-			this->backgroundWorkerFlicker->DoWork += gcnew System::ComponentModel::DoWorkEventHandler(this, &KClmtrWrap::backgroundWorkerFlicker_DoWork);
 		}
 		virtual ~KClmtrWrap(void){
 			delete _kclmtr;
@@ -944,9 +954,6 @@ namespace KClmtrWrapper {
 		void closePort(){
 			_kclmtr->closePort();
 		}
-
-		delegate System::Void MeasureEventHandler(wMeasurement^);
-		delegate System::Void FlickerEventHandler(wFlicker^);
 		/** @endcond */
 		/** @brief Sends out measurement
 		*  @details You must add the event to the object, and then make sure the thread can touch your threadf
@@ -956,7 +963,7 @@ namespace KClmtrWrapper {
 		*   Source
 		*  @snippet KClmtrWrapperExample.cpp measure
 		*/
-		event MeasureEventHandler^ measureEvent;
+		event EventHandler^ measureEvent;
 		/** @brief Sends out flicker
 		*  @details You must add the event to the object, and then make sure the thread can touch your thread
 		*  @details Here is an example: 
@@ -965,25 +972,15 @@ namespace KClmtrWrapper {
 		*   Source
 		*  @snippet KClmtrWrapperExample.cpp flicker
 		*/
-		event FlickerEventHandler^ flickerEvent;
+		event EventHandler^ flickerEvent;
 		void printMeasure(wMeasurement^ m){
-			while(backgroundWorkerMeasure->IsBusy);
-			backgroundWorkerMeasure->RunWorkerAsync(m);
+			measureEvent(this, gcnew MeasureEventArgs(m));
 		}
 		void printFlicker(wFlicker^ f){
-			flickerEvent(f);
+			flickerEvent(this, gcnew FlickerEventArgs(f));
 		}
 
 	private:
-		System::Void backgroundWorkerMeasure_DoWork(System::Object^ sender, System::ComponentModel::DoWorkEventArgs^ e) {
-			measureEvent((KClmtrWrapper::wMeasurement^) e->Argument);
-		}
-		System::Void backgroundWorkerFlicker_DoWork(System::Object^ sender, System::ComponentModel::DoWorkEventArgs^ e) {
-			flickerEvent((KClmtrWrapper::wFlicker^) e->Argument);
-		}
-
-		System::ComponentModel::BackgroundWorker^ backgroundWorkerMeasure;
-		System::ComponentModel::BackgroundWorker^ backgroundWorkerFlicker;
 		string MarshalString(String^ s);
 		System::String^ NativeToDotNet(std::string input);
 		KClmtr *_kclmtr;

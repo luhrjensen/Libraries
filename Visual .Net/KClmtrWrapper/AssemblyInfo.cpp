@@ -12,9 +12,9 @@ using namespace System::Security::Permissions;
 [assembly:AssemblyTitleAttribute("KClmtrWrapper")];
 [assembly:AssemblyDescriptionAttribute("")];
 [assembly:AssemblyConfigurationAttribute("")];
-[assembly:AssemblyCompanyAttribute("Microsoft")];
+[assembly:AssemblyCompanyAttribute("Klein Instruments Inc")];
 [assembly:AssemblyProductAttribute("KClmtrWrapper")];
-[assembly:AssemblyCopyrightAttribute("Copyright (c) Microsoft 2011")];
+[assembly:AssemblyCopyrightAttribute("Copyright (c) Microsoft 2015")];
 [assembly:AssemblyTrademarkAttribute("")];
 [assembly:AssemblyCultureAttribute("")];
 
@@ -30,9 +30,3 @@ using namespace System::Security::Permissions;
 // by using the '*' as shown below:
 
 [assembly:AssemblyVersionAttribute("1.0.*")];
-
-[assembly:ComVisible(false)];
-
-[assembly:CLSCompliantAttribute(true)];
-
-[assembly:SecurityPermission(SecurityAction::RequestMinimum, UnmanagedCode = true)];
