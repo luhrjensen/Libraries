@@ -12,12 +12,15 @@ string KClmtrWrapper::KClmtrWrap::MarshalString(String^ s){
 System::String^ KClmtrWrapper::KClmtrWrap::NativeToDotNet(std::string input){
 	return gcnew String(input.c_str());
 }
-void KClmtrWrapper::SubClass::printMeasure(Measurement m){
-	_kclmtrwrapper->printMeasure(gcnew wMeasurement(m));
+void KClmtrWrapper::SubClass::printMeasure(Measurement m){ 
+	MeasureCallBack(m);
 }
 void KClmtrWrapper::SubClass::printFlicker(Flicker f){
-	_kclmtrwrapper->printFlicker(gcnew wFlicker(f));
+	FlickerCallBack(f);
 }
-KClmtrWrapper::SubClass::SubClass(gcroot<KClmtrWrap^> _kcw){
-	_kclmtrwrapper = _kcw;
+KClmtrWrapper::SubClass::SubClass(DelMeasure ^_Measure, DelFlicker ^_Flicker) {
+	delegateMeasureCallBack = _Measure;
+	delegateFlickerCallBack = _Flicker;
+	MeasureCallBack = (CallbackMeasure)Marshal::GetFunctionPointerForDelegate(_Measure).ToPointer();
+	FlickerCallBack = (CallbackFlicker)Marshal::GetFunctionPointerForDelegate(_Flicker).ToPointer();
 }

@@ -4,68 +4,55 @@
 #pragma once
 
 using namespace System;
+using namespace System::Runtime::InteropServices;
 
 namespace KClmtrWrapper {
-
-	ref class KClmtrWrap;
-
+	/** @endcond */
 	public enum class wMeasureErrorCodes {
-		NONE                    = 0x00000000,
+		NONE = 0x00000000,
 		//Serial Port
-		NOT_OPEN                = 0x00000001,
-		TIMED_OUT               = 0x00000002,
-		LOST_CONNECTION         = 0x00000004,
+		NOT_OPEN = 0x00000001,
+		TIMED_OUT = 0x00000002,
+		LOST_CONNECTION = 0x00000004,
 
 		//Measurement
-		BAD_VALUES              = 0x00000008,
-		CONVERTED_NM            = 0x00000010,
-		KELVINS                 = 0x00000020,
-		AIMING_LIGHTS           = 0x00000040,
-		AVERAGING_LOW_LIGHT     = 0x00000080,
+		BAD_VALUES = 0x00000008,
+		CONVERTED_NM = 0x00000010,
+		KELVINS = 0x00000020,
+		AIMING_LIGHTS = 0x00000040,
+		AVERAGING_LOW_LIGHT = 0x00000080,
 
 		//Ranges
-		BOTTOM_UNDER_RANGE      = 0x00000100,
-		TOP_OVER_RANGE          = 0x00000200,
-		OVER_HIGH_RANGE         = 0x00000400,
+		BOTTOM_UNDER_RANGE = 0x00000100,
+		TOP_OVER_RANGE = 0x00000200,
+		OVER_HIGH_RANGE = 0x00000400,
 
 		//Black Cals
-		BLACK_ZERO              = 0x00000800,
-		BLACK_OVERDRIVE         = 0x00001000,
-		BLACK_EXCESSIVE         = 0x00002000,
-		BLACK_PARSING_ROM       = 0x00004000,
-		BLACK_STORING_ROM       = 0x00008000,
+		BLACK_ZERO = 0x00000800,
+		BLACK_OVERDRIVE = 0x00001000,
+		BLACK_EXCESSIVE = 0x00002000,
+		BLACK_PARSING_ROM = 0x00004000,
+		BLACK_STORING_ROM = 0x00008000,
 
 		//CalFiles
-		CAL_WHITE_RGB           = 0x00010000,
-		CAL_STORING             = 0x00020000,
-		CAL_CONVERT_BINARY      = 0x00040000,
+		CAL_WHITE_RGB = 0x00010000,
+		CAL_STORING = 0x00020000,
+		CAL_CONVERT_BINARY = 0x00040000,
 
 		//FFT
-		FFT_BAD_STRING          = 0x00080000,
-		FFT_RANGE_CAL           = 0x00100000,
-		FFT_NO_XYZ              = 0x00200000,
-		FFT_NO_RANGE            = 0x00400000,
-		FFT_INSUFFICIENT_DATA   = 0x00800000,
-		FFT_PREVIOUS_RANGE      = 0x01000000,
-		FFT_NOT_SUPPORTED       = 0x02000000,
-		FFT_BAD_SAMPLES         = 0x04000000,
-        FFT_OVER_SATURATED      = 0x08000000,
+		FFT_BAD_STRING = 0x00080000,
+		FFT_RANGE_CAL = 0x00100000,
+		FFT_NO_XYZ = 0x00200000,
+		FFT_NO_RANGE = 0x00400000,
+		FFT_INSUFFICIENT_DATA = 0x00800000,
+		FFT_PREVIOUS_RANGE = 0x01000000,
+		FFT_NOT_SUPPORTED = 0x02000000,
+		FFT_BAD_SAMPLES = 0x04000000,
+		FFT_OVER_SATURATED = 0x08000000,
 
-        //Miscellaneous
-        FIRMWARE                = 0x10000000
+		//Miscellaneous
+		FIRMWARE = 0x10000000
 	};
-
-
-	/** @cond */
-	class SubClass : public KClmtr {
-
-	public:
-		SubClass(gcroot<KClmtrWrap^> _kcw);
-		void printMeasure(Measurement m);
-		void printFlicker(Flicker f);
-		gcroot<KClmtrWrap^>  _kclmtrwrapper;
-	};
-	/** @endcond */
 	public ref struct wMatrix {
 		int row;
 		int column;
@@ -255,7 +242,7 @@ namespace KClmtrWrapper {
 		int errorcode;
 		int averagingby;
 
-		wMeasurement(){
+		wMeasurement() {
 			convertNativeToManage(Measurement());
 		}
 
@@ -399,8 +386,7 @@ namespace KClmtrWrapper {
 			
 			gs = gcnew wGamutSpec(measurement.getGamutSpec());
 		}
-		wGamutSpec^ gs;
-		
+		wGamutSpec^ gs;		
 	};
 
 	public ref struct wAvgMeasurement : public wMeasurement{
@@ -604,13 +590,36 @@ namespace KClmtrWrapper {
 			f = _f;
 		}
 	};
+	
+	delegate void DelMeasure(Measurement m);
+	delegate void DelFlicker(Flicker f);
+	typedef void(CALLBACK *CallbackMeasure)(Measurement);
+	typedef void(CALLBACK *CallbackFlicker)(Flicker);
+
+	
+	/** @cond */
+	class SubClass : public KClmtr {
+	public:
+		SubClass(DelMeasure ^_Measure, DelFlicker ^_Flicker);
+		~SubClass();
+		void printMeasure(Measurement m);
+		void printFlicker(Flicker f);
+
+	private:
+		gcroot<DelMeasure^> delegateMeasureCallBack;
+		gcroot<DelFlicker^> delegateFlickerCallBack;
+		CallbackMeasure MeasureCallBack;
+		CallbackFlicker FlickerCallBack;
+	};
 	/** @ingroup wrappers
 	* 	@brief Wraps the Native object to work easly in .Net Framework
 	*/
 	public ref class KClmtrWrap : Object {
 	public:
-		KClmtrWrap(){
-			_kclmtr = new SubClass(this);
+		KClmtrWrap() {
+			DelMeasure^ callbackMeasure = gcnew DelMeasure(this, &KClmtrWrap::printMeasure);
+			DelFlicker^ callbackFlicker = gcnew DelFlicker(this, &KClmtrWrap::printFlicker);
+			_kclmtr = new SubClass(callbackMeasure, callbackFlicker);
 		}
 		virtual ~KClmtrWrap(void){
 			delete _kclmtr;
@@ -973,16 +982,18 @@ namespace KClmtrWrapper {
 		*  @snippet KClmtrWrapperExample.cpp flicker
 		*/
 		event EventHandler^ flickerEvent;
-		void printMeasure(wMeasurement^ m){
-			measureEvent(this, gcnew MeasureEventArgs(m));
-		}
-		void printFlicker(wFlicker^ f){
-			flickerEvent(this, gcnew FlickerEventArgs(f));
-		}
-
 	private:
 		string MarshalString(String^ s);
 		System::String^ NativeToDotNet(std::string input);
 		KClmtr *_kclmtr;
+		
+		void printMeasure(Measurement m){
+			wMeasurement^ manMeasurement = gcnew wMeasurement(m);
+			measureEvent(this, gcnew MeasureEventArgs(manMeasurement));
+		}
+		void printFlicker(Flicker f){
+			wFlicker^ manFlicker = gcnew wFlicker(f);
+			flickerEvent(this, gcnew FlickerEventArgs(manFlicker));
+		}
 	};
 }
