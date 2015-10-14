@@ -537,7 +537,6 @@ namespace KClmtrWrapper {
 			return corrected;
 		}
 	};
-
 	
 	public ref struct wFlicker {
 		double bigY;				// The Y from XYZ
@@ -576,21 +575,22 @@ namespace KClmtrWrapper {
 		}
 	};
 
-	public ref class MeasureEventArgs : EventArgs {
+	public ref class MeasureEventArgs : public EventArgs {
 	public:
 		property wMeasurement^ m;
 		MeasureEventArgs(wMeasurement ^ _m) {
 			m = _m;
 		}
 	};
-	public ref class FlickerEventArgs : EventArgs {
+	public ref class FlickerEventArgs : public EventArgs {
 	public:
 		property wFlicker^ f;
 		FlickerEventArgs(wFlicker^ _f) {
 			f = _f;
 		}
 	};
-	
+
+
 	delegate void DelMeasure(Measurement m);
 	delegate void DelFlicker(Flicker f);
 	typedef void(CALLBACK *CallbackMeasure)(Measurement);
@@ -614,7 +614,7 @@ namespace KClmtrWrapper {
 	/** @ingroup wrappers
 	* 	@brief Wraps the Native object to work easly in .Net Framework
 	*/
-	public ref class KClmtrWrap : Object {
+	public ref class KClmtrWrap : public Object {
 	public:
 		KClmtrWrap() {
 			DelMeasure^ callbackMeasure = gcnew DelMeasure(this, &KClmtrWrap::printMeasure);
@@ -972,7 +972,7 @@ namespace KClmtrWrapper {
 		*   Source
 		*  @snippet KClmtrWrapperExample.cpp measure
 		*/
-		event EventHandler^ measureEvent;
+		event EventHandler<MeasureEventArgs ^>^ measureEvent;
 		/** @brief Sends out flicker
 		*  @details You must add the event to the object, and then make sure the thread can touch your thread
 		*  @details Here is an example: 
@@ -981,7 +981,7 @@ namespace KClmtrWrapper {
 		*   Source
 		*  @snippet KClmtrWrapperExample.cpp flicker
 		*/
-		event EventHandler^ flickerEvent;
+		event EventHandler<FlickerEventArgs ^>^ flickerEvent;
 	private:
 		string MarshalString(String^ s);
 		System::String^ NativeToDotNet(std::string input);

@@ -6,17 +6,17 @@ public ref class Form1 : public System::Windows::Forms::Form {
 			InitializeComponent();
 			kClmtr = gcnew KClmtrWrapper::KClmtrWrap();
 			//Connecting the Event
-			kClmtr->measureEvent += gcnew System::EventHandler(this, &Form1::printMeasurement);
+			kClmtr->measureEvent += gcnew System::EventHandler<MeasureEventArgs ^>(this, &Form1::printMeasurement);
 		}
 
 		private: KClmtrWrapper::KClmtrWrap^ kClmtr;
 
-		public: System::Void printMeasurement(Object ^sender, EventArgs^ e) {
+		public: System::Void printMeasurement(Object ^sender, MeasureEventArgs^ e) {
 			if(this->TextX->InvokeRequired){
 				// Form objects can't be updated from a different thread
 				// This calls the function from the form's thread
 				try{
-					this->Invoke(gcnew System::EventHandler(this, &Form1::printMeasurement), gcnew array<Object^> {this, e});
+					this->Invoke(gcnew System::EventHandler<MeasureEventArgs ^>(this, &Form1::printMeasurement), gcnew array<Object^> {this, e});
 				}catch(...){
 					// In case you closed the form before it could stop the measuring
 				}
@@ -40,17 +40,17 @@ public ref class Form1 : public System::Windows::Forms::Form {
 			InitializeComponent();
 			kClmtr = gcnew KClmtrWrapper::KClmtrWrap();
 			//Connecting the Event
-			kClmtr->measureEvent += gcnew System::EventHandler(this, &Form1::printFlicker);
+			kClmtr->measureEvent += gcnew System::EventHandler<FlickerEventArgs^ >(this, &Form1::printFlicker);
 		}
 
 		private: KClmtrWrapper::KClmtrWrap^ kClmtr;
 
-		public: System::Void printMeasurement(Object ^sender, EventArgs^ e) {
+		public: System::Void printMeasurement(Object ^sender, FlickerEventArgs^ e) {
 			if(this->TextX->InvokeRequired){
 				// Form objects can't be updated from a different thread
 				// This calls the function from the form's thread
 				try{
-					this->Invoke(gcnew System::EventHandler(this, &Form1::printFlicker), gcnew array<Object^> {this, e});
+					this->Invoke(gcnew System::EventHandler<FlickerEventArgs ^>(this, &Form1::printFlicker), gcnew array<Object^> {this, e});
 				}catch(...){
 					// In case you closed the form before it could stop the measuring
 				}
