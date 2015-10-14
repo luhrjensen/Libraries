@@ -11,7 +11,7 @@ public ref class Form1 : public System::Windows::Forms::Form {
 
 		private: KClmtrWrapper::KClmtrWrap^ kClmtr;
 
-		public: System::Void printMeasurement(KClmtrWrapper::wMeasurement^ xyL) {
+		public: System::Void printMeasurement(Object ^sender, EventArgs^ e) {
 			if(this->TextX->InvokeRequired){
 				// Form objects can't be updated from a different thread
 				// This calls the function from the form's thread
@@ -45,7 +45,7 @@ public ref class Form1 : public System::Windows::Forms::Form {
 
 		private: KClmtrWrapper::KClmtrWrap^ kClmtr;
 
-		public: System::Void printMeasurement(KClmtrWrapper::wFlicker^ flicker) {
+		public: System::Void printMeasurement(Object ^sender, EventArgs^ e) {
 			if(this->TextX->InvokeRequired){
 				// Form objects can't be updated from a different thread
 				// This calls the function from the form's thread
