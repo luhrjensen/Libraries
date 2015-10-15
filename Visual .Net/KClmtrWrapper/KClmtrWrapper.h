@@ -813,8 +813,8 @@ namespace KClmtrWrapper {
 		/// <summary>
 		/// Grabs and returns one measurement from the class buffer. Use startMeasering().
 		/// </summary>
-		/// <param name="m"> the measurement that was in the buffer
-		/// <return> to see if the measurement was already grabbed, and it's old data. 
+		/// <param name="m"> the measurement that was in the buffer</param>
+		/// <return> to see if the measurement was already grabbed, and it's old data. </return>
 		bool getMeasreument(wMeasurement^ %m) {
 			Measurement _m;
 			bool returnFresh = _kclmtr->getMeasurement(_m);
@@ -851,10 +851,9 @@ namespace KClmtrWrapper {
 		/// This will store a Calibration file into the device, based on the reference device's measurement and the KClmtr's measurement
 		/// </summary>
 		/// <param name="ID"> The location which the Calibration file will be stored </param>
-		/// <param name"name"> The name of the Calibration file </param>
+		/// <param name="Name"> The name of the Calibration file </param>
 		/// <param name="Reference"> Reference The reference device's measurement </param>
 		/// <param name="Kclmtr">  Kclmtr The KClmtr's measurement </param>
-		/// <param name="whitespect> The white spect to be stored for the Calibration file </param>
 		/// <return>int Error code. 0 is Good</return>
 		int storeMatrices(int ID, String^ Name, wwrgb^ Reference, wwrgb^ Kclmtr){
 			return _kclmtr->storeMatrices(ID, MarshalString(Name), Reference->getNative(), Kclmtr->getNative());
@@ -864,7 +863,7 @@ namespace KClmtrWrapper {
 		/// This will store a Calibration file into the device
 		/// </summary>
 		/// <param name="ID"> The location which the Calibration file will be stored </param>
-		/// <param name"name"> The name of the Calibration file </param>
+		/// <param name="Name"> The name of the Calibration file </param>
 		/// <param name="correctionMatrix"> correctionMatrix The XYZ 3x3 matrix and The RGB 3x3 matrix, this is obsolete if using chromaSurf or this SDK. Now using GamaSpect </param>
 		/// <return>int Error code. 0 is Good</return>
 		int storeMatrices(int ID, String^ Name, wCorrectedCoefficient ^correctionMatrix) {
@@ -874,8 +873,9 @@ namespace KClmtrWrapper {
 		/// This will store a Calibration file into the device
 		/// </summary>
 		/// <param name="ID"> The location which the Calibration file will be stored </param>
-		/// <param name"name"> The name of the Calibration file </param>
+		/// <param name="Name"> The name of the Calibration file </param>
 		/// <param name="correctedXYZ"> The XYZ 3x3 matrix </param>
+		/// <return> int Error code. 0 is Good</return>
 		int storeMatrices(int ID, String^ Name, wMatrix ^correctedXYZ) {
 			return _kclmtr->storeMatrices(ID, MarshalString(Name), correctedXYZ->getNative());
 		}
@@ -920,8 +920,8 @@ namespace KClmtrWrapper {
 		/// <summary>
 		/// Grabs and returns one flicker measurement from the class buffer. Use startFlicker().
 		/// </summary>
-		/// <param name="f"> the flicker measurement that was in the buffer
-		/// <return> to see if the flicker measurement was already grabbed, and it's old data. 
+		/// <param name="f"> the flicker measurement that was in the buffer</param>
+		/// <return> to see if the flicker measurement was already grabbed, and it's old data.</return>
 		bool getFlicker(wFlicker^ %f) {
 			Flicker _f;
 			bool returnFresh = _kclmtr->getFlicker(_f);
@@ -945,7 +945,7 @@ namespace KClmtrWrapper {
 		/// <summary>
 		/// This will open the device
 		/// </summary>
-		/// <param name="theport">sets the port name</param>
+		/// <param name="thePort">sets the port name</param>
 		/// <return>A user should always have this true. This is used for internal use.</return>
 		bool connect(int thePort){
 			port = thePort;
