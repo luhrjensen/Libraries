@@ -33,9 +33,9 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
-    <PlatformToolset>v120</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
     <CLRSupport>true</CLRSupport>
+    <PlatformToolset>v120</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
@@ -70,7 +70,7 @@
     <_ProjectFileVersion>11.0.61030.0</_ProjectFileVersion>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <OutDir>$(SolutionDir)..\bin\dotNet\$(Configuration)\</OutDir>
+    <OutDir>$(SolutionDir)..\bin\visual .net\</OutDir>
     <IntDir>$(Configuration)\</IntDir>
     <IgnoreImportLibrary>false</IgnoreImportLibrary>
   </PropertyGroup>
@@ -130,11 +130,9 @@
       <PrecompiledHeader />
       <WarningLevel>Level3</WarningLevel>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
-      <CompileAsManaged>true</CompileAsManaged>
       <GenerateXMLDocumentationFiles>true</GenerateXMLDocumentationFiles>
     </ClCompile>
     <Link>
-      <GenerateDebugInformation>true</GenerateDebugInformation>
       <TargetMachine>MachineX86</TargetMachine>
       <LinkTimeCodeGeneration>Default</LinkTimeCodeGeneration>
     </Link>
@@ -175,24 +173,10 @@
   <ItemGroup>
     <ClCompile Include="..\..\kclmtr\Flicker.cpp" />
     <ClCompile Include="..\..\kclmtr\Measurement.cpp" />
+    <ClCompile Include="..\..\kclmtr\KClmtr.cpp" />
+    <ClCompile Include="..\..\kclmtr\serialPort.cpp" />
     <ClCompile Include="AssemblyInfo.cpp" />
-    <ClCompile Include="..\..\kclmtr\KClmtr.cpp">
-      <CompileAsManaged Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">OldSyntax</CompileAsManaged>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-      </PrecompiledHeader>
-      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-      </PrecompiledHeaderFile>
-      <CompileAsManaged Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">OldSyntax</CompileAsManaged>
-    </ClCompile>
     <ClCompile Include="KClmtrWrapper.cpp" />
-    <ClCompile Include="..\..\kclmtr\serialPort.cpp">
-      <CompileAsManaged Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">OldSyntax</CompileAsManaged>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-      </PrecompiledHeader>
-      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-      </PrecompiledHeaderFile>
-      <CompileAsManaged Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">OldSyntax</CompileAsManaged>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\kclmtr\ErrorCodes.h" />
