@@ -42,11 +42,11 @@
     <_ProjectFileVersion>11.0.50727.1</_ProjectFileVersion>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <OutDir>..\..\bin\Native-Windows\</OutDir>
+    <OutDir>..\..\..\bin\native c++\win\</OutDir>
     <IntDir>$(Configuration)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <OutDir>..\..\bin\native c++\win</OutDir>
+    <OutDir>..\..\..\bin\native c++\win\</OutDir>
     <IntDir>$(Configuration)\</IntDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -80,25 +80,26 @@
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
     </ClCompile>
     <PostBuildEvent>
-      <Command>copy ..\..\kclmtr\*h "$(OutDir)"</Command>
+      <Command>
+      </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\kclmtr\Flicker.cpp" />
-    <ClCompile Include="..\..\kclmtr\KClmtr.cpp" />
-    <ClCompile Include="..\..\kclmtr\Measurement.cpp" />
-    <ClCompile Include="..\..\kclmtr\serialPort.cpp" />
+    <ClCompile Include="..\..\..\kclmtr\Flicker.cpp" />
+    <ClCompile Include="..\..\..\kclmtr\KClmtr.cpp" />
+    <ClCompile Include="..\..\..\kclmtr\Measurement.cpp" />
+    <ClCompile Include="..\..\..\kclmtr\serialPort.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <CustomBuild Include="..\..\kclmtr\KClmtr.h">
+    <CustomBuild Include="..\..\..\kclmtr\KClmtr.h">
       <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
       </Command>
     </CustomBuild>
-    <ClInclude Include="..\..\kclmtr\ErrorCodes.h" />
-    <ClInclude Include="..\..\kclmtr\Flicker.h" />
-    <ClInclude Include="..\..\kclmtr\matrix.h" />
-    <ClInclude Include="..\..\kclmtr\Measurement.h" />
-    <ClInclude Include="..\..\kclmtr\serialPort.h" />
+    <ClInclude Include="..\..\..\kclmtr\ErrorCodes.h" />
+    <ClInclude Include="..\..\..\kclmtr\Flicker.h" />
+    <ClInclude Include="..\..\..\kclmtr\matrix.h" />
+    <ClInclude Include="..\..\..\kclmtr\Measurement.h" />
+    <ClInclude Include="..\..\..\kclmtr\serialPort.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
