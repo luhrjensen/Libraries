@@ -6,7 +6,7 @@
 
 QT       += core gui
 
-TARGET = QKClmtr
+TARGET = qkclmtr
 TEMPLATE = lib
 CONFIG += staticlib
 OBJECTS_DIR = build/obj
@@ -27,16 +27,6 @@ HEADERS  += QKClmtr.h \
     ../kclmtr/matrix.h \
     ../kclmtr/Measurement.h
 
-
-TARGET = qkclmtr
-
-QHeader.files = QKClmtr.h
-QHeader.path = ../bin/qt/Headers/
-KClmtr_header.files += ../kclmtr/serialPort.h
-KClmtr_header.files += ../kclmtr/KClmtr.h
-KClmtr_header.path = ../bin/qt/Headers/kclmtr
-INSTALLS += QHeader
-INSTALLS += KClmtr_header
-
 win32: DESTDIR = ../bin/qt/win
 macx: DESTDIR = ../bin/qt/mac
+unix:!macx:!symbian:  DESTDIR = ../bin/qt/unix
