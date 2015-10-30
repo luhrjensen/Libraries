@@ -3,8 +3,8 @@ CFlags = -g -Wall -pthread
 AR = ar
 ARFlags = -rcs
 
-KClmtrDIR = ../kclmtr
-OUT = ../bin/native\ c++/libKClmtr.a
+KClmtrDIR = ../../kclmtr
+OUT = ../../bin/native\ c++/libKClmtr.a
 
 all: KClmtr.a
 
