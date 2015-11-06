@@ -596,8 +596,6 @@ namespace KClmtrWrapper {
 	typedef void(CALLBACK *CallbackMeasure)(Measurement);
 	typedef void(CALLBACK *CallbackFlicker)(Flicker);
 
-	
-	/** @cond */
 	class SubClass : public KClmtr {
 	public:
 		SubClass(DelMeasure ^_Measure, DelFlicker ^_Flicker);
@@ -626,7 +624,7 @@ namespace KClmtrWrapper {
 		}
 
 		//Property
-		/** @cond */
+		
 		/// <summary>
 		/// Gets or sets the com port's number
 		/// </summary>
@@ -967,18 +965,12 @@ namespace KClmtrWrapper {
 		/** @brief Sends out measurement
 		*  @details You must add the event to the object, and then make sure the thread can touch your threadf
 		*  @details Here is an example: 
-		*  @details Header
-		*  @snippet KClmtrWrapperExample.cpp measure
-		*   Source
 		*  @snippet KClmtrWrapperExample.cpp measure
 		*/
 		event EventHandler<MeasureEventArgs ^>^ measureEvent;
 		/** @brief Sends out flicker
 		*  @details You must add the event to the object, and then make sure the thread can touch your thread
 		*  @details Here is an example: 
-		*  @details Header
-		*  @snippet KClmtrWrapperExample.cpp flicker
-		*   Source
 		*  @snippet KClmtrWrapperExample.cpp flicker
 		*/
 		event EventHandler<FlickerEventArgs ^>^ flickerEvent;
