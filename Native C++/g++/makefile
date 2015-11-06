@@ -1,7 +1,7 @@
 CC = g++
 CFlags = -g -Wall -pthread
 AR = ar
-ARFlags = -rcs
+ARFlags = rvs
 
 KClmtrDIR = ../../kclmtr
 OUT = ../../bin/native\ c++/libKClmtr.a
