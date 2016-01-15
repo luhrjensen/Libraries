@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 46;
+	objectVersion = 47;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -183,7 +183,7 @@
 				ORGANIZATIONNAME = "Klein Instruments";
 			};
 			buildConfigurationList = 1D8BFF3815617629005662C1 /* Build configuration list for PBXProject "NSKClmtr" */;
-			compatibilityVersion = "Xcode 3.2";
+			compatibilityVersion = "Xcode 6.3";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -243,16 +243,18 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
-				FRAMEWORK_VERSION = 2.60.254;
+				FRAMEWORK_VERSION = 2.61.257;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "NSKClmtr/NSKClmtr-Prefix.pch";
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "NSKClmtr/NSKClmtr-Info.plist";
-				"INSTALL_PATH[sdk=*]" = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				INSTALL_PATH = /Users/klein/projects/examples/libraries/bin/xcode;
+				"INSTALL_PATH[sdk=*]" = /Users/klein/projects/examples/libraries/bin/xcode;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = framework;
 			};
@@ -267,14 +269,15 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
-				FRAMEWORK_VERSION = 2.60.254;
+				FRAMEWORK_VERSION = 2.61.257;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "NSKClmtr/NSKClmtr-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = Release;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "NSKClmtr/NSKClmtr-Info.plist";
-				"INSTALL_PATH[sdk=*]" = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				INSTALL_PATH = /Users/klein/projects/examples/libraries/bin/xcode;
+				"INSTALL_PATH[sdk=*]" = /Users/klein/projects/examples/libraries/bin/xcode;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = framework;
 			};

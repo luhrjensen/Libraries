@@ -123,28 +123,28 @@ void SubClass::printMeasure(Measurement m)
 -(void)setFFT_Samples:(int)value{
     _kclmtr->setFFT_Samples(value);
 }
--(bool)getFFT_PercentJEITA_Discount() {
-	return _kclmtrgetFFT_PercentJEITA_Discount();
+-(bool)getFFT_PercentJEITA_Discount{
+	return _kclmtr->getFFT_PercentJEITA_Discount();
 }
--(void)setFFT_PercentJEITA_Discount(bool onOff) {
+-(void)setFFT_PercentJEITA_Discount:(bool)onOff{
 	_kclmtr->setFFT_PercentJEITA_Discount(onOff);
 }
--(bool)getFFT_DBJEITA_Discount() {
+-(bool)getFFT_DBJEITA_Discount{
 	return _kclmtr->getFFT_DBJEITA_Discount();
 }
--(void) setFFT_DBJEITA_Discount(bool onOff) {
+-(void) setFFT_DBJEITA_Discount:(bool)onOff{
 	_kclmtr->setFFT_DBJEITA_Discount(onOff);
 }
--(FlickerSetting::percentMode) getFFT_PercentMode() {
-	return _kclmtr->getFFT_PercentMode;
+-(FlickerSetting::percentMode)getFFT_PercentMode{
+	return _kclmtr->getFFT_PercentMode();
 }
--(void)setFFT_PercentMode(FlickerSetting::percentMode mode) {
+-(void)setFFT_PercentMode:(FlickerSetting::percentMode)mode{
 	_kclmtr->setFFT_PercentMode(mode);
 }
--(FlickerSetting::decibelMode)getFFT_DBMode() {
+-(FlickerSetting::decibelMode)getFFT_DBMode{
 	return _kclmtr->getFFT_DBMode();
 }
--(void) setFFT_DBMode(FlickerSetting::decibelMode onOff) {
+-(void) setFFT_DBMode:(FlickerSetting::decibelMode)onOff {
 	_kclmtr->setFFT_DBMode(onOff);
 }
 
