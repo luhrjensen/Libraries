@@ -612,7 +612,7 @@ namespace KClmtrWrapper {
 	/** @ingroup wrappers
 	* 	@brief Wraps the Native object to work easly in .Net Framework
 	*/
-	public ref class KClmtrWrap : public Object {
+	public ref class KClmtrWrap {
 	public:
 		KClmtrWrap() {
 			DelMeasure^ callbackMeasure = gcnew DelMeasure(this, &KClmtrWrap::printMeasure);
@@ -785,6 +785,67 @@ namespace KClmtrWrapper {
 			}
 			void set(int value){
 				_kclmtr->setFFT_Samples(value);
+			}
+		}
+		/// <summary>
+		/// Get or Set JEITA Discount for dB
+		/// </summary> 
+		/// <value> mode the mode switch to set it too</value>
+		property bool FFT_DBJEITA_Discount{
+			bool get(){
+				return _kclmtr->getFFT_DBJEITA_Discount();
+			}
+			void set(bool value){
+				_kclmtr->setFFT_DBJEITA_Discount(value);
+			}
+		}
+		/// <summary>
+		/// Get or Set JEITA Discount for Percent
+		/// </summary> 
+		/// <value> mode the mode switch to set it too</value>
+		property bool FFT_PercentJEITA_Discount{
+			bool get(){
+				return _kclmtr->getFFT_PercentJEITA_Discount();
+			}
+			void set(bool value){
+				_kclmtr->setFFT_PercentJEITA_Discount(value);
+			}
+		}
+
+		/// <summary>
+		/// Get or Set Percent's Calculation for FMA or normalized\n
+		/// 		FMA = which will 4 * AC / DC * 100, or Peak to peak
+		///	        Normalized = AC / DC * 100
+		/// </summary> 
+		/// <value> mode the mode switch to set it too</value>
+		property FlickerSetting::percentMode FFT_PercentMode{
+			FlickerSetting::percentMode get(){
+				return _kclmtr->getFFT_PercentMode();
+			}
+			void set(FlickerSetting::percentMode value){
+				_kclmtr->setFFT_PercentMode(value);
+			}
+		}
+		/// <summary>
+		/// Get or Set dB's Calculation for VISA\n
+		///			VISA  =  20 * log10(2 * AC / DC) = JEITA + 3.01dB\n
+		///			JETIA =  20 * log10(2 ^ (1 / 2) * AC / DC)
+		/// </summary> 
+		/// <value> mode the mode switch to set it too</value>
+		property FlickerSetting::decibelMode FFT_DBMode{
+			FlickerSetting::decibelMode get(){
+				return _kclmtr->getFFT_DBMode();
+			}
+			void set(FlickerSetting::decibelMode value){
+				_kclmtr->setFFT_DBMode(value);
+			}
+		}
+		/// <summary>
+		/// Returns true if the device is measuring mode. Returns false if it is not in measuring mode.
+		/// </summary>
+		property bool isFlickering{
+			bool get(){
+				return _kclmtr->isFlickering();
 			}
 		}
 		//XYZ

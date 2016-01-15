@@ -62,6 +62,14 @@ public:
 -(void)setFFT_Smoothing:(bool)value;
 -(int)getFFT_Samples;
 -(void)setFFT_Samples:(int)value;
+-(bool)getFFT_PercentJEITA_Discount();
+-(void)setFFT_PercentJEITA_Discount(bool onOff);
+-(bool)getFFT_DBJEITA_Discount();
+-(void) setFFT_DBJEITA_Discount(bool onOff);
+-(FlickerSetting::percentMode) getFFT_PercentMode();
+-(void)setFFT_PercentMode(FlickerSetting::percentMode mode);
+-(FlickerSetting::decibelMode)getFFT_DBMode();
+-(void) setFFT_DBMode(FlickerSetting::decibelMode onOff);
 
 //Measurements
 -(bool)isMeasuring;
