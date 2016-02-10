@@ -30,6 +30,7 @@ public:
     }
     bool isPortOpen() {
         if(_isOpen && !KClmtr::isPortOpen()) {
+            _isOpen = false;
             emit closed();
         }
         return KClmtr::isPortOpen();
