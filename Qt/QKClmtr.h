@@ -12,7 +12,7 @@ class QKClmtr : public QObject, public KClmtr {
     Q_OBJECT
 
 public:
-    QKClmtr() {
+    QKClmtr(QObject *parent = 0) : QObject(parent) {
         _isOpen = false;
     }
     //Property
