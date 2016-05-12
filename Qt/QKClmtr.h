@@ -77,6 +77,15 @@ public:
             return false;
         }
     }
+    static bool testConnection(const QString &portName, QString &model, QString &SN) {
+        string stdModel;
+        string stdSN;
+        int err = KClmtr::testConnection(portName.toStdString(), stdModel, stdSN);
+        model = QString::fromStdString(stdModel);
+        SN = QString::fromStdString(stdSN);
+        return err;
+    }
+
     void closePort() {
         KClmtr::closePort();
         _isOpen = false;
@@ -88,8 +97,11 @@ public:
     void printFlicker(Flicker flicker) {
         emit flickered(flicker);
     }
-    int sendMessageToKColorimeter(const string &strMsg, int expected, int timeOut_Sec, string &readString) {
-        return KClmtr::sendMessageToKColorimeter(strMsg, expected, timeOut_Sec, readString);
+    int sendMessageToKColorimeter(const QString &strMsg, int expected, int timeOut_Sec, QString &readString) {
+        string stdString;
+        int err = KClmtr::sendMessageToKColorimeter(strMsg.toStdString(), expected, timeOut_Sec, stdString);
+        readString = QString::fromStdString(stdString);
+        return err;
     }
 
 private:
