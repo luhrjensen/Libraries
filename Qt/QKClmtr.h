@@ -1,6 +1,6 @@
 #ifndef QKCLMTR_H
 #define QKCLMTR_H
-
+#include <QDebug>
 #include <QObject>
 #include <QStringList>
 #include "../kclmtr/KClmtr.h"
@@ -97,11 +97,8 @@ public:
     void printFlicker(Flicker flicker) {
         emit flickered(flicker);
     }
-    int sendMessageToKColorimeter(const QString &strMsg, int expected, int timeOut_Sec, QString &readString) {
-        string stdString;
-        int err = KClmtr::sendMessageToKColorimeter(strMsg.toStdString(), expected, timeOut_Sec, stdString);
-        readString = QString::fromStdString(stdString);
-        return err;
+    int sendMessageToKColorimeter(const string &strMsg, int expected, int timeOut_Sec, string &readString) {
+        return KClmtr::sendMessageToKColorimeter(strMsg, expected, timeOut_Sec, readString);
     }
 
 private:
