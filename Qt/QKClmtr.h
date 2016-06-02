@@ -1,6 +1,6 @@
 #ifndef QKCLMTR_H
 #define QKCLMTR_H
-#include <QDebug>
+
 #include <QObject>
 #include <QStringList>
 #include "../kclmtr/KClmtr.h"
