@@ -18,9 +18,14 @@ void KClmtrWrapper::SubClass::printMeasure(Measurement m){
 void KClmtrWrapper::SubClass::printFlicker(Flicker f){
 	FlickerCallBack(f);
 }
-KClmtrWrapper::SubClass::SubClass(DelMeasure ^_Measure, DelFlicker ^_Flicker) {
+void KClmtrWrapper::SubClass::printCounts(CountsReturn c){
+	CountsCallBack(c);
+}
+KClmtrWrapper::SubClass::SubClass(DelMeasure ^_Measure, DelFlicker ^_Flicker, DelCounts ^_Counts) {
 	delegateMeasureCallBack = _Measure;
 	delegateFlickerCallBack = _Flicker;
+	delegateCountsCallBack = _Counts;
 	MeasureCallBack = (CallbackMeasure)Marshal::GetFunctionPointerForDelegate(_Measure).ToPointer();
 	FlickerCallBack = (CallbackFlicker)Marshal::GetFunctionPointerForDelegate(_Flicker).ToPointer();
+	CountsCallBack = (CallbackCounts)Marshal::GetFunctionPointerForDelegate(_Counts).ToPointer();
 }
