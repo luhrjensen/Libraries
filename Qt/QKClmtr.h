@@ -80,10 +80,10 @@ public:
     static bool testConnection(const QString &portName, QString &model, QString &SN) {
         string stdModel;
         string stdSN;
-        int err = KClmtr::testConnection(portName.toStdString(), stdModel, stdSN);
+        bool connected = KClmtr::testConnection(portName.toStdString(), stdModel, stdSN);
         model = QString::fromStdString(stdModel);
         SN = QString::fromStdString(stdSN);
-        return err;
+        return connected;
     }
 
     void closePort() {
