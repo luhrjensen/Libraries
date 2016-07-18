@@ -56,7 +56,7 @@ namespace KClmtrWrapper {
 	public ref struct wMatrix {
 		int row;
 		int column;
-		array<double, 2>^ v;
+		cli::array<double, 2> ^v;
 
 		wMatrix() {
 			row = 0;
@@ -69,7 +69,7 @@ namespace KClmtrWrapper {
 			deleteV();
 			row = _row;
 			column = _column;
-			v = gcnew array<double, 2>(row,column);
+			v = gcnew cli::array<double, 2>(row,column);
 
 			clear();
 		}
@@ -469,13 +469,13 @@ namespace KClmtrWrapper {
 		//white, red, green, blue
 		//x, y, z
 		//The z from when the screen was blue
-		array<double, 2>^ v;
+		cli::array<double, 2>^ v;
 
 		wwrgb(){
-			v = gcnew array<double, 2>(4, 3);
+			v = gcnew cli::array<double, 2>(4, 3);
 		}
 		wwrgb(wrgb WRGB){
-			v = gcnew array<double, 2>(4, 3);
+			v = gcnew cli::array<double, 2>(4, 3);
 			for(int i=0; i<4; ++i){
 				for(int j=0; j<3; ++j){
 					v[i, j] = WRGB.v[i][j];
@@ -494,7 +494,7 @@ namespace KClmtrWrapper {
 	};
 
 	public ref struct wBlackMatrix {
-		array<array<double>^>^ range;
+		cli::array<cli::array<double>^>^ range;
 		double therm;
 		int errorcode;            //The error code whenever you are getting data
 
@@ -541,7 +541,7 @@ namespace KClmtrWrapper {
 	public ref struct wFlicker {
 		double bigY;				// The Y from XYZ
 		wMeasurmentRange range;		//Range for Green aka for Y
-		array<wMatrix ^> ^peakfrequency; //The top 3 frequency of DB, first element Hz, second percent, third dB
+		cli::array<wMatrix ^> ^peakfrequency; //The top 3 frequency of DB, first element Hz, second percent, third dB
 		wMatrix ^flickerDB;			//The DB First element is Hz, Second is dB
 		wMatrix ^flickerPercent;	//The Percent First element is Hz, Second is percent
 		wMatrix ^counts;			//The counts over Time
@@ -551,7 +551,7 @@ namespace KClmtrWrapper {
 
 		wFlicker() {
 			bigY = 0;
-			peakfrequency = gcnew array<wMatrix ^>(2);
+			peakfrequency = gcnew cli::array<wMatrix ^>(2);
 			peakfrequency[0] = gcnew wMatrix();
 			peakfrequency[1] = gcnew wMatrix();
 			flickerDB = gcnew wMatrix();	
@@ -563,7 +563,7 @@ namespace KClmtrWrapper {
 		}
 		wFlicker(Flicker flicker){
 			bigY = flicker.bigY;
-			peakfrequency = gcnew array<wMatrix ^>(2);
+			peakfrequency = gcnew cli::array<wMatrix ^>(2);
 			peakfrequency[0] = gcnew wMatrix(flicker.peakfrequency[0]);
 			peakfrequency[1] = gcnew wMatrix(flicker.peakfrequency[1]);
 			flickerDB = gcnew wMatrix(flicker.flickerDB);	
@@ -575,6 +575,60 @@ namespace KClmtrWrapper {
 		}
 	};
 
+	public ref struct wCountsReturn {
+		int th1;                    /**< Thermal count 1  */
+		int th2;                    /**< Thermal count 2  */
+		int therm;                  /**< Thermal count  */
+		MeasurmentRange redrange;   /**< Red range  */
+		MeasurmentRange greenrange; /**< Green range  */
+		MeasurmentRange bluerange;  /**< Blue range  */
+		cli::array<int>^ top;
+		cli::array<int>^ bottom;
+		int errorcode;              /**< The error code whenever you are getting data  */
+
+		wCountsReturn() {
+			th1 = 0;
+			th2 = 0;
+			therm = 0;
+			top = gcnew cli::array<int>(3);
+			bottom = gcnew cli::array<int>(3);
+			redrange = range1;
+			greenrange = range1;
+			bluerange = range1;
+			errorcode = 0;
+		}
+		wCountsReturn(CountsReturn counts){
+			th1 = counts.th1;
+			th2 = counts.th2;
+			therm = counts.therm;
+			top = gcnew cli::array<int>(3);
+			bottom = gcnew cli::array<int>(3);
+			for (int i = 0; i<3; ++i){
+				top[i] = counts.top[i];
+				bottom[i] = counts.bottom[i];;
+			}
+			redrange = counts.redrange;
+			greenrange = counts.greenrange;
+			bluerange = counts.bluerange;
+			errorcode = counts.errorcode;
+		}
+		CountsReturn getNative(){
+			CountsReturn counts;
+			counts.th1 = th1;
+			counts.th2 = th2;
+			counts.therm = therm;
+			for (int i = 0; i<3; ++i){
+				counts.top[i] = top[i];
+				counts.bottom[i] = bottom[i];;
+			}
+			counts.redrange = redrange;
+			counts.greenrange = greenrange;
+			counts.bluerange = bluerange;
+			counts.errorcode = errorcode;
+			return counts;
+		}
+	};
+	
 	public ref class MeasureEventArgs : public EventArgs {
 	public:
 		property wMeasurement^ m;
@@ -589,25 +643,38 @@ namespace KClmtrWrapper {
 			f = _f;
 		}
 	};
-
+	public ref class CountsEventArgs : public EventArgs {
+	public:
+		property wCountsReturn^ c;
+		CountsEventArgs(wCountsReturn^ _c) {
+			c = _c;
+		}
+	};
 
 	delegate void DelMeasure(Measurement m);
 	delegate void DelFlicker(Flicker f);
+	delegate void DelCounts(CountsReturn c);
 	typedef void(CALLBACK *CallbackMeasure)(Measurement);
 	typedef void(CALLBACK *CallbackFlicker)(Flicker);
+	typedef void(CALLBACK *CallbackCounts)(CountsReturn);
 
 	class SubClass : public KClmtr {
 	public:
-		SubClass(DelMeasure ^_Measure, DelFlicker ^_Flicker);
+		SubClass(DelMeasure ^_Measure,
+				 DelFlicker ^_Flicker,
+				 DelCounts ^_Counts);
 		~SubClass();
 		void printMeasure(Measurement m);
 		void printFlicker(Flicker f);
+		void printCounts(CountsReturn c);
 
 	private:
 		gcroot<DelMeasure^> delegateMeasureCallBack;
 		gcroot<DelFlicker^> delegateFlickerCallBack;
+		gcroot<DelCounts^> delegateCountsCallBack;
 		CallbackMeasure MeasureCallBack;
 		CallbackFlicker FlickerCallBack;
+		CallbackCounts CountsCallBack;
 	};
 	/** @ingroup wrappers
 	* 	@brief Wraps the Native object to work easly in .Net Framework
@@ -617,7 +684,8 @@ namespace KClmtrWrapper {
 		KClmtrWrap() {
 			DelMeasure^ callbackMeasure = gcnew DelMeasure(this, &KClmtrWrap::printMeasure);
 			DelFlicker^ callbackFlicker = gcnew DelFlicker(this, &KClmtrWrap::printFlicker);
-			_kclmtr = new SubClass(callbackMeasure, callbackFlicker);
+			DelCounts^ callbackCounts = gcnew DelCounts(this, &KClmtrWrap::printCounts);
+			_kclmtr = new SubClass(callbackMeasure, callbackFlicker, callbackCounts);
 		}
 		virtual ~KClmtrWrap(void){
 			delete _kclmtr;
@@ -736,9 +804,9 @@ namespace KClmtrWrapper {
 		/// <summary>
 		/// Gets the cal files that is on the klein device
 		/// </summary>
-		property array<System::String ^>^ CalFileList{
-			array<System::String ^>^ get(){
-				array<System::String ^>^ List = gcnew array<System::String ^>(97);
+		property cli::array<System::String ^>^ CalFileList{
+			cli::array<System::String ^>^ get(){
+				cli::array<System::String ^>^ List = gcnew cli::array<System::String ^>(97);
 				const std::string* calFileList = _kclmtr->getCalFileList();
 				for(int i = 0; i <= 96; ++i)
 					List[i] = NativeToDotNet(calFileList[i]);
@@ -886,6 +954,44 @@ namespace KClmtrWrapper {
 		/// </summary>
 		wAvgMeasurement ^getNextMeasurement(int n){
 			return gcnew wAvgMeasurement(_kclmtr->getNextMeasurement(n));
+		}
+		//Counts
+		/// <summary>
+		/// Returns true if the device is measuring mode. Returns false if it is not in measuring mode.
+		/// </summary>
+		property bool isMeasureCounts{
+			bool get(){
+				return _kclmtr->isMeasureCounts();
+			}
+		}
+		/// <summary>
+		/// Starts the Klein device to measuring counts constantly.
+		/// </summary>
+		void startMeasureCounts(){
+			_kclmtr->startMeasureCounts();
+		}
+		/// <summary>
+		/// Stops the Klein device to stop measuring counts.
+		/// </summary>
+		void stopMeasureCounts(){
+			_kclmtr->stopMeasureCounts();
+		}
+		/// <summary>
+		/// Grabs and returns one measurement of counts from the class buffer. Use startMeasereCounts().
+		/// </summary>
+		/// <param name="c"> the measurement that was in the buffer</param>
+		/// <return> to see if the measurement was already grabbed, and it's old data. </return>
+		bool getMeasureCounts(wCountsReturn^ %c) {
+			CountsReturn _c;
+			bool returnFresh = _kclmtr->getMeasureCounts(_c);
+			c = gcnew wCountsReturn(_c);
+			return returnFresh;
+		}
+		/// <summary>
+		/// Returns one measurement of counts from the device. Do not need to startMeasuring() to use this method.
+		/// </summary>
+		wCountsReturn ^getNextMeasureCount(){
+			return gcnew wCountsReturn(_kclmtr->getNextMeasureCount());
 		}
 
 		//Setting up to Store CalFiles
@@ -1035,6 +1141,12 @@ namespace KClmtrWrapper {
 		*  @snippet KClmtrWrapperExample.cpp flicker
 		*/
 		event EventHandler<FlickerEventArgs ^>^ flickerEvent;
+		/** @brief Sends out Counts
+		*  @details You must add the event to the object, and then make sure the thread can touch your thread
+		*  @details Here is an example:
+		*  @snippet KClmtrWrapperExample.cpp flicker
+		*/
+		event EventHandler<CountsEventArgs ^>^ CountsEvent;
 	private:
 		string MarshalString(String^ s);
 		System::String^ NativeToDotNet(std::string input);
@@ -1047,6 +1159,10 @@ namespace KClmtrWrapper {
 		void printFlicker(Flicker f){
 			wFlicker^ manFlicker = gcnew wFlicker(f);
 			flickerEvent(this, gcnew FlickerEventArgs(manFlicker));
+		}
+		void printCounts(CountsReturn c){
+			wCountsReturn^ manCounts = gcnew wCountsReturn(c);
+			CountsEvent(this, gcnew CountsEventArgs(manCounts));
 		}
 	};
 }
