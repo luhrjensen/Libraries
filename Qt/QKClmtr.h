@@ -87,9 +87,11 @@ public:
     }
 
     void closePort() {
-        KClmtr::closePort();
-        _isOpen = false;
-        emit closed();
+        if(_isOpen) {
+            KClmtr::closePort();
+            _isOpen = false;
+            emit closed();
+        }
     }
     void printMeasure(Measurement measure) {
         emit measured(measure);
