@@ -29,11 +29,12 @@ public:
         return QString::fromStdString(KClmtr::getModel());
     }
     bool isPortOpen() {
-        if(_isOpen && !KClmtr::isPortOpen()) {
+        bool isOpen = KClmtr::isPortOpen();
+        if(_isOpen && !isOpen) {
             _isOpen = false;
             emit closed();
         }
-        return KClmtr::isPortOpen();
+        return isOpen;
     }
     //Property - CalFiles
     QString getCalFileName() {
