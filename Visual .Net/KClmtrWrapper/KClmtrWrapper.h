@@ -234,9 +234,9 @@ namespace KClmtrWrapper {
 		double hue;
 		double saturation;
 		double value;
-		MeasurmentRange redrange;
-		MeasurmentRange greenrange;
-		MeasurmentRange bluerange;
+		MeasurementRange redrange;
+		MeasurementRange greenrange;
+		MeasurementRange bluerange;
 		double temp;
 		double tempduv;
 		int errorcode;
@@ -341,9 +341,9 @@ namespace KClmtrWrapper {
 			m.hue = hue;
 			m.saturation = saturation;
 			m.value = value;
-			m.redrange = static_cast<MeasurmentRange>(redrange);
-			m.greenrange = static_cast<MeasurmentRange>(greenrange);
-			m.bluerange = static_cast<MeasurmentRange>(bluerange);
+			m.redrange = static_cast<MeasurementRange>(redrange);
+			m.greenrange = static_cast<MeasurementRange>(greenrange);
+			m.bluerange = static_cast<MeasurementRange>(bluerange);
 			m.temp = temp;
 			m.tempduv = tempduv;
 			m.errorcode = errorcode;
@@ -376,9 +376,9 @@ namespace KClmtrWrapper {
 			hue = measurement.hue;
 			saturation = measurement.saturation;
 			value = measurement.value;
-			redrange = (MeasurmentRange)measurement.redrange;
-			greenrange = (MeasurmentRange)measurement.greenrange;
-			bluerange = (MeasurmentRange)measurement.bluerange;
+			redrange = (MeasurementRange)measurement.redrange;
+			greenrange = (MeasurementRange)measurement.greenrange;
+			bluerange = (MeasurementRange)measurement.bluerange;
 			temp = measurement.temp;
 			tempduv = measurement.tempduv;
 			errorcode = measurement.errorcode;
@@ -579,9 +579,9 @@ namespace KClmtrWrapper {
 		int th1;                    /**< Thermal count 1  */
 		int th2;                    /**< Thermal count 2  */
 		int therm;                  /**< Thermal count  */
-		MeasurmentRange redrange;   /**< Red range  */
-		MeasurmentRange greenrange; /**< Green range  */
-		MeasurmentRange bluerange;  /**< Blue range  */
+		MeasurementRange redrange;   /**< Red range  */
+		MeasurementRange greenrange; /**< Green range  */
+		MeasurementRange bluerange;  /**< Blue range  */
 		cli::array<int>^ top;
 		cli::array<int>^ bottom;
 		int errorcode;              /**< The error code whenever you are getting data  */
@@ -663,7 +663,7 @@ namespace KClmtrWrapper {
 		SubClass(DelMeasure ^_Measure,
 				 DelFlicker ^_Flicker,
 				 DelCounts ^_Counts);
-		~SubClass();
+		~SubClass() { }
 		void printMeasure(Measurement m);
 		void printFlicker(Flicker f);
 		void printCounts(CountsReturn c);
