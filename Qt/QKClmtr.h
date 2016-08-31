@@ -43,6 +43,9 @@ public:
     int storeMatrices(int ID, const QString &Name, const wrgb &reference, const wrgb &kclmtr) {
         return KClmtr::storeMatrices(ID, Name.toStdString(), reference, kclmtr);
     }
+    int storeMatrices(int ID, const QString &Name, const CorrectedCoefficient &CorrectionMatrix) {
+        return KClmtr::storeMatrices(ID, Name.toStdString(), CorrectionMatrix);
+    }
     void setCalFileID(const int calFileID) {
         //will it really change
         if(getCalFileID() != calFileID) {
