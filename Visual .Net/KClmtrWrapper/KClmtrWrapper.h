@@ -241,54 +241,103 @@ namespace KClmtrWrapper {
 		double tempduv;
 		int errorcode;
 		int averagingby;
+		double minX;
+		double maxX;
+		double minY;
+		double maxY;
+		double minZ;
+		double maxZ;
 
 		wMeasurement() {
 			convertNativeToManage(Measurement());
 		}
-
-		wMeasurement(Measurement measurement) {
+		wMeasurement(const Measurement &measurement) {
 			convertNativeToManage(measurement);
 		}
+		wMeasurement(const wMeasurement %m) {
+			x = m.x;
+			y = m.y;
+			bigx = m.bigx;
+			bigy = m.bigy;
+			bigz = m.bigz;
+			bigxraw = m.bigxraw;
+			bigyraw = m.bigyraw;
+			bigzraw = m.bigzraw;
+			red = m.red;
+			green = m.green;
+			blue = m.blue;
+			u = m.u;
+			v = m.v;
+			nm = m.nm;
+			nmduv = m.nmduv;
+			L = m.L;
+			a = m.a;
+			b = m.b;
+			C = m.C;
+			h = m.h;
+			hue = m.hue;
+			saturation = m.saturation;
+			value = m.value;
+			redrange = m.redrange;
+			greenrange = m.greenrange;
+			bluerange = m.bluerange;
+			temp = m.temp;
+			tempduv = m.tempduv;
+			errorcode = m.errorcode;
+			averagingby = m.averagingby;
+			minX = m.minX;
+			maxX = m.maxX;
+			minY = m.minY;
+			maxY = m.maxY;
+			minZ = m.minZ;
+			maxZ = m.maxZ;
+		};
+		wMeasurement% operator=(const wMeasurement %m) {
+			wMeasurement::wMeasurement(m);
+			return *this;
+		};
 
-		static wMeasurement^ fromXYZ(double X, double Y, double Z){
+		static wMeasurement^ fromXYZ(double X, double Y, double Z) {
 			return fromXYZ(X, Y, Z, wGamutSpec::fromCode(wGamutSpec::wGamutCode::defaultGamut));
 		}
-		static wMeasurement^ fromxyY(double x, double y, double Y){
+		static wMeasurement^ fromxyY(double x, double y, double Y) {
 			return fromxyY(x, y, Y, wGamutSpec::fromCode(wGamutSpec::wGamutCode::defaultGamut));
 		}
-		static wMeasurement^ fromuvprimeY(double u, double v, double Y){
+		static wMeasurement^ fromuvprimeY(double u, double v, double Y) {
 			return fromuvprimeY(u, v, Y, wGamutSpec::fromCode(wGamutSpec::wGamutCode::defaultGamut));
 		}
-		static wMeasurement^ fromTempduvY(double _temp, double _tempduv, double Y){
+		static wMeasurement^ fromTempduvY(double _temp, double _tempduv, double Y) {
 			return fromTempduvY(_temp, _tempduv, Y, wGamutSpec::fromCode(wGamutSpec::wGamutCode::defaultGamut));
 		}
-		static wMeasurement^ fromnmduvY(double _nm, double _nmduv, double Y){
+		static wMeasurement^ fromnmduvY(double _nm, double _nmduv, double Y) {
 			return fromnmduvY(_nm, _nmduv, Y, wGamutSpec::fromCode(wGamutSpec::wGamutCode::defaultGamut));
 		}
-		static wMeasurement^ fromRGB(double red, double green, double blue){
+		static wMeasurement^ fromRGB(double red, double green, double blue) {
 			return fromRGB(red, green, blue, wGamutSpec::fromCode(wGamutSpec::wGamutCode::defaultGamut));
 		}
-
-		static wMeasurement^ fromXYZ(double X, double Y, double Z, wGamutSpec^ gs){
+		static wMeasurement^ fromXYZ(double X, double Y, double Z, wGamutSpec^ gs) {
 			return gcnew wMeasurement(Measurement::fromXYZ(X, Y, Z, gs->getNative()));
 		}
-		static wMeasurement^ fromxyY(double x, double y, double Y, wGamutSpec^ gs){
+		static wMeasurement^ fromxyY(double x, double y, double Y, wGamutSpec^ gs) {
 			return gcnew wMeasurement(Measurement::fromxyY(x, y, Y, gs->getNative()));
 		}
-		static wMeasurement^ fromuvprimeY(double u, double v, double Y, wGamutSpec^ gs){
+		static wMeasurement^ fromuvprimeY(double u, double v, double Y, wGamutSpec^ gs) {
 			return gcnew wMeasurement(Measurement::fromuvprimeY(u, v, Y, gs->getNative()));
 		}
-		static wMeasurement^ fromTempduvY(double _temp, double _tempduv, double Y, wGamutSpec^ gs){
+		static wMeasurement^ fromTempduvY(double _temp, double _tempduv, double Y, wGamutSpec^ gs) {
 			return gcnew wMeasurement(Measurement::fromTempduvY(_temp, _tempduv, Y, gs->getNative()));
 		}
-		static wMeasurement^ fromnmduvY(double _nm, double _nmduv, double Y, wGamutSpec^ gs){
+		static wMeasurement^ fromnmduvY(double _nm, double _nmduv, double Y, wGamutSpec^ gs) {
 			return gcnew wMeasurement(Measurement::fromnmduvY(_nm, _nmduv, Y, gs->getNative()));
 		}
-		static wMeasurement^ fromRGB(double r, double g, double b, wGamutSpec^ gs){
+		static wMeasurement^ fromRGB(double r, double g, double b, wGamutSpec^ gs) {
 			return gcnew wMeasurement(Measurement::fromRGB(r, g, b, gs->getNative()));
 		}
 		static wMeasurement^ fromHSV(double hue, double saturation, double value, wGamutSpec^ gs) {
 			return gcnew wMeasurement(Measurement::fromHSV(hue, saturation, value, gs->getNative()));
+		}
+		static wMeasurement^ fromLab(double L, double a, double b, wGamutSpec^ gs) {
+			return gcnew wMeasurement(Measurement::fromLab(L, a, b, gs->getNative()));
 		}
 		
 		double deltaE1976(wMeasurement^ spec) {
@@ -352,7 +401,7 @@ namespace KClmtrWrapper {
 			return m;
 		}
 	protected:
-		void convertNativeToManage(Measurement measurement) {
+		void convertNativeToManage(const Measurement &measurement) {
 			x = measurement.x;
 			y = measurement.y;
 			bigx = measurement.bigx;
@@ -383,88 +432,18 @@ namespace KClmtrWrapper {
 			tempduv = measurement.tempduv;
 			errorcode = measurement.errorcode;
 			averagingby = measurement.averagingby;
+			minX = measurement.minX;
+			maxX = measurement.maxX;
+			minY = measurement.minY;
+			maxY = measurement.maxY;
+			minZ = measurement.minZ;
+			maxZ = measurement.maxZ;
 			
 			gs = gcnew wGamutSpec(measurement.getGamutSpec());
 		}
 		wGamutSpec^ gs;		
 	};
 
-	public ref struct wAvgMeasurement : public wMeasurement{
-		double minX;
-		double minY;
-		double minZ;
-		double maxX;
-		double maxY;
-		double maxZ;
-
-		wAvgMeasurement() {
-			wMeasurement();
-
-			minX = bigx;
-			maxX = bigx;
-			minY = bigy;
-			maxY = bigy;
-			minZ = bigz;
-			maxZ = bigz;
-		};
-		wAvgMeasurement(wMeasurement m) {
-		    x = m.x;
-			y = m.y;
-			bigx = m.bigx;
-			bigy = m.bigy;
-			bigz = m.bigz;
-			bigxraw = m.bigxraw;
-			bigyraw = m.bigyraw;
-			bigzraw = m.bigzraw;
-			red = m.red;
-			green = m.green;
-			blue = m.blue;
-			u = m.u;
-			v = m.v;
-			nm = m.nm;
-			nmduv = m.nmduv;
-			L = m.L;
-			a = m.a;
-			b = m.b;
-			C = m.C;
-			h = m.h;
-			hue = m.hue;
-			saturation = m.saturation;
-			value = m.saturation;
-			redrange = m.redrange;
-			greenrange = m.greenrange;
-			bluerange = m.bluerange;
-			temp = m.temp;
-			tempduv = m.tempduv;
-			errorcode = m.errorcode;
-			averagingby = m.averagingby;
-		
-			gs = m.getGamutSpec();
-
-			minX = bigx;
-			maxX = bigx;
-			minY = bigy;
-			maxY = bigy;
-			minZ = bigz;
-			maxZ = bigz;
-		};
-
-		wAvgMeasurement(AvgMeasurement m) {
-			convertNativeToManage(m);
-		};
-
-	protected:
-		void convertNativeToManage(AvgMeasurement m) {
-			minX = m.minX;
-			maxX = m.maxX;
-			minY = m.minY;
-			maxY = m.maxY;
-			minZ = m.minZ;
-			maxZ = m.maxZ;
-			
-			wMeasurement::convertNativeToManage(m);
-		}
-	};
 	public ref struct wwrgb {
 		//white, red, green, blue
 		//x, y, z
@@ -918,6 +897,17 @@ namespace KClmtrWrapper {
 		}
 		//XYZ
 		/// <summary>
+		/// Gets and Sets the max number of measurements to average over in low light measurments
+		/// </summary
+		property int MaxAverageCount {
+			int get() {
+				return _kclmtr->getMaxAverageCount();
+			}
+			void set(int value) {
+				_kclmtr->setMaxAverageCount(value);
+			}
+		}
+		/// <summary>
 		/// Returns true if the device is measuring mode. Returns false if it is not in measuring mode.
 		/// </summary>
 		property bool isMeasure{
@@ -952,8 +942,8 @@ namespace KClmtrWrapper {
 		/// Returns one measurement from the device. Do not need to startMeasuring() to use this method.
 		/// <param name="n"> Number of measurment needs average by. Good number is 8 measurement(one second)</param>
 		/// </summary>
-		wAvgMeasurement ^getNextMeasurement(int n){
-			return gcnew wAvgMeasurement(_kclmtr->getNextMeasurement(n));
+		wMeasurement ^getNextMeasurement(int n){
+			return gcnew wMeasurement(_kclmtr->getNextMeasurement(n));
 		}
 		//Counts
 		/// <summary>
