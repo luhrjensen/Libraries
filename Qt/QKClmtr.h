@@ -46,6 +46,15 @@ public:
     int storeMatrices(int ID, const QString &Name, const CorrectedCoefficient &CorrectionMatrix) {
         return KClmtr::storeMatrices(ID, Name.toStdString(), CorrectionMatrix);
     }
+    int deleteCalFile(const int calFileID) {
+        int oldID = getCalFileID();
+        int returnVaule = KClmtr::deleteCalFile(calFileID);
+        if(oldID == calFileID) {
+            emit calfileChanged();
+        }
+        return returnVaule;
+    }
+
     void setCalFileID(const int calFileID) {
         //will it really change
         if(getCalFileID() != calFileID) {
