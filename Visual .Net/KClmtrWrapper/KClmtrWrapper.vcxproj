@@ -41,7 +41,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <CharacterSet>Unicode</CharacterSet>
-    <CLRSupport>true</CLRSupport>
+    <CLRSupport>Safe</CLRSupport>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <PlatformToolset>v140</PlatformToolset>
   </PropertyGroup>
@@ -134,7 +134,6 @@
       <GenerateXMLDocumentationFiles>true</GenerateXMLDocumentationFiles>
     </ClCompile>
     <Link>
-      <TargetMachine>MachineX86</TargetMachine>
       <LinkTimeCodeGeneration>Default</LinkTimeCodeGeneration>
     </Link>
   </ItemDefinitionGroup>
@@ -172,22 +171,33 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\kclmtr\Counts.cpp" />
     <ClCompile Include="..\..\kclmtr\Flicker.cpp" />
     <ClCompile Include="..\..\kclmtr\Measurement.cpp" />
     <ClCompile Include="..\..\kclmtr\KClmtr.cpp" />
-    <ClCompile Include="..\..\kclmtr\serialPort.cpp" />
+    <ClCompile Include="..\..\kclmtr\SerialPort.cpp" />
     <ClCompile Include="AssemblyInfo.cpp" />
     <ClCompile Include="KClmtrWrapper.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\kclmtr\ErrorCodes.h" />
+    <ClInclude Include="..\..\kclmtr\BlackMatrix.h" />
+    <ClInclude Include="..\..\kclmtr\Counts.h" />
+    <ClInclude Include="..\..\kclmtr\Enums.h" />
     <ClInclude Include="..\..\kclmtr\Flicker.h" />
     <ClInclude Include="..\..\kclmtr\KClmtr.h" />
-    <ClInclude Include="..\..\kclmtr\matrix.h" />
+    <ClInclude Include="..\..\kclmtr\Matrix.h" />
     <ClInclude Include="..\..\kclmtr\Measurement.h" />
+    <ClInclude Include="..\..\kclmtr\MeasurementRange.h" />
+    <ClInclude Include="..\..\kclmtr\WRGB.h" />
+    <ClInclude Include="BlackMatrixWrapper.h" />
+    <ClInclude Include="CountsWrapper.h" />
+    <ClInclude Include="FlickerWrapper.h" />
     <ClInclude Include="KClmtrWrapper.h" />
+    <ClInclude Include="MatrixWrapper.h" />
+    <ClInclude Include="MeasurementWrapper.h" />
     <ClInclude Include="resource.h" />
-    <ClInclude Include="..\..\kclmtr\serialPort.h" />
+    <ClInclude Include="..\..\kclmtr\SerialPort.h" />
+    <ClInclude Include="WRGBWrapper.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

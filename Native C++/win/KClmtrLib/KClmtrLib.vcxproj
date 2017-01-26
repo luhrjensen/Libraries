@@ -85,21 +85,25 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\..\kclmtr\Counts.cpp" />
     <ClCompile Include="..\..\..\kclmtr\Flicker.cpp" />
     <ClCompile Include="..\..\..\kclmtr\KClmtr.cpp" />
     <ClCompile Include="..\..\..\kclmtr\Measurement.cpp" />
-    <ClCompile Include="..\..\..\kclmtr\serialPort.cpp" />
+    <ClCompile Include="..\..\..\kclmtr\SerialPort.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\..\kclmtr\Enums.h" />
+    <ClInclude Include="..\..\..\kclmtr\WRGB.h" />
     <CustomBuild Include="..\..\..\kclmtr\KClmtr.h">
       <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
       </Command>
     </CustomBuild>
-    <ClInclude Include="..\..\..\kclmtr\ErrorCodes.h" />
+    <ClInclude Include="..\..\..\kclmtr\BlackMatrix.h" />
+    <ClInclude Include="..\..\..\kclmtr\Counts.h" />
     <ClInclude Include="..\..\..\kclmtr\Flicker.h" />
-    <ClInclude Include="..\..\..\kclmtr\matrix.h" />
+    <ClInclude Include="..\..\..\kclmtr\Matrix.h" />
     <ClInclude Include="..\..\..\kclmtr\Measurement.h" />
-    <ClInclude Include="..\..\..\kclmtr\serialPort.h" />
+    <ClInclude Include="..\..\..\kclmtr\SerialPort.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
