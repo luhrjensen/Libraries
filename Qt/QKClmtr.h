@@ -8,6 +8,8 @@
 /** @ingroup wrappers
  *  @brief Wraps the Native object to work easly in Qt
  */
+using namespace KClmtrBase;
+using namespace KClmtrNative;
 class QKClmtr : public QObject, public KClmtr {
     Q_OBJECT
 
@@ -40,7 +42,7 @@ public:
     QString getCalFileName() {
         return QString::fromStdString(KClmtr::getCalFileName());
     }
-    int storeMatrices(int ID, const QString &Name, const wrgb &reference, const wrgb &kclmtr) {
+    int storeMatrices(int ID, const QString &Name, const WRGB &reference, const WRGB &kclmtr) {
         return KClmtr::storeMatrices(ID, Name.toStdString(), reference, kclmtr);
     }
     int storeMatrices(int ID, const QString &Name, const CorrectedCoefficient &CorrectionMatrix) {

@@ -17,7 +17,8 @@ SOURCES += QKClmtr.cpp \
     ../kclmtr/serialPort.cpp \
     ../kclmtr/KClmtr.cpp \
     ../kclmtr/Flicker.cpp \
-    ../kclmtr/Measurement.cpp
+    ../kclmtr/Measurement.cpp \
+    ../kclmtr/Counts.cpp
 
 HEADERS  += QKClmtr.h \
     ../kclmtr/serialPort.h \
@@ -25,7 +26,11 @@ HEADERS  += QKClmtr.h \
     ../kclmtr/ErrorCodes.h \
     ../kclmtr/Flicker.h \
     ../kclmtr/matrix.h \
-    ../kclmtr/Measurement.h
+    ../kclmtr/Measurement.h \
+    ../kclmtr/BlackMatrix.h \
+    ../kclmtr/Counts.h \
+    ../kclmtr/Enums.h \
+    ../kclmtr/WRGB.h
 
 win32: DESTDIR = ../bin/qt/win
 macx: DESTDIR = ../bin/qt/mac
