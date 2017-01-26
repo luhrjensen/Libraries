@@ -64,7 +64,7 @@ public:
             emit calfileChanged();
         }
     }
-    void setGamutSpec(const gamutSpec &gs) {
+    void setGamutSpec(const GamutSpec &gs) {
         KClmtr::setGamutSpec(gs);
         emit gamutSpecChanged();
     }
