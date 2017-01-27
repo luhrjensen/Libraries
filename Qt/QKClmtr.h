@@ -14,9 +14,10 @@ class QKClmtr : public QObject, public KClmtr {
     Q_OBJECT
 
 public:
-    QKClmtr(QObject *parent = 0) : QObject(parent) {
+    QKClmtr(QObject *parent = 0) : QObject(parent), KClmtr() {
         _isOpen = false;
     }
+
     //Property
     QString getPort() {
         return QString::fromStdString(KClmtr::getPort());

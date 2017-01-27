@@ -23,7 +23,6 @@ SOURCES += QKClmtr.cpp \
 HEADERS  += QKClmtr.h \
     ../kclmtr/serialPort.h \
     ../kclmtr/KClmtr.h \
-    ../kclmtr/ErrorCodes.h \
     ../kclmtr/Flicker.h \
     ../kclmtr/matrix.h \
     ../kclmtr/Measurement.h \
