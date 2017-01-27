@@ -35,16 +35,16 @@ namespace KClmtrBase {
 				delete gs;
 			}
 			wGamutSpec() {
-				gs = new gamutSpec();
+				gs = new GamutSpec();
 			}
-			wGamutSpec(const gamutSpec &_gs) {
-				gs = new gamutSpec(_gs);
+			wGamutSpec(const GamutSpec &_gs) {
+				gs = new GamutSpec(_gs);
 			}
 			wGamutSpec(double redX, double redY,
 				double greenX, double greenY,
 				double blueX, double blueY,
 				double whiteX, double whiteY, double whiteBigY) {
-				gs = new gamutSpec(redX, redY,
+				gs = new GamutSpec(redX, redY,
 					greenX, greenY,
 					blueX, blueY,
 					whiteX, whiteY, whiteBigY);
@@ -55,8 +55,8 @@ namespace KClmtrBase {
 			}
 			static wGamutSpec^ fromCode(GamutCode code, double whiteBigY) {
 				wGamutSpec^ wgs = gcnew wGamutSpec();
-				gamutSpec g = gamutSpec::fromCode(code, whiteBigY);
-				wgs->gs = new gamutSpec(g);
+				GamutSpec g = GamutSpec::fromCode(code, whiteBigY);
+				wgs->gs = new GamutSpec(g);
 				return wgs;
 			}
 			GamutCode getCodeSpec() {
@@ -93,11 +93,11 @@ namespace KClmtrBase {
 				return gcnew wMatrix<double>(gs->getXYZtoRGB());
 			}
 
-			const gamutSpec getNative() {
+			const GamutSpec getNative() {
 				return *gs;
 			}
 		private:
-			gamutSpec *gs;
+			GamutSpec *gs;
 		};
 
 		public ref class wMeasurement {
