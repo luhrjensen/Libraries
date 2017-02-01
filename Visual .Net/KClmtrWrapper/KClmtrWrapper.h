@@ -49,8 +49,8 @@ namespace KClmtrBase {
 			wCorrectedCoefficient(KClmtr::CorrectedCoefficient c) {
 				coeff = new KClmtr::CorrectedCoefficient(c);
 			}
-			~wCorrectedCoefficient() {
-				delete coeff;
+			virtual  ~wCorrectedCoefficient() {
+				this->!wCorrectedCoefficient();
 			}
 			property wMatrix<double> ^ColorMatrix {
 				wMatrix<double> ^get() {
@@ -71,30 +71,52 @@ namespace KClmtrBase {
 			KClmtr::CorrectedCoefficient getNative() {
 				return *coeff;
 			}
+		protected:
+			!wCorrectedCoefficient() {
+				delete coeff;
+			}
 		private:
 			KClmtr::CorrectedCoefficient *coeff;
 		};
 
 		public ref class MeasureEventArgs : public EventArgs {
 		public:
-			property wMeasurement^ m;
+			property wMeasurement^ Measurement {
+				wMeasurement^ get() {
+					return m;
+				}
+			}
 			MeasureEventArgs(wMeasurement ^ _m) {
 				m = _m;
 			}
+		private:
+			wMeasurement^ m;
 		};
 		public ref class FlickerEventArgs : public EventArgs {
 		public:
-			property wFlicker^ f;
+			property wFlicker^ Flicker {
+				wFlicker^ get() {
+					return f;
+				}
+			}
 			FlickerEventArgs(wFlicker^ _f) {
 				f = _f;
 			}
+		private:
+			wFlicker^ f;
 		};
 		public ref class CountsEventArgs : public EventArgs {
 		public:
-			property wCounts^ c;
+			property wCounts^ Counts {
+				wCounts^ get() {
+					return c;
+				}
+			}
 			CountsEventArgs(wCounts^ _c) {
 				c = _c;
 			}
+		private:
+			wCounts^ c;
 		};
 
 		delegate void DelMeasure(Measurement m);
@@ -125,7 +147,7 @@ namespace KClmtrBase {
 		/** @ingroup wrappers
 		* 	@brief Wraps the Native object to work easly in .Net Framework
 		*/
-		public ref class KClmtrWrap {
+		public ref class KClmtrWrap  {
 		public:
 			KClmtrWrap() {
 				DelMeasure^ callbackMeasure = gcnew DelMeasure(this, &KClmtrWrap::printMeasure);
@@ -133,10 +155,9 @@ namespace KClmtrBase {
 				DelCounts^ callbackCounts = gcnew DelCounts(this, &KClmtrWrap::printCounts);
 				_kclmtr = new SubClass(callbackMeasure, callbackFlicker, callbackCounts);
 			}
-			virtual ~KClmtrWrap(void) {
-				delete _kclmtr;
+			virtual ~KClmtrWrap() {
+				this->!KClmtrWrap();
 			}
-
 			//Property
 
 			/// <summary>
@@ -604,6 +625,11 @@ namespace KClmtrBase {
 			*  @snippet KClmtrWrapperExample.cpp flicker
 			*/
 			event EventHandler<CountsEventArgs ^>^ CountsEvent;
+
+		protected:
+			!KClmtrWrap() {
+				delete _kclmtr;
+			}
 		private:
 			string MarshalString(String^ s);
 			System::String^ NativeToDotNet(std::string input);

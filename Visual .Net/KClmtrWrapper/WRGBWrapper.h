@@ -30,8 +30,8 @@ namespace KClmtrBase {
 		using namespace KClmtrNative;
 		public ref class wWRGB {
 		public:
-			~wWRGB() {
-				delete wrgb;
+			virtual ~wWRGB() {
+				this->!wWRGB();
 			}
 			wWRGB() {
 				wrgb = new WRGB();
@@ -59,6 +59,10 @@ namespace KClmtrBase {
 						}
 					}
 				}
+			}
+		protected:
+			!wWRGB() {
+				delete wrgb;
 			}
 		private:
 			WRGB *wrgb;

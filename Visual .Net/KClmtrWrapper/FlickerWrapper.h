@@ -61,11 +61,15 @@ namespace KClmtrBase {
 					r = new FlickerSetting::Range(range);
 				}
 				~wRange() {
-					delete r;
+					this->!wRange();
 				}
 
 				const FlickerSetting::Range getNative() {
 					return *r;
+				}
+			protected:
+				!wRange() {
+					delete r;
 				}
 			private:
 				FlickerSetting::Range *r;
@@ -112,6 +116,10 @@ namespace KClmtrBase {
 					cArray = new FlickerSetting::RangeCorrecionArray(cArr);
 				}
 				~wRangeCorrecionArray() {
+					this->!wRangeCorrecionArray();
+				}
+			protected:
+				!wRangeCorrecionArray() {
 					delete cArray;
 				}
 			private:
@@ -137,6 +145,10 @@ namespace KClmtrBase {
 				settings = new FlickerSetting(s);
 			}
 			~wFlickerSetting() {
+				this->!wFlickerSetting();
+			}
+		protected:
+			!wFlickerSetting() {
 				delete settings;
 			}
 		private:
@@ -207,7 +219,11 @@ namespace KClmtrBase {
 			wFlicker(const Flicker &flicker) {
 				f = new Flicker(flicker);
 			}
-			~wFlicker() {
+			virtual  ~wFlicker() {
+				this->!wFlicker();
+			}
+		protected:
+			!wFlicker() {
 				delete f;
 			}
 		private:
