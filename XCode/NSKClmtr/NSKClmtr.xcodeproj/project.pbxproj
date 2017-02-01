@@ -10,21 +10,25 @@
 		1D11BE801566BA4E00323836 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D8BFF4215617629005662C1 /* Cocoa.framework */; };
 		1D11BE861566BA4E00323836 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 1D11BE841566BA4E00323836 /* InfoPlist.strings */; };
 		1D11BEA31566BA6100323836 /* NSKClmtr.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1D11BE3915659F3600323836 /* NSKClmtr.mm */; };
-		1D11BEA41566BA6100323836 /* KClmtr.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1D8BFFA015642146005662C1 /* KClmtr.cpp */; };
-		1D11BEA51566BA6100323836 /* serialPort.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1D8BFFA415642146005662C1 /* serialPort.cpp */; };
-		1D11BEA71566BAA900323836 /* serialPort.h in Headers */ = {isa = PBXBuildFile; fileRef = 1D8BFFA515642146005662C1 /* serialPort.h */; settings = {ATTRIBUTES = (Private, ); }; };
-		1D11BEA81566BAAC00323836 /* KClmtr.h in Headers */ = {isa = PBXBuildFile; fileRef = 1D8BFFA115642146005662C1 /* KClmtr.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		1D85B16D156D5C9400EDB2E8 /* NSKClmtr.h in Headers */ = {isa = PBXBuildFile; fileRef = 1D11BE3815659F3600323836 /* NSKClmtr.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		AF5742D71BA75ED1009136AA /* ErrorCodes.h in Headers */ = {isa = PBXBuildFile; fileRef = AF5742D11BA75ED1009136AA /* ErrorCodes.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		AF5742D81BA75ED1009136AA /* Flicker.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AF5742D21BA75ED1009136AA /* Flicker.cpp */; };
-		AF5742D91BA75ED1009136AA /* Flicker.h in Headers */ = {isa = PBXBuildFile; fileRef = AF5742D31BA75ED1009136AA /* Flicker.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		AF5742DA1BA75ED1009136AA /* matrix.h in Headers */ = {isa = PBXBuildFile; fileRef = AF5742D41BA75ED1009136AA /* matrix.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		AF5742DB1BA75ED1009136AA /* Measurement.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AF5742D51BA75ED1009136AA /* Measurement.cpp */; };
-		AF5742DC1BA75ED1009136AA /* Measurement.h in Headers */ = {isa = PBXBuildFile; fileRef = AF5742D61BA75ED1009136AA /* Measurement.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		AF9B6BC81E42765400833235 /* blackmatrix.h in Headers */ = {isa = PBXBuildFile; fileRef = AF9B6BBA1E42765400833235 /* blackmatrix.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		AF9B6BC91E42765400833235 /* Counts.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AF9B6BBB1E42765400833235 /* Counts.cpp */; };
+		AF9B6BCA1E42765400833235 /* Counts.h in Headers */ = {isa = PBXBuildFile; fileRef = AF9B6BBC1E42765400833235 /* Counts.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		AF9B6BCB1E42765400833235 /* Enums.h in Headers */ = {isa = PBXBuildFile; fileRef = AF9B6BBD1E42765400833235 /* Enums.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		AF9B6BCC1E42765400833235 /* Flicker.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AF9B6BBE1E42765400833235 /* Flicker.cpp */; };
+		AF9B6BCD1E42765400833235 /* Flicker.h in Headers */ = {isa = PBXBuildFile; fileRef = AF9B6BBF1E42765400833235 /* Flicker.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		AF9B6BCE1E42765400833235 /* KClmtr.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AF9B6BC01E42765400833235 /* KClmtr.cpp */; };
+		AF9B6BCF1E42765400833235 /* KClmtr.h in Headers */ = {isa = PBXBuildFile; fileRef = AF9B6BC11E42765400833235 /* KClmtr.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		AF9B6BD01E42765400833235 /* matrix.h in Headers */ = {isa = PBXBuildFile; fileRef = AF9B6BC21E42765400833235 /* matrix.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		AF9B6BD11E42765400833235 /* Measurement.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AF9B6BC31E42765400833235 /* Measurement.cpp */; };
+		AF9B6BD21E42765400833235 /* Measurement.h in Headers */ = {isa = PBXBuildFile; fileRef = AF9B6BC41E42765400833235 /* Measurement.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		AF9B6BD31E42765400833235 /* serialPort.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AF9B6BC51E42765400833235 /* serialPort.cpp */; };
+		AF9B6BD41E42765400833235 /* serialPort.h in Headers */ = {isa = PBXBuildFile; fileRef = AF9B6BC61E42765400833235 /* serialPort.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		AF9B6BD51E42765400833235 /* wrgb.h in Headers */ = {isa = PBXBuildFile; fileRef = AF9B6BC71E42765400833235 /* wrgb.h */; settings = {ATTRIBUTES = (Private, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		1D11BE3815659F3600323836 /* NSKClmtr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSKClmtr.h; sourceTree = "<group>"; };
+		1D11BE3815659F3600323836 /* NSKClmtr.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; fileEncoding = 4; path = NSKClmtr.h; sourceTree = "<group>"; };
 		1D11BE3915659F3600323836 /* NSKClmtr.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = NSKClmtr.mm; sourceTree = "<group>"; };
 		1D11BE7F1566BA4E00323836 /* NSKClmtr.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = NSKClmtr.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		1D11BE831566BA4E00323836 /* NSKClmtr-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "NSKClmtr-Info.plist"; sourceTree = "<group>"; };
@@ -35,16 +39,20 @@
 		1D8BFF4515617629005662C1 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
 		1D8BFF4615617629005662C1 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		1D8BFF4715617629005662C1 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
-		1D8BFFA015642146005662C1 /* KClmtr.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = KClmtr.cpp; sourceTree = "<group>"; };
-		1D8BFFA115642146005662C1 /* KClmtr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KClmtr.h; sourceTree = "<group>"; };
-		1D8BFFA415642146005662C1 /* serialPort.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = serialPort.cpp; sourceTree = "<group>"; };
-		1D8BFFA515642146005662C1 /* serialPort.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = serialPort.h; sourceTree = "<group>"; };
-		AF5742D11BA75ED1009136AA /* ErrorCodes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ErrorCodes.h; sourceTree = "<group>"; };
-		AF5742D21BA75ED1009136AA /* Flicker.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Flicker.cpp; sourceTree = "<group>"; };
-		AF5742D31BA75ED1009136AA /* Flicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Flicker.h; sourceTree = "<group>"; };
-		AF5742D41BA75ED1009136AA /* matrix.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = matrix.h; sourceTree = "<group>"; };
-		AF5742D51BA75ED1009136AA /* Measurement.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Measurement.cpp; sourceTree = "<group>"; };
-		AF5742D61BA75ED1009136AA /* Measurement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Measurement.h; sourceTree = "<group>"; };
+		AF9B6BBA1E42765400833235 /* blackmatrix.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; fileEncoding = 4; path = blackmatrix.h; sourceTree = "<group>"; };
+		AF9B6BBB1E42765400833235 /* Counts.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Counts.cpp; sourceTree = "<group>"; };
+		AF9B6BBC1E42765400833235 /* Counts.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; fileEncoding = 4; path = Counts.h; sourceTree = "<group>"; };
+		AF9B6BBD1E42765400833235 /* Enums.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; fileEncoding = 4; path = Enums.h; sourceTree = "<group>"; };
+		AF9B6BBE1E42765400833235 /* Flicker.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Flicker.cpp; sourceTree = "<group>"; };
+		AF9B6BBF1E42765400833235 /* Flicker.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; fileEncoding = 4; path = Flicker.h; sourceTree = "<group>"; };
+		AF9B6BC01E42765400833235 /* KClmtr.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = KClmtr.cpp; sourceTree = "<group>"; };
+		AF9B6BC11E42765400833235 /* KClmtr.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; fileEncoding = 4; path = KClmtr.h; sourceTree = "<group>"; };
+		AF9B6BC21E42765400833235 /* matrix.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; fileEncoding = 4; path = matrix.h; sourceTree = "<group>"; };
+		AF9B6BC31E42765400833235 /* Measurement.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Measurement.cpp; sourceTree = "<group>"; };
+		AF9B6BC41E42765400833235 /* Measurement.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; fileEncoding = 4; path = Measurement.h; sourceTree = "<group>"; };
+		AF9B6BC51E42765400833235 /* serialPort.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = serialPort.cpp; sourceTree = "<group>"; };
+		AF9B6BC61E42765400833235 /* serialPort.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; fileEncoding = 4; path = serialPort.h; sourceTree = "<group>"; };
+		AF9B6BC71E42765400833235 /* wrgb.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; fileEncoding = 4; path = wrgb.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -120,16 +128,20 @@
 		1D8BFF6A15642146005662C1 /* kclmtr */ = {
 			isa = PBXGroup;
 			children = (
-				AF5742D11BA75ED1009136AA /* ErrorCodes.h */,
-				AF5742D21BA75ED1009136AA /* Flicker.cpp */,
-				AF5742D31BA75ED1009136AA /* Flicker.h */,
-				AF5742D41BA75ED1009136AA /* matrix.h */,
-				AF5742D51BA75ED1009136AA /* Measurement.cpp */,
-				AF5742D61BA75ED1009136AA /* Measurement.h */,
-				1D8BFFA015642146005662C1 /* KClmtr.cpp */,
-				1D8BFFA115642146005662C1 /* KClmtr.h */,
-				1D8BFFA415642146005662C1 /* serialPort.cpp */,
-				1D8BFFA515642146005662C1 /* serialPort.h */,
+				AF9B6BBA1E42765400833235 /* blackmatrix.h */,
+				AF9B6BBB1E42765400833235 /* Counts.cpp */,
+				AF9B6BBC1E42765400833235 /* Counts.h */,
+				AF9B6BBD1E42765400833235 /* Enums.h */,
+				AF9B6BBE1E42765400833235 /* Flicker.cpp */,
+				AF9B6BBF1E42765400833235 /* Flicker.h */,
+				AF9B6BC01E42765400833235 /* KClmtr.cpp */,
+				AF9B6BC11E42765400833235 /* KClmtr.h */,
+				AF9B6BC21E42765400833235 /* matrix.h */,
+				AF9B6BC31E42765400833235 /* Measurement.cpp */,
+				AF9B6BC41E42765400833235 /* Measurement.h */,
+				AF9B6BC51E42765400833235 /* serialPort.cpp */,
+				AF9B6BC61E42765400833235 /* serialPort.h */,
+				AF9B6BC71E42765400833235 /* wrgb.h */,
 			);
 			name = kclmtr;
 			path = ../../kclmtr;
@@ -142,13 +154,16 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AF9B6BD51E42765400833235 /* wrgb.h in Headers */,
 				1D85B16D156D5C9400EDB2E8 /* NSKClmtr.h in Headers */,
-				AF5742D91BA75ED1009136AA /* Flicker.h in Headers */,
-				AF5742DA1BA75ED1009136AA /* matrix.h in Headers */,
-				AF5742DC1BA75ED1009136AA /* Measurement.h in Headers */,
-				AF5742D71BA75ED1009136AA /* ErrorCodes.h in Headers */,
-				1D11BEA71566BAA900323836 /* serialPort.h in Headers */,
-				1D11BEA81566BAAC00323836 /* KClmtr.h in Headers */,
+				AF9B6BCF1E42765400833235 /* KClmtr.h in Headers */,
+				AF9B6BD41E42765400833235 /* serialPort.h in Headers */,
+				AF9B6BD01E42765400833235 /* matrix.h in Headers */,
+				AF9B6BCA1E42765400833235 /* Counts.h in Headers */,
+				AF9B6BD21E42765400833235 /* Measurement.h in Headers */,
+				AF9B6BC81E42765400833235 /* blackmatrix.h in Headers */,
+				AF9B6BCB1E42765400833235 /* Enums.h in Headers */,
+				AF9B6BCD1E42765400833235 /* Flicker.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -179,7 +194,7 @@
 		1D8BFF3515617629005662C1 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0510;
+				LastUpgradeCheck = 0640;
 				ORGANIZATIONNAME = "Klein Instruments";
 			};
 			buildConfigurationList = 1D8BFF3815617629005662C1 /* Build configuration list for PBXProject "NSKClmtr" */;
@@ -215,11 +230,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AF5742D81BA75ED1009136AA /* Flicker.cpp in Sources */,
+				AF9B6BCE1E42765400833235 /* KClmtr.cpp in Sources */,
+				AF9B6BD11E42765400833235 /* Measurement.cpp in Sources */,
+				AF9B6BC91E42765400833235 /* Counts.cpp in Sources */,
+				AF9B6BCC1E42765400833235 /* Flicker.cpp in Sources */,
 				1D11BEA31566BA6100323836 /* NSKClmtr.mm in Sources */,
-				AF5742DB1BA75ED1009136AA /* Measurement.cpp in Sources */,
-				1D11BEA41566BA6100323836 /* KClmtr.cpp in Sources */,
-				1D11BEA51566BA6100323836 /* serialPort.cpp in Sources */,
+				AF9B6BD31E42765400833235 /* serialPort.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -255,6 +271,7 @@
 				INFOPLIST_FILE = "NSKClmtr/NSKClmtr-Info.plist";
 				INSTALL_PATH = /Users/klein/projects/examples/libraries/bin/xcode;
 				"INSTALL_PATH[sdk=*]" = /Users/klein/projects/examples/libraries/bin/xcode;
+				OTHER_CPLUSPLUSFLAGS = "$(OTHER_CFLAGS)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = framework;
 			};
@@ -278,6 +295,7 @@
 				INFOPLIST_FILE = "NSKClmtr/NSKClmtr-Info.plist";
 				INSTALL_PATH = /Users/klein/projects/examples/libraries/bin/xcode;
 				"INSTALL_PATH[sdk=*]" = /Users/klein/projects/examples/libraries/bin/xcode;
+				OTHER_CPLUSPLUSFLAGS = "$(OTHER_CFLAGS)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = framework;
 			};
@@ -286,7 +304,7 @@
 		1D8BFF4F15617629005662C1 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_C_LANGUAGE_STANDARD = "compiler-default";
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = DEBUG;
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
@@ -294,8 +312,11 @@
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = "";
 				ONLY_ACTIVE_ARCH = YES;
+				OTHER_CPLUSPLUSFLAGS = (
+					"$(OTHER_CFLAGS)",
+					"-std=c++0x",
+				);
 				SDKROOT = macosx;
 			};
 			name = Debug;
@@ -303,13 +324,16 @@
 		1D8BFF5015617629005662C1 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_C_LANGUAGE_STANDARD = "compiler-default";
 				GCC_PREPROCESSOR_DEFINITIONS = Release;
 				GCC_VERSION = "";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = "";
+				OTHER_CPLUSPLUSFLAGS = (
+					"$(OTHER_CFLAGS)",
+					"-std=c++0x",
+				);
 				SDKROOT = macosx;
 			};
 			name = Release;

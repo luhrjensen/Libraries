@@ -33,7 +33,7 @@ void SubClass::printCounts(Counts c)
 {
     NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
     
-    [_NSKClmtr sendMeasure:c];
+    [_NSKClmtr sendCounts:c];
 
     [pool release];
 
@@ -114,7 +114,7 @@ void SubClass::printCounts(Counts c)
     return calListboo;
 }
 
--(void)setTempCalFile:(CorrectedCoefficient)matrix {
+-(void)setTempCalFile:(KClmtr::CorrectedCoefficient)matrix {
     _kclmtr->setTempCalFile(matrix);
 }
 
@@ -168,7 +168,7 @@ void SubClass::printCounts(Counts c)
 	return _kclmtr->getFFT_numberOfPeaks();
 }
 //Measurements
--(bool)setMaxAverageCount(int) maxAvg{
+-(bool)setMaxAverageCount:(int)maxAvg{
 	return _kclmtr->setMaxAverageCount(maxAvg);
 }
 -(int)getMaxAverageCount {
@@ -177,8 +177,8 @@ void SubClass::printCounts(Counts c)
 -(SpeedMode)getMeasureSpeedMode {
 	return _kclmtr->getMeasureSpeedMode();
 }
--(void)setMeasureSpeedMode(SpeedMode) s{
-	_kclmtr->setMeasureSpeedMode(SpeedMode s);
+-(void)setMeasureSpeedMode:(SpeedMode)s{
+	_kclmtr->setMeasureSpeedMode(s);
 }
 -(bool)isMeasuring{
     return _kclmtr->isMeasuring();
@@ -192,7 +192,7 @@ void SubClass::printCounts(Counts c)
 -(Measurement)getNextMeasurment:(int)n{
     return _kclmtr->getNextMeasurement(n);
 }
--(bool)getMeasurement:(Measurement&) m; {
+-(bool)getMeasurement:(out Measurement&) m; {
 	return _kclmtr->getMeasurement(m);
 }
 
@@ -206,7 +206,7 @@ void SubClass::printCounts(Counts c)
 -(bool)isMeasureCounts{
 	return _kclmtr->isMeasureCounts();
 }
--(bool)getMeasureCounts(Counts&) c{
+-(bool)getMeasureCounts:(out Counts&)c{
 	return _kclmtr->getMeasureCounts(c);
 }
 -(Counts)getNextMeasureCount{
@@ -214,19 +214,16 @@ void SubClass::printCounts(Counts c)
 }
 
 //CalFiles
--(CorrectedCoefficient)getCofficintTestMatrix:(wrgb&)Reference kclmtr:(wrgb&)kclmtr{
+-(KClmtr::CorrectedCoefficient)getCofficintTestMatrix:(WRGB)Reference kclmtr:(WRGB)kclmtr{
     return _kclmtr->getCoefficientTestMatrix(Reference, kclmtr);
 }
 -(int)deleteCalFile:(int)calFileID{
     return _kclmtr->deleteCalFile(calFileID);
 }
--(int)storeCalFile:(int)idNumber name:(NSString&)Name (wrgb&)Reference kclmtr:(wrgb&)kclmtr {
+-(int)storeCalFile:(int)idNumber name:(NSString*)Name ref:(WRGB)Reference kclmtr:(WRGB)kclmtr {
     return _kclmtr->storeMatrices(idNumber, [Name UTF8String], Reference, kclmtr);
 }
--(int)storeCalFile:(int)idNumber name:(NSString&)Name (Matrix<double>&)correctedXYZ{
-	return _kclmtr->storeMatrices(idNumber, [Name UTF8String], correctedXYZ);
-}
--(int)storeCalFile:(int)idNumber name:(NSString&)Name (CorrectedCoefficient&)correctionMatrix {
+-(int)storeCalFile:(int)idNumber name:(NSString*)Name correctionMatrix:(KClmtr::CorrectedCoefficient)correctionMatrix {
 	return _kclmtr->storeMatrices(idNumber, [Name UTF8String], correctionMatrix);
 }
 
@@ -250,8 +247,8 @@ void SubClass::printCounts(Counts c)
 -(bool)isFlickering{
     return _kclmtr->isFlickering();
 }
--(int)startFlicker:(bool)grabConstantly{
-    return _kclmtr->startFlicker(grabConstantly);
+-(int)startFlicker{
+    return _kclmtr->startFlicker();
 }
 -(Flicker)getNextFlicker{
     return _kclmtr->getNextFlicker();
@@ -259,7 +256,7 @@ void SubClass::printCounts(Counts c)
 -(void)stopFlickering{
     _kclmtr->stopFlicker();
 }
--(bool)getFlicker:(Flicker&) f {
+-(bool)getFlicker:(out Flicker&) f {
 	return _kclmtr->getFlicker(f);
 }
 
@@ -273,12 +270,12 @@ void SubClass::printCounts(Counts c)
 -(void)closePort{
     _kclmtr->closePort();
 }
-+(bool)testConnection((NSString&)portName (NSString&) model (NSString&)SN{
-	string model, sn;
-	bool test = KClmtr::testConnection([Name UTF8String], model, sn);
++(bool)testConnection:(NSString*)portName model:(out NSString*)model SN:(out NSString*)SN{
+	string _model, _SN;
+	bool test = KClmtr::testConnection([portName UTF8String], _model, _SN);
 	
-	[NSString stringWithUTF8String:model.c_str()];
-	[NSString stringWithUTF8String:sn.c_str()];
+	model = [NSString stringWithUTF8String:_model.c_str()];
+	SN = [NSString stringWithUTF8String:_SN.c_str()];
 	
 	return test;
 }
@@ -306,7 +303,7 @@ void SubClass::printCounts(Counts c)
     targetFlicker = target;
     printFlicker = action;
 }
--(void)addTargetForFlicker:(id)target action:(SEL)action
+-(void)addTargetForCounts:(id)target action:(SEL)action
 {
     targetCounts = target;
     printCounts = action;
