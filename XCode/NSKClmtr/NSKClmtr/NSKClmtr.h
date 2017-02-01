@@ -11,6 +11,8 @@
 
 @class  NSKClmtr;
 /** @cond */
+using namespace KClmtrBase;
+using namespace KClmtrNative;
 class SubClass : public KClmtr {
 public:
     SubClass(NSKClmtr* _NSK);
@@ -57,7 +59,7 @@ public:
 -(GamutSpec)getGamutSpec;
 -(void)setGamutSpec:(GamutSpec)gamutSpec;
 -(NSArray*)getCalfileList;
--(void)setTempCalFile:(CorrectedCoefficient)matrix;
+-(void)setTempCalFile:(KClmtr::CorrectedCoefficient)matrix;
 
 //Properties - FFT
 -(bool)getFFT_Cosine;
@@ -78,29 +80,28 @@ public:
 -(int)getFFT_numberofPeaks;
 
 //Measurements
--(bool)setMaxAverageCount(int) maxAvg;
+-(bool)setMaxAverageCount:(int)maxAvg;
 -(int)getMaxAverageCount;
 -(SpeedMode)getMeasureSpeedMode;
--(void)setMeasureSpeedMode(SpeedMode) s;
+-(void)setMeasureSpeedMode:(SpeedMode)s;
 -(bool)isMeasuring;
 -(void)startMeasuring;
 -(void)stopMeasuring;
--(bool)getMeasurement:(Measurement&) m;
+-(bool)getMeasurement:(out Measurement&) m;
 -(Measurement)getNextMeasurment:(int)n;
 
 //Counts
 -(void)startMeasureCounts;
 -(void)stopMeasureCounts;
 -(bool)isMeasureCounts;
--(bool)getMeasureCounts(Counts&) c;
+-(bool)getMeasureCounts:(out Counts&)c;
 -(Counts)getNextMeasureCount;
 
 //CalFiles
--(CorrectedCoefficient)getCofficintTestMatrix:(wrgb&)Reference kclmtr:(wrgb)kclmtr;
+-(KClmtr::CorrectedCoefficient)getCofficintTestMatrix:(WRGB)Reference kclmtr:(WRGB)kclmtr;
 -(int)deleteCalFile:(int)calFileID;
--(int)storeCalFile:(int)idNumber name:(NSString&)Name (wrgb&)Reference kclmtr:(wrgb&)kclmtr;
--(int)storeCalFile:(int)idNumber name:(NSString&)Name (Matrix<double>&)correctedXYZ;
--(int)storeCalFile:(int)idNumber name:(NSString&)Name (CorrectedCoefficient&)correctionMatrix;
+-(int)storeCalFile:(int)idNumber name:(NSString*)Name ref:(WRGB)Reference kclmtr:(WRGB)kclmtr;
+-(int)storeCalFile:(int)idNumber name:(NSString*)Name correctionMatrix:(KClmtr::CorrectedCoefficient)correctionMatrix;
 
 
 //BlackCal - Cold
@@ -113,17 +114,17 @@ public:
 
 //FFT
 -(bool)isFlickering;
--(int)startFlicker:(bool)grabConstantly;
+-(int)startFlicker;
 -(Flicker)getNextFlicker;
 -(void)stopFlickering;
--(bool)getFlicker:(Flicker&)f;
+-(bool)getFlicker:(out Flicker&)f;
 
 //Setup/closing
 -(bool)connect;
--(bool)connect:(NSString&)portName;
+-(bool)connect:(NSString*)portName;
 -(void)closePort;
  
-+(bool)testConnection((NSString&)portName (NSString&) model (NSString&)SN;
++(bool)testConnection:(NSString*)portName model:(out NSString*)model SN:(out NSString*)SN;
  
 -(void)sendFlicker:(Flicker)flicker;
 -(void)sendMeasure:(Measurement)measurement;
