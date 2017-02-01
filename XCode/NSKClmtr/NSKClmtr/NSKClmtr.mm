@@ -29,6 +29,15 @@ void SubClass::printMeasure(Measurement m)
     [pool release];
 
 }
+void SubClass::printCounts(Counts c)
+{
+    NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+    
+    [_NSKClmtr sendMeasure:c];
+
+    [pool release];
+
+}
 
 @implementation NSKClmtr
 
@@ -67,7 +76,12 @@ void SubClass::printMeasure(Measurement m)
 -(void)setAimingLights:(bool) onOff{
     _kclmtr->setAimingLights(onOff);
 }
-
+-(int)getRange{
+	return _kclmtr->getRange();
+}
+-(void)setRange:(int) range{
+	_kclmtr->setRange(range);
+}
 //Properties - CalFiles
 -(NSString*)getCalfileName{
     return [NSString stringWithUTF8String:_kclmtr->getCalFileName().c_str()];
@@ -78,16 +92,16 @@ void SubClass::printMeasure(Measurement m)
 -(void)setCalFileID:(int)calFileID{
     _kclmtr->setCalFileID(calFileID);
 }
--(matrix)getCalMatrix{
+-(Matrix<double>)getCalMatrix{
     return _kclmtr->getCalMatrix();
 }
--(matrix)getRGBMatrix{
+-(Matrix<double>)getRGBMatrix{
     return _kclmtr->getRGBMatrix();
 }
--(gamutSpec)getGamutSpec{
+-(GamutSpec)getGamutSpec{
     return _kclmtr->getGamutSpec();
 }
--(void)setGamutSpec:(gamutSpec)gamutSpec{
+-(void)setGamutSpec:(GamutSpec)gamutSpec{
     _kclmtr->setGamutSpec(gamutSpec);
 }
 -(NSArray*)getCalfileList{
@@ -135,20 +149,37 @@ void SubClass::printMeasure(Measurement m)
 -(void) setFFT_DBJEITA_Discount:(bool)onOff{
 	_kclmtr->setFFT_DBJEITA_Discount(onOff);
 }
--(FlickerSetting::percentMode)getFFT_PercentMode{
+-(PercentMode)getFFT_PercentMode{
 	return _kclmtr->getFFT_PercentMode();
 }
--(void)setFFT_PercentMode:(FlickerSetting::percentMode)mode{
+-(void)setFFT_PercentMode:(PercentMode)mode{
 	_kclmtr->setFFT_PercentMode(mode);
 }
--(FlickerSetting::decibelMode)getFFT_DBMode{
+-(DecibelMode)getFFT_DBMode{
 	return _kclmtr->getFFT_DBMode();
 }
--(void) setFFT_DBMode:(FlickerSetting::decibelMode)onOff {
+-(void) setFFT_DBMode:(DecibelMode)onOff {
 	_kclmtr->setFFT_DBMode(onOff);
 }
-
+-(void)setFFT_numberOfPeaks:(int)numberOfPeaks{
+	_kclmtr->setFFT_numberOfPeaks(numberOfPeaks);
+}
+-(int)getFFT_numberofPeaks{
+	return _kclmtr->getFFT_numberOfPeaks();
+}
 //Measurements
+-(bool)setMaxAverageCount(int) maxAvg{
+	return _kclmtr->setMaxAverageCount(maxAvg);
+}
+-(int)getMaxAverageCount {
+	return _kclmtr->getMaxAverageCount();
+}
+-(SpeedMode)getMeasureSpeedMode {
+	return _kclmtr->getMeasureSpeedMode();
+}
+-(void)setMeasureSpeedMode(SpeedMode) s{
+	_kclmtr->setMeasureSpeedMode(SpeedMode s);
+}
 -(bool)isMeasuring{
     return _kclmtr->isMeasuring();
 }
@@ -158,22 +189,47 @@ void SubClass::printMeasure(Measurement m)
 -(void)stopMeasuring{
     _kclmtr->stopMeasuring();
 }
--(AvgMeasurement)getNextMeasurment:(int)n{
+-(Measurement)getNextMeasurment:(int)n{
     return _kclmtr->getNextMeasurement(n);
 }
--(CorrectedCoefficient)getCofficintTestMatrix:(wrgb)Reference kclmtr:(wrgb)kclmtr{
+-(bool)getMeasurement:(Measurement&) m; {
+	return _kclmtr->getMeasurement(m);
+}
+
+//Counts
+-(void)startMeasureCounts{
+	_kclmtr->startMeasureCounts();
+}
+-(void)stopMeasureCounts{
+	_kclmtr->stopMeasureCounts();
+}
+-(bool)isMeasureCounts{
+	return _kclmtr->isMeasureCounts();
+}
+-(bool)getMeasureCounts(Counts&) c{
+	return _kclmtr->getMeasureCounts(c);
+}
+-(Counts)getNextMeasureCount{
+	return _kclmtr->getNextMeasureCount();
+}
+
+//CalFiles
+-(CorrectedCoefficient)getCofficintTestMatrix:(wrgb&)Reference kclmtr:(wrgb&)kclmtr{
     return _kclmtr->getCoefficientTestMatrix(Reference, kclmtr);
 }
 -(int)deleteCalFile:(int)calFileID{
     return _kclmtr->deleteCalFile(calFileID);
 }
--(int)storeCalFile:(int)idNumber name:(NSString*)Name ref:(wrgb)Reference kclmtr:(wrgb)kclmtr {
+-(int)storeCalFile:(int)idNumber name:(NSString&)Name (wrgb&)Reference kclmtr:(wrgb&)kclmtr {
     return _kclmtr->storeMatrices(idNumber, [Name UTF8String], Reference, kclmtr);
 }
--(bool)getMeasurement:(Measurement&) m; {
-	return _kclmtr->getMeasurement(m);
+-(int)storeCalFile:(int)idNumber name:(NSString&)Name (Matrix<double>&)correctedXYZ{
+	return _kclmtr->storeMatrices(idNumber, [Name UTF8String], correctedXYZ);
 }
-	
+-(int)storeCalFile:(int)idNumber name:(NSString&)Name (CorrectedCoefficient&)correctionMatrix {
+	return _kclmtr->storeMatrices(idNumber, [Name UTF8String], correctionMatrix);
+}
+
 //BlackCal - Cold
 -(BlackMatrix)captureBlackLevel{
     return _kclmtr->captureBlackLevel();
@@ -217,6 +273,16 @@ void SubClass::printMeasure(Measurement m)
 -(void)closePort{
     _kclmtr->closePort();
 }
++(bool)testConnection((NSString&)portName (NSString&) model (NSString&)SN{
+	string model, sn;
+	bool test = KClmtr::testConnection([Name UTF8String], model, sn);
+	
+	[NSString stringWithUTF8String:model.c_str()];
+	[NSString stringWithUTF8String:sn.c_str()];
+	
+	return test;
+}
+
 
 -(void)sendMeasure:(Measurement)measurement
 {
@@ -225,6 +291,10 @@ void SubClass::printMeasure(Measurement m)
 -(void)sendFlicker:(Flicker)flicker
 {
     [targetFlicker performSelector:printFlicker withObject:[NSValue value:new Flicker(flicker) withObjCType:@encode(Flicker)]];
+}
+-(void)sendCounts:(Counts)counts
+{
+    [targetCounts performSelector:printCounts withObject:[NSValue value:new Counts(counts) withObjCType:@encode(Counts)]];
 }
 -(void)addTargetForMeasure:(id)target action:(SEL)action
 {
@@ -235,6 +305,11 @@ void SubClass::printMeasure(Measurement m)
 {
     targetFlicker = target;
     printFlicker = action;
+}
+-(void)addTargetForFlicker:(id)target action:(SEL)action
+{
+    targetCounts = target;
+    printCounts = action;
 }
 
 @end
