@@ -34,8 +34,8 @@ namespace KClmtrBase {
 			wBlackMatrix(const BlackMatrix &black) {
 				blackMatrix = new BlackMatrix(black);
 			}
-			~wBlackMatrix() {
-				delete blackMatrix;
+			virtual ~wBlackMatrix() {
+				this->!wBlackMatrix();
 			}
 			property double Therm {
 				double get() {
@@ -70,6 +70,10 @@ namespace KClmtrBase {
 						}
 					}
 				}
+			}
+		protected:
+			!wBlackMatrix() {
+				delete blackMatrix;
 			}
 		private:
 			BlackMatrix *blackMatrix;

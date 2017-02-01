@@ -31,8 +31,8 @@ namespace KClmtrBase {
 		using namespace KClmtrNative;
 		public ref struct wGamutSpec {
 		public:
-			~wGamutSpec() {
-				delete gs;
+			virtual ~wGamutSpec() {
+				this->!wGamutSpec();
 			}
 			wGamutSpec() {
 				gs = new GamutSpec();
@@ -95,6 +95,10 @@ namespace KClmtrBase {
 
 			const GamutSpec getNative() {
 				return *gs;
+			}
+		protected:
+			!wGamutSpec() {
+				delete gs;
 			}
 		private:
 			GamutSpec *gs;
@@ -291,8 +295,8 @@ namespace KClmtrBase {
 					m->setGamutSpec(gs->getNative());
 				}
 			}
-			~wMeasurement() {
-				delete m;
+			virtual ~wMeasurement() {
+				this->!wMeasurement();
 			}
 			wMeasurement() {
 				m = new Measurement();
@@ -370,6 +374,10 @@ namespace KClmtrBase {
 
 			const Measurement getNative() {
 				return *m;
+			}
+		protected:
+			!wMeasurement() {
+				delete m;
 			}
 		private:
 			Measurement *m;

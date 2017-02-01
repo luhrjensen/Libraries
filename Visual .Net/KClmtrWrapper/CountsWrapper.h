@@ -78,11 +78,15 @@ namespace KClmtrBase {
 			wCounts(const Counts &other) {
 				counts = new Counts(other);
 			}
-			~wCounts() {
-				delete counts;
+			virtual  ~wCounts() {
+				this->!wCounts();
 			}
 			const Counts getNative() {
 				return *counts;
+			}
+		protected:
+			!wCounts() {
+				delete counts;
 			}
 		private:
 			Counts *counts;

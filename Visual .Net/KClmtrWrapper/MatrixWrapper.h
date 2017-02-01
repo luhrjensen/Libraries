@@ -38,8 +38,8 @@ namespace KClmtrBase {
 			wMatrix(const Matrix<T> &v) {
 				matrix = new Matrix<T>(v);
 			}
-			~wMatrix() {
-				delete matrix;
+			virtual ~wMatrix() {
+				this->!wMatrix();
 			}
 			property int Row {
 				int get() {
@@ -72,6 +72,10 @@ namespace KClmtrBase {
 			}
 			const Matrix<T> getNative() {
 				return *matrix;
+			}
+		protected:
+			!wMatrix() {
+				delete matrix;
 			}
 		private:
 			Matrix<T> *matrix;
