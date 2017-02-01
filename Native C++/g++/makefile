@@ -1,5 +1,5 @@
 CC = g++
-CFlags = -g -Wall -pthread
+CFlags = -g -Wall -pthread -std=c++0x 
 AR = ar
 ARFlags = rvs
 
@@ -9,19 +9,22 @@ OUT = ../../bin/native\ c++/libKClmtr.a
 all: KClmtr.a
 
 KClmtr.a: KClmtr.o
-	$(AR) $(ARFlags) $(OUT) KClmtr.o serialPort.o Flicker.o Measurement.o
+	$(AR) $(ARFlags) $(OUT) KClmtr.o SerialPort.o Flicker.o Measurement.o Counts.o
 
-KClmtr.o: serialPort.o Flicker.o Measurement.o
+KClmtr.o: SerialPort.o Flicker.o Measurement.o Counts.o
 	$(CC) $(CFlags) -c  $(KClmtrDIR)/KClmtr.cpp
 
-serialPort.o:
-	$(CC) $(CFlags) -c $(KClmtrDIR)/serialPort.cpp
+SerialPort.o:
+	$(CC) $(CFlags) -c $(KClmtrDIR)/SerialPort.cpp
 
 Flicker.o:
 	$(CC) $(CFlags) -c $(KClmtrDIR)/Flicker.cpp
 
 Measurement.o:
 	$(CC) $(CFlags) -c $(KClmtrDIR)/Measurement.cpp
+
+Counts.o:
+	$(CC) $(CFlags) -c $(KClmtrDIR)/Counts.cpp
 
 clean:
 	rm -f *.o
