@@ -383,6 +383,17 @@ namespace KClmtrBase {
 					return _kclmtr->isFlickering();
 				}
 			}
+			/// <summary>
+			/// Gets and Set the number of peaks to find when Flickering
+			/// </summary>
+			property int FFT_numberOfPeaks {
+				int get() {
+					return _kclmtr->getFFT_numberOfPeaks();
+				}
+				void set(int value) {
+					_kclmtr->setFFT_numberOfPeaks(value);
+				}
+			}
 			//XYZ
 			/// <summary>
 			/// Gets and Sets the max number of measurements to average over in low light measurments
@@ -404,6 +415,17 @@ namespace KClmtrBase {
 				}
 			}
 			/// <summary>
+			/// Get and Set how fast the device measure
+			/// </summary>
+			property SpeedMode MeasureSpeedMode {
+				SpeedMode get() {
+					return _kclmtr->getMeasureSpeedMode();
+				}
+				void set(SpeedMode value) {
+					_kclmtr->setMeasureSpeedMode(value);
+				}
+			}			
+			/// <summary>
 			/// Starts the Klein device to measure constantly.
 			/// </summary>
 			void startMeasuring() {
@@ -420,15 +442,16 @@ namespace KClmtrBase {
 			/// </summary>
 			/// <param name="m"> the measurement that was in the buffer</param>
 			/// <return> to see if the measurement was already grabbed, and it's old data. </return>
-			bool getMeasreument(wMeasurement^ %m) {
+			bool getMeasreument([Out] wMeasurement^ %m) {
 				Measurement _m;
 				bool returnFresh = _kclmtr->getMeasurement(_m);
 				m = gcnew wMeasurement(_m);
 				return returnFresh;
+
 			}
 			/// <summary>
 			/// Returns one measurement from the device. Do not need to startMeasuring() to use this method.
-			/// <param name="n"> Number of measurment needs average by. Good number is 8 measurement(one second)</param>
+			/// <param name="n"> Number of measurment needs average by. Good number is 8 measurement(one second), N less than 1 is auto averages </param>
 			/// </summary>
 			wMeasurement ^getNextMeasurement(int n) {
 				return gcnew wMeasurement(_kclmtr->getNextMeasurement(n));
@@ -459,7 +482,7 @@ namespace KClmtrBase {
 			/// </summary>
 			/// <param name="c"> the measurement that was in the buffer</param>
 			/// <return> to see if the measurement was already grabbed, and it's old data. </return>
-			bool getMeasureCounts(wCounts^ %c) {
+			bool getMeasureCounts([Out] wCounts^ %c) {
 				Counts _c;
 				bool returnFresh = _kclmtr->getMeasureCounts(_c);
 				c = gcnew wCounts(_c);
@@ -555,17 +578,16 @@ namespace KClmtrBase {
 			/// <summary>
 			/// Returns true if the device is in flicker mode. Returns false if the device is not in flicker mode
 			/// </summary>
-			/// <param name="grabConstantly"> If you are planning to use getNextFlicker() set this to be false. If you want it to return flicker has soon has it grabs one, set it to be true </param>
 			/// <return> Error string, OK is good </return> 
-			int startFlicker(bool grabConstantly) {
-				return _kclmtr->startFlicker(grabConstantly);
+			int startFlicker() {
+				return _kclmtr->startFlicker();
 			}
 			/// <summary>
 			/// Grabs and returns one flicker measurement from the class buffer. Use startFlicker().
 			/// </summary>
 			/// <param name="f"> the flicker measurement that was in the buffer</param>
 			/// <return> to see if the flicker measurement was already grabbed, and it's old data.</return>
-			bool getFlicker(wFlicker^ %f) {
+			bool getFlicker([Out] wFlicker^ %f) {
 				Flicker _f;
 				bool returnFresh = _kclmtr->getFlicker(_f);
 				f = gcnew wFlicker(_f);
@@ -625,14 +647,32 @@ namespace KClmtrBase {
 			*  @snippet KClmtrWrapperExample.cpp flicker
 			*/
 			event EventHandler<CountsEventArgs ^>^ CountsEvent;
-
+			/// <summary>
+			/// Test a Port to see if a port is a Klein Device, also returns model and serial number
+			/// </summary>
+			/// <param name="portNumber"> The portNumber to check</param>
+			/// <param name="returnModel"> The Model number of the Device, if it's a Klein Device</param>
+			/// <param name="returnSN"> The SerialNumber number of the Device, if it's a Klein Device</param>
+			/// <return>Boolean to tell it connected or not</return>
+			static bool testConnection(int portNumber, [Out] System::String^% returnModel, [Out] System::String^% returnSN) {
+				String^ port = "\\\\.\\COM" + portNumber;
+				string nativePort = MarshalString(port);
+				
+				string model, sn;
+				bool test = KClmtr::testConnection(nativePort, model, sn);
+				
+				returnModel = NativeToDotNet(model);
+				returnSN = NativeToDotNet(sn);				
+				
+				return test;
+			}
 		protected:
 			!KClmtrWrap() {
 				delete _kclmtr;
-			}
+			}			
 		private:
-			string MarshalString(String^ s);
-			System::String^ NativeToDotNet(std::string input);
+			static string MarshalString(String^ s);
+			static System::String^ NativeToDotNet(std::string input);
 			KClmtr *_kclmtr;
 
 			void printMeasure(Measurement m) {
