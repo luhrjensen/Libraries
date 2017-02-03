@@ -72,8 +72,8 @@ public:
 
     QStringList getCalFileList() {
         QStringList CalList;
-        const string *calList  = KClmtr::getCalFileList();
-        for(int i = 0; i < 97;  i++) {
+        vector<string> calList  = KClmtr::getCalFileList();
+        for(size_t i = 0; i < calList.size();  i++) {
             CalList << QString::fromStdString(calList[i]);
         }
         return CalList;

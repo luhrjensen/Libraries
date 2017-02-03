@@ -274,8 +274,8 @@ namespace KClmtrBase {
 			property cli::array<System::String ^>^ CalFileList {
 				cli::array<System::String ^>^ get() {
 					cli::array<System::String ^>^ List = gcnew cli::array<System::String ^>(97);
-					const std::string* calFileList = _kclmtr->getCalFileList();
-					for (int i = 0; i <= 96; ++i)
+					vector<string> calFileList = _kclmtr->getCalFileList();
+					for (size_t i = 0; i < calFileList.size(); ++i)
 						List[i] = NativeToDotNet(calFileList[i]);
 					return List;
 				}
