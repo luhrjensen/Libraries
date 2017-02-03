@@ -1,5 +1,5 @@
 CC = g++
-CFlags = -g -Wall -pthread -std=c++0x 
+CFlags = -g -Wall -pthread
 AR = ar
 ARFlags = rvs
 
