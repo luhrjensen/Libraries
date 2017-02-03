@@ -106,9 +106,9 @@ void SubClass::printCounts(Counts c)
 }
 -(NSArray*)getCalfileList{
     NSMutableArray *calListboo = [[NSMutableArray alloc] init];;
-    const string* fileList = _kclmtr->getCalFileList();
+    vector<string> fileList = _kclmtr->getCalFileList();
     
-    for(int i = 0; i < 97; ++i)
+    for(size_t i = 0; i < fileList.size(); ++i)
         [calListboo addObject:[NSString stringWithUTF8String:fileList[i].c_str()]];
     
     return calListboo;

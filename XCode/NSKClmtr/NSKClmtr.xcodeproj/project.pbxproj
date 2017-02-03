@@ -11,20 +11,20 @@
 		1D11BE861566BA4E00323836 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 1D11BE841566BA4E00323836 /* InfoPlist.strings */; };
 		1D11BEA31566BA6100323836 /* NSKClmtr.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1D11BE3915659F3600323836 /* NSKClmtr.mm */; };
 		1D85B16D156D5C9400EDB2E8 /* NSKClmtr.h in Headers */ = {isa = PBXBuildFile; fileRef = 1D11BE3815659F3600323836 /* NSKClmtr.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		AF9B6BC81E42765400833235 /* blackmatrix.h in Headers */ = {isa = PBXBuildFile; fileRef = AF9B6BBA1E42765400833235 /* blackmatrix.h */; settings = {ATTRIBUTES = (Private, ); }; };
-		AF9B6BC91E42765400833235 /* Counts.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AF9B6BBB1E42765400833235 /* Counts.cpp */; };
-		AF9B6BCA1E42765400833235 /* Counts.h in Headers */ = {isa = PBXBuildFile; fileRef = AF9B6BBC1E42765400833235 /* Counts.h */; settings = {ATTRIBUTES = (Private, ); }; };
-		AF9B6BCB1E42765400833235 /* Enums.h in Headers */ = {isa = PBXBuildFile; fileRef = AF9B6BBD1E42765400833235 /* Enums.h */; settings = {ATTRIBUTES = (Private, ); }; };
-		AF9B6BCC1E42765400833235 /* Flicker.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AF9B6BBE1E42765400833235 /* Flicker.cpp */; };
-		AF9B6BCD1E42765400833235 /* Flicker.h in Headers */ = {isa = PBXBuildFile; fileRef = AF9B6BBF1E42765400833235 /* Flicker.h */; settings = {ATTRIBUTES = (Private, ); }; };
-		AF9B6BCE1E42765400833235 /* KClmtr.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AF9B6BC01E42765400833235 /* KClmtr.cpp */; };
-		AF9B6BCF1E42765400833235 /* KClmtr.h in Headers */ = {isa = PBXBuildFile; fileRef = AF9B6BC11E42765400833235 /* KClmtr.h */; settings = {ATTRIBUTES = (Private, ); }; };
-		AF9B6BD01E42765400833235 /* matrix.h in Headers */ = {isa = PBXBuildFile; fileRef = AF9B6BC21E42765400833235 /* matrix.h */; settings = {ATTRIBUTES = (Private, ); }; };
-		AF9B6BD11E42765400833235 /* Measurement.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AF9B6BC31E42765400833235 /* Measurement.cpp */; };
-		AF9B6BD21E42765400833235 /* Measurement.h in Headers */ = {isa = PBXBuildFile; fileRef = AF9B6BC41E42765400833235 /* Measurement.h */; settings = {ATTRIBUTES = (Private, ); }; };
-		AF9B6BD31E42765400833235 /* serialPort.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AF9B6BC51E42765400833235 /* serialPort.cpp */; };
-		AF9B6BD41E42765400833235 /* serialPort.h in Headers */ = {isa = PBXBuildFile; fileRef = AF9B6BC61E42765400833235 /* serialPort.h */; settings = {ATTRIBUTES = (Private, ); }; };
-		AF9B6BD51E42765400833235 /* wrgb.h in Headers */ = {isa = PBXBuildFile; fileRef = AF9B6BC71E42765400833235 /* wrgb.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		AF7DA8011E45276800650329 /* BlackMatrix.h in Headers */ = {isa = PBXBuildFile; fileRef = AF7DA7F31E45276800650329 /* BlackMatrix.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		AF7DA8021E45276800650329 /* Counts.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AF7DA7F41E45276800650329 /* Counts.cpp */; };
+		AF7DA8031E45276800650329 /* Counts.h in Headers */ = {isa = PBXBuildFile; fileRef = AF7DA7F51E45276800650329 /* Counts.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		AF7DA8041E45276800650329 /* Enums.h in Headers */ = {isa = PBXBuildFile; fileRef = AF7DA7F61E45276800650329 /* Enums.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		AF7DA8051E45276800650329 /* Flicker.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AF7DA7F71E45276800650329 /* Flicker.cpp */; };
+		AF7DA8061E45276800650329 /* Flicker.h in Headers */ = {isa = PBXBuildFile; fileRef = AF7DA7F81E45276800650329 /* Flicker.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		AF7DA8071E45276800650329 /* KClmtr.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AF7DA7F91E45276800650329 /* KClmtr.cpp */; };
+		AF7DA8081E45276800650329 /* KClmtr.h in Headers */ = {isa = PBXBuildFile; fileRef = AF7DA7FA1E45276800650329 /* KClmtr.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		AF7DA8091E45276800650329 /* Matrix.h in Headers */ = {isa = PBXBuildFile; fileRef = AF7DA7FB1E45276800650329 /* Matrix.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		AF7DA80A1E45276800650329 /* Measurement.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AF7DA7FC1E45276800650329 /* Measurement.cpp */; };
+		AF7DA80B1E45276800650329 /* Measurement.h in Headers */ = {isa = PBXBuildFile; fileRef = AF7DA7FD1E45276800650329 /* Measurement.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		AF7DA80C1E45276800650329 /* SerialPort.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AF7DA7FE1E45276800650329 /* SerialPort.cpp */; };
+		AF7DA80D1E45276800650329 /* SerialPort.h in Headers */ = {isa = PBXBuildFile; fileRef = AF7DA7FF1E45276800650329 /* SerialPort.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		AF7DA80E1E45276800650329 /* WRGB.h in Headers */ = {isa = PBXBuildFile; fileRef = AF7DA8001E45276800650329 /* WRGB.h */; settings = {ATTRIBUTES = (Private, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -39,20 +39,20 @@
 		1D8BFF4515617629005662C1 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
 		1D8BFF4615617629005662C1 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		1D8BFF4715617629005662C1 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
-		AF9B6BBA1E42765400833235 /* blackmatrix.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; fileEncoding = 4; path = blackmatrix.h; sourceTree = "<group>"; };
-		AF9B6BBB1E42765400833235 /* Counts.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Counts.cpp; sourceTree = "<group>"; };
-		AF9B6BBC1E42765400833235 /* Counts.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; fileEncoding = 4; path = Counts.h; sourceTree = "<group>"; };
-		AF9B6BBD1E42765400833235 /* Enums.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; fileEncoding = 4; path = Enums.h; sourceTree = "<group>"; };
-		AF9B6BBE1E42765400833235 /* Flicker.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Flicker.cpp; sourceTree = "<group>"; };
-		AF9B6BBF1E42765400833235 /* Flicker.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; fileEncoding = 4; path = Flicker.h; sourceTree = "<group>"; };
-		AF9B6BC01E42765400833235 /* KClmtr.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = KClmtr.cpp; sourceTree = "<group>"; };
-		AF9B6BC11E42765400833235 /* KClmtr.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; fileEncoding = 4; path = KClmtr.h; sourceTree = "<group>"; };
-		AF9B6BC21E42765400833235 /* matrix.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; fileEncoding = 4; path = matrix.h; sourceTree = "<group>"; };
-		AF9B6BC31E42765400833235 /* Measurement.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Measurement.cpp; sourceTree = "<group>"; };
-		AF9B6BC41E42765400833235 /* Measurement.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; fileEncoding = 4; path = Measurement.h; sourceTree = "<group>"; };
-		AF9B6BC51E42765400833235 /* serialPort.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = serialPort.cpp; sourceTree = "<group>"; };
-		AF9B6BC61E42765400833235 /* serialPort.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; fileEncoding = 4; path = serialPort.h; sourceTree = "<group>"; };
-		AF9B6BC71E42765400833235 /* wrgb.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; fileEncoding = 4; path = wrgb.h; sourceTree = "<group>"; };
+		AF7DA7F31E45276800650329 /* BlackMatrix.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BlackMatrix.h; sourceTree = "<group>"; };
+		AF7DA7F41E45276800650329 /* Counts.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Counts.cpp; sourceTree = "<group>"; };
+		AF7DA7F51E45276800650329 /* Counts.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Counts.h; sourceTree = "<group>"; };
+		AF7DA7F61E45276800650329 /* Enums.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Enums.h; sourceTree = "<group>"; };
+		AF7DA7F71E45276800650329 /* Flicker.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Flicker.cpp; sourceTree = "<group>"; };
+		AF7DA7F81E45276800650329 /* Flicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Flicker.h; sourceTree = "<group>"; };
+		AF7DA7F91E45276800650329 /* KClmtr.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = KClmtr.cpp; sourceTree = "<group>"; };
+		AF7DA7FA1E45276800650329 /* KClmtr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KClmtr.h; sourceTree = "<group>"; };
+		AF7DA7FB1E45276800650329 /* Matrix.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Matrix.h; sourceTree = "<group>"; };
+		AF7DA7FC1E45276800650329 /* Measurement.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Measurement.cpp; sourceTree = "<group>"; };
+		AF7DA7FD1E45276800650329 /* Measurement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Measurement.h; sourceTree = "<group>"; };
+		AF7DA7FE1E45276800650329 /* SerialPort.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SerialPort.cpp; sourceTree = "<group>"; };
+		AF7DA7FF1E45276800650329 /* SerialPort.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SerialPort.h; sourceTree = "<group>"; };
+		AF7DA8001E45276800650329 /* WRGB.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WRGB.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -128,20 +128,20 @@
 		1D8BFF6A15642146005662C1 /* kclmtr */ = {
 			isa = PBXGroup;
 			children = (
-				AF9B6BBA1E42765400833235 /* blackmatrix.h */,
-				AF9B6BBB1E42765400833235 /* Counts.cpp */,
-				AF9B6BBC1E42765400833235 /* Counts.h */,
-				AF9B6BBD1E42765400833235 /* Enums.h */,
-				AF9B6BBE1E42765400833235 /* Flicker.cpp */,
-				AF9B6BBF1E42765400833235 /* Flicker.h */,
-				AF9B6BC01E42765400833235 /* KClmtr.cpp */,
-				AF9B6BC11E42765400833235 /* KClmtr.h */,
-				AF9B6BC21E42765400833235 /* matrix.h */,
-				AF9B6BC31E42765400833235 /* Measurement.cpp */,
-				AF9B6BC41E42765400833235 /* Measurement.h */,
-				AF9B6BC51E42765400833235 /* serialPort.cpp */,
-				AF9B6BC61E42765400833235 /* serialPort.h */,
-				AF9B6BC71E42765400833235 /* wrgb.h */,
+				AF7DA7F31E45276800650329 /* BlackMatrix.h */,
+				AF7DA7F41E45276800650329 /* Counts.cpp */,
+				AF7DA7F51E45276800650329 /* Counts.h */,
+				AF7DA7F61E45276800650329 /* Enums.h */,
+				AF7DA7F71E45276800650329 /* Flicker.cpp */,
+				AF7DA7F81E45276800650329 /* Flicker.h */,
+				AF7DA7F91E45276800650329 /* KClmtr.cpp */,
+				AF7DA7FA1E45276800650329 /* KClmtr.h */,
+				AF7DA7FB1E45276800650329 /* Matrix.h */,
+				AF7DA7FC1E45276800650329 /* Measurement.cpp */,
+				AF7DA7FD1E45276800650329 /* Measurement.h */,
+				AF7DA7FE1E45276800650329 /* SerialPort.cpp */,
+				AF7DA7FF1E45276800650329 /* SerialPort.h */,
+				AF7DA8001E45276800650329 /* WRGB.h */,
 			);
 			name = kclmtr;
 			path = ../../kclmtr;
@@ -154,16 +154,16 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AF9B6BD51E42765400833235 /* wrgb.h in Headers */,
+				AF7DA80E1E45276800650329 /* WRGB.h in Headers */,
 				1D85B16D156D5C9400EDB2E8 /* NSKClmtr.h in Headers */,
-				AF9B6BCF1E42765400833235 /* KClmtr.h in Headers */,
-				AF9B6BD41E42765400833235 /* serialPort.h in Headers */,
-				AF9B6BD01E42765400833235 /* matrix.h in Headers */,
-				AF9B6BCA1E42765400833235 /* Counts.h in Headers */,
-				AF9B6BD21E42765400833235 /* Measurement.h in Headers */,
-				AF9B6BC81E42765400833235 /* blackmatrix.h in Headers */,
-				AF9B6BCB1E42765400833235 /* Enums.h in Headers */,
-				AF9B6BCD1E42765400833235 /* Flicker.h in Headers */,
+				AF7DA80B1E45276800650329 /* Measurement.h in Headers */,
+				AF7DA8041E45276800650329 /* Enums.h in Headers */,
+				AF7DA8091E45276800650329 /* Matrix.h in Headers */,
+				AF7DA8061E45276800650329 /* Flicker.h in Headers */,
+				AF7DA8081E45276800650329 /* KClmtr.h in Headers */,
+				AF7DA8011E45276800650329 /* BlackMatrix.h in Headers */,
+				AF7DA80D1E45276800650329 /* SerialPort.h in Headers */,
+				AF7DA8031E45276800650329 /* Counts.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -230,12 +230,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AF9B6BCE1E42765400833235 /* KClmtr.cpp in Sources */,
-				AF9B6BD11E42765400833235 /* Measurement.cpp in Sources */,
-				AF9B6BC91E42765400833235 /* Counts.cpp in Sources */,
-				AF9B6BCC1E42765400833235 /* Flicker.cpp in Sources */,
+				AF7DA8071E45276800650329 /* KClmtr.cpp in Sources */,
+				AF7DA8051E45276800650329 /* Flicker.cpp in Sources */,
+				AF7DA80C1E45276800650329 /* SerialPort.cpp in Sources */,
+				AF7DA80A1E45276800650329 /* Measurement.cpp in Sources */,
 				1D11BEA31566BA6100323836 /* NSKClmtr.mm in Sources */,
-				AF9B6BD31E42765400833235 /* serialPort.cpp in Sources */,
+				AF7DA8021E45276800650329 /* Counts.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
