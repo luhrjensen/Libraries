@@ -195,9 +195,13 @@
     <ClInclude Include="KClmtrWrapper.h" />
     <ClInclude Include="MatrixWrapper.h" />
     <ClInclude Include="MeasurementWrapper.h" />
-    <ClInclude Include="resource.h" />
     <ClInclude Include="..\..\kclmtr\SerialPort.h" />
+    <ClInclude Include="resource1.h" />
+    <ClInclude Include="Verision.h" />
     <ClInclude Include="WRGBWrapper.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="KClmtrWrapper.rc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

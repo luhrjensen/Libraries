@@ -38,9 +38,6 @@
     <ClInclude Include="..\..\kclmtr\SerialPort.h">
       <Filter>Base Object</Filter>
     </ClInclude>
-    <ClInclude Include="resource.h">
-      <Filter>Extra</Filter>
-    </ClInclude>
     <ClInclude Include="MatrixWrapper.h" />
     <ClInclude Include="MeasurementWrapper.h" />
     <ClInclude Include="..\..\kclmtr\Counts.h">
@@ -62,6 +59,10 @@
     <ClInclude Include="..\..\kclmtr\Enums.h">
       <Filter>Base Object</Filter>
     </ClInclude>
+    <ClInclude Include="Verision.h">
+      <Filter>Extra</Filter>
+    </ClInclude>
+    <ClInclude Include="resource1.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Base Object">
@@ -70,5 +71,10 @@
     <Filter Include="Extra">
       <UniqueIdentifier>{4a7f7e56-584d-423e-aaf6-c609cca94b99}</UniqueIdentifier>
     </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="KClmtrWrapper.rc">
+      <Filter>Extra</Filter>
+    </ResourceCompile>
   </ItemGroup>
 </Project>

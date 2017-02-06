@@ -5,11 +5,11 @@
 #include <QStringList>
 #include "../kclmtr/KClmtr.h"
 
-/** @ingroup wrappers
- *  @brief Wraps the Native object to work easly in Qt
- */
 using namespace KClmtrBase;
 using namespace KClmtrNative;
+/** 
+ *  @brief Wraps the Native object to work easly in Qt
+ */
 class QKClmtr : public QObject, public KClmtr {
     Q_OBJECT
 

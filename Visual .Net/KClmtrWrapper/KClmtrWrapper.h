@@ -44,10 +44,10 @@ namespace KClmtrBase {
 		public ref class wCorrectedCoefficient {
 		public:
 			wCorrectedCoefficient() {
-				coeff = new KClmtr::CorrectedCoefficient();
+				coeff = new CorrectedCoefficient();
 			}
-			wCorrectedCoefficient(KClmtr::CorrectedCoefficient c) {
-				coeff = new KClmtr::CorrectedCoefficient(c);
+			wCorrectedCoefficient(CorrectedCoefficient c) {
+				coeff = new CorrectedCoefficient(c);
 			}
 			virtual  ~wCorrectedCoefficient() {
 				this->!wCorrectedCoefficient();
@@ -68,7 +68,7 @@ namespace KClmtrBase {
 					coeff->colorMatrix = rgbMatrix->getNative();
 				}
 			}
-			KClmtr::CorrectedCoefficient getNative() {
+			CorrectedCoefficient getNative() {
 				return *coeff;
 			}
 		protected:
@@ -76,7 +76,7 @@ namespace KClmtrBase {
 				delete coeff;
 			}
 		private:
-			KClmtr::CorrectedCoefficient *coeff;
+			CorrectedCoefficient *coeff;
 		};
 
 		public ref class MeasureEventArgs : public EventArgs {
@@ -441,7 +441,7 @@ namespace KClmtrBase {
 			/// Grabs and returns one measurement from the class buffer. Use startMeasering().
 			/// </summary>
 			/// <param name="m"> the measurement that was in the buffer</param>
-			/// <return> to see if the measurement was already grabbed, and it's old data. </return>
+			/// <returns> to see if the measurement was already grabbed, and it's old data. </returns>
 			bool getMeasreument([Out] wMeasurement^ %m) {
 				Measurement _m;
 				bool returnFresh = _kclmtr->getMeasurement(_m);
@@ -481,7 +481,7 @@ namespace KClmtrBase {
 			/// Grabs and returns one measurement of counts from the class buffer. Use startMeasereCounts().
 			/// </summary>
 			/// <param name="c"> the measurement that was in the buffer</param>
-			/// <return> to see if the measurement was already grabbed, and it's old data. </return>
+			/// <returns> to see if the measurement was already grabbed, and it's old data. </returns>
 			bool getMeasureCounts([Out] wCounts^ %c) {
 				Counts _c;
 				bool returnFresh = _kclmtr->getMeasureCounts(_c);
@@ -501,7 +501,7 @@ namespace KClmtrBase {
 			/// </summary>
 			/// <param name="Reference"> Reference The reference device's measurement </param>
 			/// <param name="Kclmtr">  Kclmtr The KClmtr's measurement </param>
-			/// <return> The meatrix that would be stored to the KClmtr, but does not </return>
+			/// <returns> The meatrix that would be stored to the KClmtr, but does not </returns>
 			wCorrectedCoefficient^ getCoefficientTestMatrix(wWRGB^ Reference, wWRGB^ Kclmtr) {
 				return gcnew wCorrectedCoefficient(_kclmtr->getCoefficientTestMatrix(Reference->getNative(), Kclmtr->getNative()));
 			}
@@ -520,7 +520,7 @@ namespace KClmtrBase {
 			/// <param name="Name"> The name of the Calibration file </param>
 			/// <param name="Reference"> Reference The reference device's measurement </param>
 			/// <param name="Kclmtr">  Kclmtr The KClmtr's measurement </param>
-			/// <return>int Error code. 0 is Good</return>
+			/// <returns>int Error code. 0 is Good</returns>
 			int storeMatrices(int ID, String^ Name, wWRGB^ Reference, wWRGB^ Kclmtr) {
 				return _kclmtr->storeMatrices(ID, MarshalString(Name), Reference->getNative(), Kclmtr->getNative());
 			}
@@ -531,7 +531,7 @@ namespace KClmtrBase {
 			/// <param name="ID"> The location which the Calibration file will be stored </param>
 			/// <param name="Name"> The name of the Calibration file </param>
 			/// <param name="correctionMatrix"> correctionMatrix The XYZ 3x3 matrix and The RGB 3x3 matrix, this is obsolete if using chromaSurf or this SDK. Now using GamaSpect </param>
-			/// <return>int Error code. 0 is Good</return>
+			/// <returns>int Error code. 0 is Good</returns>
 			int storeMatrices(int ID, String^ Name, wCorrectedCoefficient ^correctionMatrix) {
 				return _kclmtr->storeMatrices(ID, MarshalString(Name), correctionMatrix->getNative());
 			}
@@ -541,7 +541,7 @@ namespace KClmtrBase {
 			/// <param name="ID"> The location which the Calibration file will be stored </param>
 			/// <param name="Name"> The name of the Calibration file </param>
 			/// <param name="correctedXYZ"> The XYZ 3x3 matrix </param>
-			/// <return> int Error code. 0 is Good</return>
+			/// <returns> int Error code. 0 is Good</returns>
 			int storeMatrices(int ID, String^ Name, wMatrix<double> ^correctedXYZ) {
 				return _kclmtr->storeMatrices(ID, MarshalString(Name), correctedXYZ->getNative());
 			}
@@ -578,7 +578,7 @@ namespace KClmtrBase {
 			/// <summary>
 			/// Returns true if the device is in flicker mode. Returns false if the device is not in flicker mode
 			/// </summary>
-			/// <return> Error string, OK is good </return> 
+			/// <returns> Error string, OK is good </returns> 
 			int startFlicker() {
 				return _kclmtr->startFlicker();
 			}
@@ -586,7 +586,7 @@ namespace KClmtrBase {
 			/// Grabs and returns one flicker measurement from the class buffer. Use startFlicker().
 			/// </summary>
 			/// <param name="f"> the flicker measurement that was in the buffer</param>
-			/// <return> to see if the flicker measurement was already grabbed, and it's old data.</return>
+			/// <returns> to see if the flicker measurement was already grabbed, and it's old data.</returns>
 			bool getFlicker([Out] wFlicker^ %f) {
 				Flicker _f;
 				bool returnFresh = _kclmtr->getFlicker(_f);
@@ -611,7 +611,7 @@ namespace KClmtrBase {
 			/// This will open the device
 			/// </summary>
 			/// <param name="thePort">sets the port name</param>
-			/// <return>A user should always have this true. This is used for internal use.</return>
+			/// <returns>A user should always have this true. This is used for internal use.</returns>
 			bool connect(int thePort) {
 				port = thePort;
 				return _kclmtr->connect();
@@ -653,7 +653,7 @@ namespace KClmtrBase {
 			/// <param name="portNumber"> The portNumber to check</param>
 			/// <param name="returnModel"> The Model number of the Device, if it's a Klein Device</param>
 			/// <param name="returnSN"> The SerialNumber number of the Device, if it's a Klein Device</param>
-			/// <return>Boolean to tell it connected or not</return>
+			/// <returns>Boolean to tell it connected or not</returns>
 			static bool testConnection(int portNumber, [Out] System::String^% returnModel, [Out] System::String^% returnSN) {
 				String^ port = "\\\\.\\COM" + portNumber;
 				string nativePort = MarshalString(port);

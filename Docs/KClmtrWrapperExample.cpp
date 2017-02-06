@@ -22,7 +22,7 @@ public ref class Form1 : public System::Windows::Forms::Form {
 				}
 			}else{
 				// If the code is 0 then there was no error
-				if(xyL->errorcode == 0){
+				if(xyL->getErrorCode() == 0){
 					// Output
 				}else{
 					// There was an error
@@ -55,7 +55,7 @@ public ref class Form1 : public System::Windows::Forms::Form {
 					// In case you closed the form before it could stop the measuring
 				}
 				// If the code is 0 then there was no error, there are other errors that could be dropped, take a look at the examples
-				if(flicker->errorcode == 0){
+				if(flicker->getErrorCode() == 0){
 					// Output
 				}else{
 					// There was an error
