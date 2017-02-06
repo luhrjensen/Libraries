@@ -114,7 +114,7 @@ void SubClass::printCounts(Counts c)
     return calListboo;
 }
 
--(void)setTempCalFile:(KClmtr::CorrectedCoefficient)matrix {
+-(void)setTempCalFile:(CorrectedCoefficient)matrix {
     _kclmtr->setTempCalFile(matrix);
 }
 
@@ -214,7 +214,7 @@ void SubClass::printCounts(Counts c)
 }
 
 //CalFiles
--(KClmtr::CorrectedCoefficient)getCofficintTestMatrix:(WRGB)Reference kclmtr:(WRGB)kclmtr{
+-(CorrectedCoefficient)getCofficintTestMatrix:(WRGB)Reference kclmtr:(WRGB)kclmtr{
     return _kclmtr->getCoefficientTestMatrix(Reference, kclmtr);
 }
 -(int)deleteCalFile:(int)calFileID{
@@ -223,7 +223,7 @@ void SubClass::printCounts(Counts c)
 -(int)storeCalFile:(int)idNumber name:(NSString*)Name ref:(WRGB)Reference kclmtr:(WRGB)kclmtr {
     return _kclmtr->storeMatrices(idNumber, [Name UTF8String], Reference, kclmtr);
 }
--(int)storeCalFile:(int)idNumber name:(NSString*)Name correctionMatrix:(KClmtr::CorrectedCoefficient)correctionMatrix {
+-(int)storeCalFile:(int)idNumber name:(NSString*)Name correctionMatrix:(CorrectedCoefficient)correctionMatrix {
 	return _kclmtr->storeMatrices(idNumber, [Name UTF8String], correctionMatrix);
 }
 

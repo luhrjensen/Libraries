@@ -14,14 +14,14 @@ MOC_DIR = build/moc
 CONFIG += x86_64
 
 SOURCES += QKClmtr.cpp \
-    ../kclmtr/serialPort.cpp \
+    ../kclmtr/SerialPort.cpp \
     ../kclmtr/KClmtr.cpp \
     ../kclmtr/Flicker.cpp \
     ../kclmtr/Measurement.cpp \
     ../kclmtr/Counts.cpp
 
 HEADERS  += QKClmtr.h \
-    ../kclmtr/serialPort.h \
+    ../kclmtr/SerialPort.h \
     ../kclmtr/KClmtr.h \
     ../kclmtr/Flicker.h \
     ../kclmtr/matrix.h \

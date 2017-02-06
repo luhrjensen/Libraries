@@ -59,7 +59,7 @@ public:
 -(GamutSpec)getGamutSpec;
 -(void)setGamutSpec:(GamutSpec)gamutSpec;
 -(NSArray*)getCalfileList;
--(void)setTempCalFile:(KClmtr::CorrectedCoefficient)matrix;
+-(void)setTempCalFile:(CorrectedCoefficient)matrix;
 
 //Properties - FFT
 -(bool)getFFT_Cosine;
@@ -98,10 +98,10 @@ public:
 -(Counts)getNextMeasureCount;
 
 //CalFiles
--(KClmtr::CorrectedCoefficient)getCofficintTestMatrix:(WRGB)Reference kclmtr:(WRGB)kclmtr;
+-(CorrectedCoefficient)getCofficintTestMatrix:(WRGB)Reference kclmtr:(WRGB)kclmtr;
 -(int)deleteCalFile:(int)calFileID;
 -(int)storeCalFile:(int)idNumber name:(NSString*)Name ref:(WRGB)Reference kclmtr:(WRGB)kclmtr;
--(int)storeCalFile:(int)idNumber name:(NSString*)Name correctionMatrix:(KClmtr::CorrectedCoefficient)correctionMatrix;
+-(int)storeCalFile:(int)idNumber name:(NSString*)Name correctionMatrix:(CorrectedCoefficient)correctionMatrix;
 
 
 //BlackCal - Cold
