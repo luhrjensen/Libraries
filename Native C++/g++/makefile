@@ -4,7 +4,7 @@ AR = ar
 ARFlags = rvs
 
 KClmtrDIR = ../../kclmtr
-OUT = ../../bin/native\ c++/libKClmtr.a
+OUT = ../../bin/native\ c++/g++/libKClmtr.a
 
 all: KClmtr.a
 
