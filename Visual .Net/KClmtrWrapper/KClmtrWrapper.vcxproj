@@ -196,7 +196,7 @@
     <ClInclude Include="MatrixWrapper.h" />
     <ClInclude Include="MeasurementWrapper.h" />
     <ClInclude Include="..\..\kclmtr\SerialPort.h" />
-    <ClInclude Include="resource1.h" />
+    <ClInclude Include="Resource.h" />
     <ClInclude Include="Verision.h" />
     <ClInclude Include="WRGBWrapper.h" />
   </ItemGroup>

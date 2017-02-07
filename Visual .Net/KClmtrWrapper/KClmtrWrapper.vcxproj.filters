@@ -62,7 +62,9 @@
     <ClInclude Include="Verision.h">
       <Filter>Extra</Filter>
     </ClInclude>
-    <ClInclude Include="resource1.h" />
+    <ClInclude Include="Resource.h">
+      <Filter>Extra</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Base Object">
