@@ -7,7 +7,7 @@
 
 using namespace KClmtrBase;
 using namespace KClmtrNative;
-/** 
+/**
  *  @brief Wraps the Native object to work easly in Qt
  */
 class QKClmtr : public QObject, public KClmtr {
