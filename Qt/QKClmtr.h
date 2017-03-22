@@ -146,5 +146,12 @@ signals:
     void calfileChanged();
     void gamutSpecChanged();
 };
+class QKleinErrorCodes : public KleinsErrorCodes {
+public:
+    static QString errorCodesToString(unsigned int errorcode, bool ingoreAimingLights = false,
+                               unsigned int ingoreErrorcode = KleinsErrorCodes::ingoreWarningList) {
+        return QString::fromStdString(KleinsErrorCodes::errorCodesToString(errorcode, ingoreAimingLights, ingoreErrorcode));
+    }
+ };
 
 #endif // QKCLMTR_H
