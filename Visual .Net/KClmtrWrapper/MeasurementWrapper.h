@@ -246,8 +246,8 @@ namespace KClmtrBase {
 					return m->getColorTemputure_duv();
 				}
 			}
-			property int errorcode {
-				int get() {
+			property unsigned int errorcode {
+				unsigned int get() {
 					return m->getErrorCode();
 				}
 			}

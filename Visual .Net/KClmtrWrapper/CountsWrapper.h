@@ -65,8 +65,8 @@ namespace KClmtrBase {
 					return gcnew wMatrix<int>(counts->getTheCounts());
 				}
 			}
-			property int ErrorCode {
-				int get() {
+			property unsigned int ErrorCode {
+				unsigned int get() {
 					return counts->getErrorCode();
 				}
 			}

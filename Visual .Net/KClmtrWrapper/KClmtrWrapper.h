@@ -40,7 +40,6 @@ namespace KClmtrBase {
 		using namespace KClmtrNative;
 		using namespace KClmtrWrapper;
 		/** @endcond */
-
 		public ref class wCorrectedCoefficient {
 		public:
 			wCorrectedCoefficient() {
@@ -159,7 +158,6 @@ namespace KClmtrBase {
 				this->!KClmtrWrap();
 			}
 			//Property
-
 			/// <summary>
 			/// Gets or sets the com port's number
 			/// </summary>
@@ -220,7 +218,17 @@ namespace KClmtrBase {
 					return _kclmtr->isPortOpen();
 				}
 			}
-
+			/// <summary>
+			/// This will find any Negative Nosie values and set it to zero. This doesn't remove Negative_Value error when the negative isn't just noise
+			/// </summary>
+			property bool ZeroNoise {
+				void set(const bool value) {
+					_kclmtr->setZeroNoise(value);
+				}
+				bool get() {
+					return _kclmtr->getZeroNoise();
+				}
+			}
 			//Property - CalFiles
 			/// <summary>
 			/// Gets or Set the current Cal File based on it's name

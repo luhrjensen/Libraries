@@ -202,8 +202,8 @@ namespace KClmtrBase {
 					return gcnew wMatrix<double>(f->getAmplitude());
 				}
 			}
-			property int ErrorCode {
-				int get() {
+			property unsigned int ErrorCode {
+				unsigned int get() {
 					return f->getErrorCode();
 				}
 			}
