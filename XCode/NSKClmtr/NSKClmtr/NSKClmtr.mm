@@ -82,6 +82,12 @@ void SubClass::printCounts(Counts c)
 -(void)setRange:(int) range{
 	_kclmtr->setRange(range);
 }
+-(void)setZeroNoise:(bool)value {
+    _kclmtr->setZeroNoise(value);
+}
+-(bool)getZeroNoise {
+    return _kclmtr->getZeroNoise();
+}
 //Properties - CalFiles
 -(NSString*)getCalfileName{
     return [NSString stringWithUTF8String:_kclmtr->getCalFileName().c_str()];

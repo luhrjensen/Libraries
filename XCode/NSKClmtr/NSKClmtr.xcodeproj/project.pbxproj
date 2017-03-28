@@ -42,7 +42,7 @@
 		AF7DA7F31E45276800650329 /* BlackMatrix.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BlackMatrix.h; sourceTree = "<group>"; };
 		AF7DA7F41E45276800650329 /* Counts.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Counts.cpp; sourceTree = "<group>"; };
 		AF7DA7F51E45276800650329 /* Counts.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Counts.h; sourceTree = "<group>"; };
-		AF7DA7F61E45276800650329 /* Enums.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Enums.h; sourceTree = "<group>"; };
+		AF7DA7F61E45276800650329 /* Enums.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; fileEncoding = 4; path = Enums.h; sourceTree = "<group>"; };
 		AF7DA7F71E45276800650329 /* Flicker.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Flicker.cpp; sourceTree = "<group>"; };
 		AF7DA7F81E45276800650329 /* Flicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Flicker.h; sourceTree = "<group>"; };
 		AF7DA7F91E45276800650329 /* KClmtr.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = KClmtr.cpp; sourceTree = "<group>"; };
@@ -133,9 +133,9 @@
 				AF7DA7F51E45276800650329 /* Counts.h */,
 				AF7DA7F61E45276800650329 /* Enums.h */,
 				AF7DA7F71E45276800650329 /* Flicker.cpp */,
-				AF7DA7F81E45276800650329 /* Flicker.h */,
 				AF7DA7F91E45276800650329 /* KClmtr.cpp */,
 				AF7DA7FA1E45276800650329 /* KClmtr.h */,
+				AF7DA7F81E45276800650329 /* Flicker.h */,
 				AF7DA7FB1E45276800650329 /* Matrix.h */,
 				AF7DA7FC1E45276800650329 /* Measurement.cpp */,
 				AF7DA7FD1E45276800650329 /* Measurement.h */,

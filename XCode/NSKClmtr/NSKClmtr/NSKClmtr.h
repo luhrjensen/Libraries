@@ -49,6 +49,8 @@ public:
 -(void)setAimingLights:(bool) onOff;
 -(void)setRange:(int) range;
 -(int)getRange;
+-(void)setZeroNoise:(bool)value;
+-(bool)getZeroNoise;
 
 //Properties - CalFiles
 -(NSString*)getCalfileName;
