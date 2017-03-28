@@ -12,7 +12,7 @@ KClmtr.a: KClmtr.o
 	$(AR) $(ARFlags) $(OUT) KClmtr.o SerialPort.o Flicker.o Measurement.o Counts.o
 
 KClmtr.o: SerialPort.o Flicker.o Measurement.o Counts.o
-	$(CC) $(CFlags) -c  $(KClmtrDIR)/KClmtr.cpp
+	$(CC) $(CFlags) -c $(KClmtrDIR)/KClmtr.cpp
 
 SerialPort.o:
 	$(CC) $(CFlags) -c $(KClmtrDIR)/SerialPort.cpp
