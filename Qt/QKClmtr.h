@@ -72,7 +72,7 @@ public:
 
     QStringList getCalFileList() {
         QStringList CalList;
-        vector<string> calList  = KClmtr::getCalFileList();
+        std::vector<std::string> calList  = KClmtr::getCalFileList();
         for(size_t i = 0; i < calList.size();  i++) {
             CalList << QString::fromStdString(calList[i]);
         }
@@ -94,8 +94,8 @@ public:
         }
     }
     static bool testConnection(const QString &portName, QString &model, QString &SN) {
-        string stdModel;
-        string stdSN;
+        std::string stdModel;
+        std::string stdSN;
         bool connected = KClmtr::testConnection(portName.toStdString(), stdModel, stdSN);
         model = QString::fromStdString(stdModel);
         SN = QString::fromStdString(stdSN);
@@ -115,7 +115,7 @@ public:
     void printFlicker(Flicker flicker) {
         emit flickered(flicker);
     }
-    int sendMessageToKColorimeter(const string &strMsg, int expected, int timeOut_Sec, string &readString) {
+    int sendMessageToKColorimeter(const std::string &strMsg, int expected, int timeOut_Sec, std::string &readString) {
         return KClmtr::sendMessageToKColorimeter(strMsg, expected, timeOut_Sec, readString);
     }
 
