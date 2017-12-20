@@ -25,60 +25,76 @@ OTHER DEALINGS IN THE SOFTWARE.
 #pragma once
 #include "../../kclmtr/matrix.h"
 
+#define MAKE_MATRIX(NAME, TYPE) \
+public ref class NAME { \
+	public: \
+		NAME() { \
+			matrix = new KClmtrBase::KClmtrNative::Matrix<TYPE>(); \
+		} \
+		NAME(const KClmtrBase::KClmtrNative::Matrix<TYPE> &v) { \
+			matrix = new KClmtrBase::KClmtrNative::Matrix<TYPE>(v); \
+		} \
+		NAME(unsigned int row, unsigned int col) { \
+			matrix = new KClmtrBase::KClmtrNative::Matrix<TYPE>(row, col); \
+		} \
+		virtual ~NAME() { \
+			this->!NAME(); \
+		} \
+		property unsigned int Row { \
+			unsigned  int get() { \
+				return matrix->getRow(); \
+			} \
+		} \
+		property unsigned int Column { \
+			unsigned  int get() { \
+				return matrix->getColumn(); \
+			} \
+		} \
+		property cli::array<TYPE, 2>^ v { \
+			cli::array<TYPE, 2>^ get() { \
+				cli::array<TYPE, 2>^ values = gcnew cli::array<TYPE, 2>(matrix->getRow(), matrix->getColumn()); \
+				for (unsigned int i = 0; i < matrix->getRow(); ++i) { \
+					for (unsigned int j = 0; j < matrix->getColumn(); ++j) { \
+						values[i, j] = matrix->v[i][j]; \
+					} \
+				} \
+				return values; \
+			} \
+			void set(cli::array<TYPE, 2>^ values) { \
+				matrix->initializeV(matrix->getRow(), matrix->getColumn()); \
+				for (unsigned int i = 0; i < matrix->getRow(); ++i) { \
+					for (unsigned int j = 0; j < matrix->getColumn(); ++j) { \
+						matrix->v[i][j] = values[i, j]; \
+					} \
+				} \
+			} \
+		} \
+		property TYPE default[int, int] { \
+			TYPE get(int x, int y) { \
+				return matrix->v[x][y]; \
+			} \
+			void set(int x, int y, TYPE value) { \
+				matrix->v[x][y] = value; \
+			} \
+		} \
+		void initializeV(unsigned int row, unsigned int columns) { \
+			matrix->initializeV(row, columns); \
+		} \
+		const KClmtrBase::KClmtrNative::Matrix<TYPE> getNative() { \
+			return *matrix; \
+		} \
+	protected: \
+		!NAME() { \
+			delete matrix; \
+		} \
+	private: \
+		KClmtrBase::KClmtrNative::Matrix<TYPE> *matrix; \
+	};
+
 namespace KClmtrBase {
 	namespace KClmtrWrapper {
-		using namespace KClmtrNative;
-
-		template<typename T>
-		public ref class wMatrix {
-		public:
-			wMatrix() {
-				matrix = new Matrix<T>();
-			}
-			wMatrix(const Matrix<T> &v) {
-				matrix = new Matrix<T>(v);
-			}
-			virtual ~wMatrix() {
-				this->!wMatrix();
-			}
-			property int Row {
-				int get() {
-					return matrix->getRow();
-				}
-			}
-			property int Column {
-				int get() {
-					return matrix->getColumn();
-				}
-			}
-			property cli::array<T, 2>^ v {
-				cli::array<T, 2>^ get() {
-					cli::array<T, 2>^ values = gcnew cli::array<T, 2>(matrix->getRow(), matrix->getColumn());
-					for (int i = 0; i < matrix->getRow(); ++i) {
-						for (int j = 0; j < matrix->getColumn(); ++j) {
-							values[i, j] = matrix->v[i][j];
-						}
-					}
-					return values;
-				}
-				void set(cli::array<T, 2>^ values) {
-					matrix->initializeV(matrix->getRow(), matrix->getColumn());
-					for (int i = 0; i < matrix->getRow(); ++i) {
-						for (int j = 0; j < matrix->getColumn(); ++j) {
-							matrix->v[i][j] = values[i, j];
-						}
-					}
-				}
-			}
-			const Matrix<T> getNative() {
-				return *matrix;
-			}
-		protected:
-			!wMatrix() {
-				delete matrix;
-			}
-		private:
-			Matrix<T> *matrix;
-		};
+		MAKE_MATRIX(wMatrixDouble, double)
+		MAKE_MATRIX(wMatrixFloat, float)
+		MAKE_MATRIX(wMatrixInt, int)
 	}
 }

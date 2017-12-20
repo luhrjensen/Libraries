@@ -60,9 +60,9 @@ namespace KClmtrBase {
 					return counts->getBlueRange();
 				}
 			}
-			property wMatrix<int> ^TheCounts {
-				wMatrix<int> ^get() {
-					return gcnew wMatrix<int>(counts->getTheCounts());
+			property wMatrixInt ^TheCounts {
+				wMatrixInt ^get() {
+					return gcnew wMatrixInt(counts->getTheCounts());
 				}
 			}
 			property unsigned int ErrorCode {

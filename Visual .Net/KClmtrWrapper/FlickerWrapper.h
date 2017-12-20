@@ -167,39 +167,39 @@ namespace KClmtrBase {
 					return f->getRange();
 				}
 			}
-			property wMatrix<double> ^PeakFrequencyPercent {
-				wMatrix<double> ^get() {
-					return gcnew wMatrix<double>(f->getPeakFrequencyPercent());
+			property wMatrixDouble ^PeakFrequencyPercent {
+				wMatrixDouble ^get() {
+					return gcnew wMatrixDouble(f->getPeakFrequencyPercent());
 				}
 			}
-			property wMatrix<double> ^PeakFrequencyDB {
-				wMatrix<double> ^get() {
-					return gcnew wMatrix<double>(f->getPeakFrequencyDB());
+			property wMatrixDouble ^PeakFrequencyDB {
+				wMatrixDouble ^get() {
+					return gcnew wMatrixDouble(f->getPeakFrequencyDB());
 				}
 			}
-			property wMatrix<double> ^FlickerDB {
-				wMatrix<double> ^get() {
-					return gcnew wMatrix<double>(f->getFlickerDB());
+			property wMatrixDouble ^FlickerDB {
+				wMatrixDouble ^get() {
+					return gcnew wMatrixDouble(f->getFlickerDB());
 				}
 			}
-			property wMatrix<double> ^FlickerPercent {
-				wMatrix<double> ^get() {
-					return gcnew wMatrix<double>(f->getFlickerPercent());
+			property wMatrixDouble ^FlickerPercent {
+				wMatrixDouble ^get() {
+					return gcnew wMatrixDouble(f->getFlickerPercent());
 				}
 			}
-			property wMatrix<double> ^Counts {
-				wMatrix<double> ^get() {
-					return gcnew wMatrix<double>(f->getCounts());
+			property wMatrixDouble^Counts {
+				wMatrixDouble^get() {
+					return gcnew wMatrixDouble(f->getCounts());
 				}
 			}
-			property wMatrix<double> ^Nits {
-				wMatrix<double> ^get() {
-					return gcnew wMatrix<double>(f->getNits());
+			property wMatrixDouble ^Nits {
+				wMatrixDouble ^get() {
+					return gcnew wMatrixDouble(f->getNits());
 				}
 			}
-			property wMatrix<double> ^Amplitude {
-				wMatrix<double> ^get() {
-					return gcnew wMatrix<double>(f->getAmplitude());
+			property wMatrixDouble ^Amplitude {
+				wMatrixDouble^get() {
+					return gcnew wMatrixDouble(f->getAmplitude());
 				}
 			}
 			property unsigned int ErrorCode {

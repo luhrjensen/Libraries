@@ -86,11 +86,11 @@ namespace KClmtrBase {
 			void getBlue(double &x, double &y, double &bigY) {
 				gs->getBlue(x, y, bigY);
 			}
-			wMatrix<double>^ getRGBtoXYZ() {
-				return gcnew wMatrix<double>(gs->getRGBtoXYZ());
+			wMatrixDouble^ getRGBtoXYZ() {
+				return gcnew wMatrixDouble(gs->getRGBtoXYZ());
 			}
-			wMatrix<double>^ getXYZtoRGB() {
-				return gcnew wMatrix<double>(gs->getXYZtoRGB());
+			wMatrixDouble^ getXYZtoRGB() {
+				return gcnew wMatrixDouble(gs->getXYZtoRGB());
 			}
 
 			const GamutSpec getNative() {

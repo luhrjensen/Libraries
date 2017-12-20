@@ -20,6 +20,12 @@
     <ClCompile Include="..\..\kclmtr\Counts.cpp">
       <Filter>Base Object</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\kclmtr\Matrix.cpp">
+      <Filter>Base Object</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\kclmtr\Enum.cpp">
+      <Filter>Base Object</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="KClmtrWrapper.h" />

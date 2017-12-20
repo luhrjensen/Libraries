@@ -51,19 +51,19 @@ namespace KClmtrBase {
 			virtual  ~wCorrectedCoefficient() {
 				this->!wCorrectedCoefficient();
 			}
-			property wMatrix<double> ^ColorMatrix {
-				wMatrix<double> ^get() {
-					return gcnew wMatrix<double>(coeff->colorMatrix);
+			property wMatrixDouble ^ColorMatrix {
+				wMatrixDouble ^get() {
+					return gcnew wMatrixDouble(coeff->colorMatrix);
 				}
-				void set(wMatrix<double> ^colorMatrix) {
+				void set(wMatrixDouble ^colorMatrix) {
 					coeff->colorMatrix = colorMatrix->getNative();
 				}
 			}
-			property wMatrix<double> ^RGBMatrix {
-				wMatrix<double> ^get() {
-					return gcnew wMatrix<double>(coeff->rgbMatrix);
+			property wMatrixDouble ^RGBMatrix {
+				wMatrixDouble ^get() {
+					return gcnew wMatrixDouble(coeff->rgbMatrix);
 				}
-				void set(wMatrix<double> ^rgbMatrix) {
+				void set(wMatrixDouble ^rgbMatrix) {
 					coeff->colorMatrix = rgbMatrix->getNative();
 				}
 			}
@@ -164,12 +164,12 @@ namespace KClmtrBase {
 			/// <value> Com port's number </value>
 			property int port {
 				int get() {
-					string foobar = _kclmtr->getPort();
+					std::string foobar = _kclmtr->getPort();
 					return Convert::ToInt16(NativeToDotNet(foobar.substr(3, 1)));
 				}
 				void set(int value) {
 					String^ port = "\\\\.\\COM" + value;
-					string foobar = MarshalString(port);
+					std::string foobar = MarshalString(port);
 					_kclmtr->setPort(foobar);
 				}
 			}
@@ -252,17 +252,17 @@ namespace KClmtrBase {
 			/// <summary>
 			/// Gets the current Cal File's calaibration matrix
 			/// </summary>
-			property wMatrix<double>^ CalMatrix {
-				wMatrix<double>^ get() {
-					return gcnew wMatrix<double>(_kclmtr->getCalMatrix());
+			property wMatrixDouble^ CalMatrix {
+				wMatrixDouble^ get() {
+					return gcnew wMatrixDouble(_kclmtr->getCalMatrix());
 				}
 			}
 			/// <summary>
 			/// Gets the current Cal File's color matrix
 			/// </summary>
-			property wMatrix<double>^ RGBMatrix {
-				wMatrix<double>^ get() {
-					return gcnew wMatrix<double>(_kclmtr->getRGBMatrix());
+			property wMatrixDouble^ RGBMatrix {
+				wMatrixDouble^ get() {
+					return gcnew wMatrixDouble(_kclmtr->getRGBMatrix());
 				}
 			}
 			/// <summary>
@@ -282,7 +282,7 @@ namespace KClmtrBase {
 			property cli::array<System::String ^>^ CalFileList {
 				cli::array<System::String ^>^ get() {
 					cli::array<System::String ^>^ List = gcnew cli::array<System::String ^>(97);
-					vector<string> calFileList = _kclmtr->getCalFileList();
+					std::vector<std::string> calFileList = _kclmtr->getCalFileList();
 					for (size_t i = 0; i < calFileList.size(); ++i)
 						List[i] = NativeToDotNet(calFileList[i]);
 					return List;
@@ -550,7 +550,7 @@ namespace KClmtrBase {
 			/// <param name="Name"> The name of the Calibration file </param>
 			/// <param name="correctedXYZ"> The XYZ 3x3 matrix </param>
 			/// <returns> int Error code. 0 is Good</returns>
-			int storeMatrices(int ID, String^ Name, wMatrix<double> ^correctedXYZ) {
+			int storeMatrices(int ID, String^ Name, wMatrixDouble ^correctedXYZ) {
 				return _kclmtr->storeMatrices(ID, MarshalString(Name), correctedXYZ->getNative());
 			}
 
@@ -664,9 +664,9 @@ namespace KClmtrBase {
 			/// <returns>Boolean to tell it connected or not</returns>
 			static bool testConnection(int portNumber, [Out] System::String^% returnModel, [Out] System::String^% returnSN) {
 				String^ port = "\\\\.\\COM" + portNumber;
-				string nativePort = MarshalString(port);
+				std::string nativePort = MarshalString(port);
 				
-				string model, sn;
+				std::string model, sn;
 				bool test = KClmtr::testConnection(nativePort, model, sn);
 				
 				returnModel = NativeToDotNet(model);
@@ -679,7 +679,7 @@ namespace KClmtrBase {
 				delete _kclmtr;
 			}			
 		private:
-			static string MarshalString(String^ s);
+			static std::string MarshalString(String^ s);
 			static System::String^ NativeToDotNet(std::string input);
 			KClmtr *_kclmtr;
 

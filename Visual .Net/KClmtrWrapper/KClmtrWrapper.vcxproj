@@ -22,7 +22,7 @@
     <ProjectGuid>{7A1A814F-41D5-4BD1-8BC3-5756A0704FD7}</ProjectGuid>
     <RootNamespace>KClmtrWrapper</RootNamespace>
     <Keyword>ManagedCProj</Keyword>
-    <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.16299.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
@@ -172,7 +172,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\kclmtr\Counts.cpp" />
+    <ClCompile Include="..\..\kclmtr\Enum.cpp" />
     <ClCompile Include="..\..\kclmtr\Flicker.cpp" />
+    <ClCompile Include="..\..\kclmtr\Matrix.cpp" />
     <ClCompile Include="..\..\kclmtr\Measurement.cpp" />
     <ClCompile Include="..\..\kclmtr\KClmtr.cpp" />
     <ClCompile Include="..\..\kclmtr\SerialPort.cpp" />

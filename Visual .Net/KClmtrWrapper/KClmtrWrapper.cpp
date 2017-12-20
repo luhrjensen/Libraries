@@ -29,10 +29,10 @@ OTHER DEALINGS IN THE SOFTWARE.
 using namespace KClmtrBase::KClmtrNative;
 using namespace KClmtrBase::KClmtrWrapper;
 
-string KClmtrWrap::MarshalString(String^ s) {
+std::string KClmtrWrap::MarshalString(String^ s) {
 	using namespace Runtime::InteropServices;
 	const char* chars = (const char*)(Marshal::StringToHGlobalAnsi(s)).ToPointer();
-	string os = chars;
+	std::string os = chars;
 	Marshal::FreeHGlobal(IntPtr((void*)chars));
 	return os;
 }
