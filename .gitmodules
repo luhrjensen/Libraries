@@ -1,0 +1,3 @@
+[submodule "KClmtr"]
+	path = KClmtr
+	url = git@github.com:luhrjensen/KClmtr.git

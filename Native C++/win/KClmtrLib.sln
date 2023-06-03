@@ -1,20 +1,31 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Express 2012 for Windows Desktop
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.32106.194
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "KClmtr", "KClmtrLib\KClmtrLib.vcxproj", "{2E499617-D9D9-4B84-977A-996CC99248B9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
+		Debug|x64 = Debug|x64
 		Release|Win32 = Release|Win32
+		Release|x64 = Release|x64
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{2E499617-D9D9-4B84-977A-996CC99248B9}.Debug|Win32.ActiveCfg = Debug|Win32
 		{2E499617-D9D9-4B84-977A-996CC99248B9}.Debug|Win32.Build.0 = Debug|Win32
+		{2E499617-D9D9-4B84-977A-996CC99248B9}.Debug|x64.ActiveCfg = Debug|x64
+		{2E499617-D9D9-4B84-977A-996CC99248B9}.Debug|x64.Build.0 = Debug|x64
 		{2E499617-D9D9-4B84-977A-996CC99248B9}.Release|Win32.ActiveCfg = Release|Win32
 		{2E499617-D9D9-4B84-977A-996CC99248B9}.Release|Win32.Build.0 = Release|Win32
+		{2E499617-D9D9-4B84-977A-996CC99248B9}.Release|x64.ActiveCfg = Release|x64
+		{2E499617-D9D9-4B84-977A-996CC99248B9}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {4AFEFD33-D8D1-430A-8F2B-156877D1A18F}
 	EndGlobalSection
 EndGlobal

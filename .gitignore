@@ -1,0 +1,23 @@
+.vs/
+
+# Build results
+[Dd]ebug/
+[Dd]ebugPublic/
+[Rr]elease/
+[Rr]eleases/
+x64/
+x86/
+bld/
+[Bb]in/
+[Oo]bj/
+[Ll]og/
+
+*obj
+*.lib
+*.user
+*.recipe
+*.pdb
+*.tlog
+*.userprefs
+*.dll
+*.exe
