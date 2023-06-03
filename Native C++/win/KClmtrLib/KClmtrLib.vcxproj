@@ -23,6 +23,7 @@
     <ProjectGuid>{2E499617-D9D9-4B84-977A-996CC99248B9}</ProjectGuid>
     <RootNamespace>KClmtrLib</RootNamespace>
     <Keyword>Win32Proj</Keyword>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
@@ -67,18 +68,23 @@
     <_ProjectFileVersion>11.0.50727.1</_ProjectFileVersion>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <OutDir>..\..\..\bin\native c++\win\</OutDir>
-    <IntDir>$(Configuration)\</IntDir>
+    <OutDir>$(SolutionDir)..\..\bin\native c++\win32\</OutDir>
+    <IntDir>$(Platform)\$(Configuration)\</IntDir>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <OutDir>$(SolutionDir)..\..\bin\native c++\win\</OutDir>
+  </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <OutDir>..\..\..\bin\native c++\win\</OutDir>
-    <IntDir>$(Configuration)\</IntDir>
+    <OutDir>$(SolutionDir)..\..\bin\native c++\win32\</OutDir>
+    <IntDir>$(Platform)\$(Configuration)\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <OutDir>$(SolutionDir)..\..\bin\native c++\win\</OutDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <CustomBuildStep>
-      <Command>copy ../kclmtr/KClmtr.h $(TargetDir)
-</Command>
+      <Command>
+      </Command>
     </CustomBuildStep>
     <ClCompile>
       <Optimization>Disabled</Optimization>
@@ -91,13 +97,13 @@
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
     </ClCompile>
     <PostBuildEvent>
-      <Command />
+      <Command>xcopy "$(SolutionDir)..\..\KClmtr\*.h" "$(OutputPath)..\..\headers" /i /y</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <CustomBuildStep>
-      <Command>copy ../kclmtr/KClmtr.h $(TargetDir)
-</Command>
+      <Command>
+      </Command>
     </CustomBuildStep>
     <ClCompile>
       <Optimization>Disabled</Optimization>
@@ -110,8 +116,7 @@
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
     </ClCompile>
     <PostBuildEvent>
-      <Command>
-      </Command>
+      <Command>xcopy "$(SolutionDir)..\..\KClmtr\*.h" "$(OutputPath)..\..\headers" /i /y</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -126,8 +131,7 @@
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
     </ClCompile>
     <PostBuildEvent>
-      <Command>
-      </Command>
+      <Command>xcopy "$(SolutionDir)..\..\KClmtr\*.h" "$(OutputPath)..\..\headers" /i /y</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -143,32 +147,37 @@
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
     </ClCompile>
     <PostBuildEvent>
+      <Command>xcopy "$(SolutionDir)..\..\KClmtr\*.h" "$(OutputPath)..\..\headers" /i /y</Command>
+    </PostBuildEvent>
+    <CustomBuildStep>
       <Command>
       </Command>
-    </PostBuildEvent>
+    </CustomBuildStep>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\kclmtr\Counts.cpp" />
-    <ClCompile Include="..\..\..\kclmtr\Flicker.cpp" />
-    <ClCompile Include="..\..\..\kclmtr\KClmtr.cpp" />
-    <ClCompile Include="..\..\..\kclmtr\Measurement.cpp" />
-    <ClCompile Include="..\..\..\kclmtr\SerialPort.cpp" />
+    <ClCompile Include="..\..\..\KClmtr\Counts.cpp" />
+    <ClCompile Include="..\..\..\KClmtr\Enum.cpp" />
+    <ClCompile Include="..\..\..\KClmtr\Flicker.cpp" />
+    <ClCompile Include="..\..\..\KClmtr\KClmtr.cpp" />
+    <ClCompile Include="..\..\..\KClmtr\Matrix.cpp" />
+    <ClCompile Include="..\..\..\KClmtr\Measurement.cpp" />
+    <ClCompile Include="..\..\..\KClmtr\SerialPort.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\..\kclmtr\Enums.h" />
-    <ClInclude Include="..\..\..\kclmtr\WRGB.h" />
-    <CustomBuild Include="..\..\..\kclmtr\KClmtr.h">
+    <ClInclude Include="..\..\..\KClmtr\Enums.h" />
+    <ClInclude Include="..\..\..\KClmtr\WRGB.h" />
+    <CustomBuild Include="..\..\..\KClmtr\KClmtr.h">
       <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
       </Command>
       <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
       </Command>
     </CustomBuild>
-    <ClInclude Include="..\..\..\kclmtr\BlackMatrix.h" />
-    <ClInclude Include="..\..\..\kclmtr\Counts.h" />
-    <ClInclude Include="..\..\..\kclmtr\Flicker.h" />
-    <ClInclude Include="..\..\..\kclmtr\Matrix.h" />
-    <ClInclude Include="..\..\..\kclmtr\Measurement.h" />
-    <ClInclude Include="..\..\..\kclmtr\SerialPort.h" />
+    <ClInclude Include="..\..\..\KClmtr\BlackMatrix.h" />
+    <ClInclude Include="..\..\..\KClmtr\Counts.h" />
+    <ClInclude Include="..\..\..\KClmtr\Flicker.h" />
+    <ClInclude Include="..\..\..\KClmtr\Matrix.h" />
+    <ClInclude Include="..\..\..\KClmtr\Measurement.h" />
+    <ClInclude Include="..\..\..\KClmtr\SerialPort.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
